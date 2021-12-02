@@ -1,0 +1,30 @@
+{
+  "name": "@yandex-cloud/i18n",
+  "description": "i18n library for Yandex Cloud UI services",
+  "version": "0.0.1",
+  "license": "MIT",
+  "main": "lib/index.js",
+  "repository": "git@github.com:yandex-cloud/i18n",
+  "scripts": {
+    "build": "babel src --out-dir lib",
+    "lint": "eslint src/*",
+    "prepublish": "rm -rf lib && npm run build",
+    "test": "exit 0"
+  },
+  "files": [
+    "example/keysets",
+    "example/index",
+    "src/index",
+    "lib/index",
+    "index.d.ts"
+  ],
+  "types": "index.d.ts",
+  "peerDependencies": {
+    "@babel/runtime": "^7.4.5"
+  },
+  "devDependencies": {
+    "@babel/cli": "^7.8.4",
+    "eslint": "^8.0.0",
+    "@yandex-cloud/eslint-config": "^1.0.0"
+  }
+}
