@@ -4,6 +4,7 @@ on:
 
 jobs:
   commitlint:
+    if: github.actor != 'yc-ui-bot'
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
@@ -14,6 +15,7 @@ jobs:
       - run: npx commitlint --from ${{ github.event.pull_request.base.sha }} --to ${{ github.event.pull_request.head.sha }} --verbose
 
   test:
+    if: github.actor != 'yc-ui-bot'
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
