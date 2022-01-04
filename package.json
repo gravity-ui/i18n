@@ -22,6 +22,9 @@
   "peerDependencies": {
     "@babel/runtime": "^7.4.5"
   },
+  "publishConfig": {
+    "access": "public"
+  },
   "devDependencies": {
     "@babel/cli": "^7.8.4",
     "@commitlint/cli": "^15.0.0",
