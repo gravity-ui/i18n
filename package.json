@@ -24,6 +24,8 @@
   },
   "devDependencies": {
     "@babel/cli": "^7.8.4",
+    "@commitlint/cli": "^15.0.0",
+    "@commitlint/config-conventional": "^15.0.0",
     "eslint": "^8.0.0",
     "@yandex-cloud/eslint-config": "^1.0.0"
   }
