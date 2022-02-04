@@ -1,12 +1,15 @@
-## Утилиты I18N
+## I18N utilities
 
-Утилиты пакета I18N предназначены для интернационализации UI-сервисов Yandex Cloud.
+Utilities in the I18N package are designed for internationalization of Yandex Cloud UI services.
 
-### Установка
+### Install
+
 `npm install --save @yandex-cloud/i18n`
 
-### Примеры использования
+### Use examples
+
 #### `keysets/en.json`
+
 ```json
 {
   "wizard": {
@@ -14,7 +17,9 @@
   }
 }
 ```
+
 #### `keysets/ru.json`
+
 ```json
 {
   "wizard": {
@@ -22,7 +27,9 @@
   }
 }
 ```
+
 #### `index.js`
+
 ```js
 const ru = require('./keysets/ru.json');
 const en = require('./keysets/en.json');
@@ -60,48 +67,57 @@ if (i18n.has('wizard', 'label_error-widget-no-access')) {
     i18n.i18n('wizard', 'label_error-widget-no-access')
 }
 ```
-### Шаблонизация и плюрализация
-Библиотека поддерживает шаблонизацию. Шаблонизируемые переменные заключаются в двойные фигурные скобки, а значения передаются в функцию i18n в форме key-value словаря:
+
+### Templating and pluralization
+
+The library supports templating. Templated variables are enclosed in double curly brackets, and the values are passed to the i18n function as a key-value dictionary:
+
 #### `keysets.json`
+
 ```json
 {
-  "label_template": "По запросу «{{inputValue}}» в месте «{{folderName}}» ничего не найдено"
+  "label_template": "No matches found for "{{inputValue}}" in "{{folderName}}"
 }
 ```
 
 #### `index.js`
+
 ```js
-i18n('label_template', {inputValue: 'не знаю что', folderName: 'не знаю где'});  // => По запросу «не знаю что» в месте «не знаю где» ничего не найдено
+i18n('label_template', {inputValue: 'something', folderName: 'somewhere'});  // => No matches found for "something" "somewhere"
 ```
 
-Для удобной локализации ключей, зависящих от числового значения, можно использовать плюрализацию.
-Плюрализованный ключ содержит 4 значения (для числительных 1, 2-4, 5-9 и 0 соответственно). Имя переменной для плюрализации - `count`.
-Например:
+Pluralization can be used for easy localization of keys that depend on numeric values.
+The pluralized key contains 4 values (for the numerals 1, 2-4, 5-9, and 0, respectively). Variable name for pluralization: `count`.
+For example:
+
 #### `keysets.json`
+
 ```json
 {
-  "label_seconds": ["Осталась {{count}} секунда", "Осталось {{count}} секунды", "Осталось {{count}} секунд", "Времени не осталось"]
+  "label_seconds": ["{{count}} second is left", "{{count}} seconds are left", "{{count}} seconds are left", "No time left"]
 }
 ```
+
 #### `index.js`
+
 ```js
-i18n('label_seconds', {count: 1});  // => 1 секунда
-i18n('label_seconds', {count: 3});  // => 3 секунды
-i18n('label_seconds', {count: 7});  // => 7 секунд
-i18n('label_seconds', {count: 10}); // => 10 секунд
-i18n('label_seconds', {count: 0});  // => Времени не осталось
+i18n('label_seconds', {count: 1});  // => 1 second
+i18n('label_seconds', {count: 3});  // => 3 seconds
+i18n('label_seconds', {count: 7});  // => 7 seconds
+i18n('label_seconds', {count: 10}); // => 10 seconds
+i18n('label_seconds', {count: 0});  // => No time left
 ```
 
-### Типизация
+### Typing
 
-Для того чтобы функцию `i18nInstance.i18n` сделать типизированной, нужно выполнить несколько шагов:
+To type the `i18nInstance.i18n` function, follow the steps:
 
-#### Подготовка
+#### Preparation
 
-Нужно подготовить кейсет файл в json для того, чтобы типизация подтянула данные. В месте скачивания кейсетов добавьте создание рядом дополнительного файла `data.json`, для уменьшения размера файла и ускорения парсинга IDE можно все значения заменить на `'str'`.
+Prepare a JSON keyset file so that the typing procedure can fetch data. Where you fetch keysets from, add creation of an additional `data.json` file. To decrease the file size and speed up IDE parsing, you can replace all values by `'str'`.
 
 ```ts
-// Пример из консоли
+// Example from the console
 
 async function createFiles(keysets: Record<Lang, LangKeysets>) {
     await mkdirp(DEST_PATH);
@@ -112,7 +128,7 @@ async function createFiles(keysets: Record<Lang, LangKeysets>) {
         const hash = getContentHash(content);
         const filePath = path.resolve(DEST_PATH, `${lang}.${hash.slice(0, 8)}.js`);
 
-        // <Новые строки>
+        // <New lines>
         let typesPromise;
 
         if (lang === 'ru') {
@@ -128,24 +144,24 @@ async function createFiles(keysets: Record<Lang, LangKeysets>) {
             const JSONForTypes = JSON.stringify(keyset, null, 4);
             typesPromise = writeFile(path.resolve(DEST_PATH, `data.json`), JSONForTypes, 'utf-8');
         }
-        // </Новые строки>
+        // </New lines>
 
         return Promise.all([typesPromise, writeFile(filePath, content, 'utf-8')]);
     });
 
     await Promise.all(createFilePromises);
 }
-
 ```
 
-#### Подключение
-В ваших `ui/utils/i18n` (месте, где конфигурируете i18n и экспортируете для дальнейшего использования всеми интерфейсами) нужно импортировать типизирующую функцию `I18NFn` с вашим `Keysets` и после конфигурирования вашего i18n возвращать закастованную функцию
+#### Connection
+
+In your `ui/utils/i18n` directories (where you configure i18n and export it to be used by all interfaces), import the typing function `I18NFn` with your `Keysets`. After your i18n has been configured, return the casted function
 
 ```ts
-// Пример из консоли
+// Example from the console
 
 import {I18NFn} from '@yandex-data-ui/i18n';
-// обязательно типизированный импорт!
+// This must be a typed import!
 import type Keysets from '../../../dist/public/build/i18n/data.json';
 
 const i18nInstance = new I18N();
@@ -156,13 +172,13 @@ export const cui18n = (i18nInstance.i18n as TypedI18n).bind(i18nInstance, 'commo
 export const i18n = i18nInstance.i18n.bind(i18nInstance) as TypedI18n;
 ```
 
-#### Дополнительные вопросы
+#### Additional issues
 
-**Логика работы типизации**
+**Typing logic**
 
-Есть несколько кейсов использования:
+There are several typing use cases:
 
-- Вызов функции с передачей ключей литералами строк
+- Calling a function with keys passed as string literals
 
 ```ts
 i18n('common', 'label_subnet'); // ok
@@ -170,7 +186,7 @@ i18n('dcommon', 'label_dsubnet'); // error: Argument of type '"dcommon"' is not 
 i18n('common', 'label_dsubnet'); // error: Argument of type '"label_dsubnet"' is not assignable to parameter of type ...
 ```
 
-- Вызов функции с передачей строк, которые нельзя вычислить в литералы (если ts не может понять, что за строка ему передаётся, он не ругается на неё)
+- Calling a function, passing to it strings that can't be converted into literals (if ts can't derive the string type, it doesn't throw an error)
 
 ```ts
 const someUncomputebleString = `label_random-index-${Math.floor(Math.random() * 4)}`;
@@ -181,7 +197,7 @@ for (let i = 0; i < 4; i++) {
 }
 ```
 
-- Вызов функции с передачей строк, которые можно вычислить в литералы
+- Calling a function, passing to it strings that can be converted into literals
 
 ```ts
 const labelColors = ['red', 'green', 'yelllow', 'white'] as const;
@@ -195,18 +211,19 @@ for (let i = 0; i < 4; i++) {
 }
 ```
 
-**Почему нет типизации через класс**
+**Why typing via a class isn't supported**
 
-Данная функция может поломать или усложнить некоторые сценарии использования i18n, поэтому была добавлена в качестве дополнительной функциональности. Если хорошо себя проявит, то в будущем можно будет добавить в класс, чтобы не кастовать экспортируемые функции.
+This function can break or complicate some i18n scenarios, so it was added as a functional extension. If it proves effective, we would probably add it to a class to avoid casting exported functions.
 
-**Почему могут не работать встроенные методы**
+**Why built-in methods might fail**
 
-Типизация встроенных методов функций достаточно сложна для реализации обхода вложенных структур и условных типов. Именно поэтому типизация работает только в случае использования непосредственного вызова функции и вызова `bind` до третьего аргумента.
+Implementing of traversal of nested structures and conditional types using typed built-in function methods is a complex enough task. That's why typing works only when using a direct function call and a `bind` call up to the third argument.
 
-**Почему нельзя генерировать сразу ts файл, чтобы типизировались и значения ключей**
+**Why can't I generate a ts file straightforwardly to typecast key values as well?**
 
-Можно, и вы можете реализовать у себя этот функционал, передавая результирующий тип в I18NFn. Но при больших объемах файла ts начинает есть столько ресурсов, что это сильно тормозит IDE, чего не происходит с JSON файлом.
+You can do that by passing the result type to I18NFn. However, with large file sizes, ts starts consuming huge amounts of resources, slowing down the IDE dramatically, but with JSON file this is not the case.
 
-**Почему не типизированы остальные методы класса I18N**
+**Why other methods of the I18N class haven't been typed?**
 
-Их можно типизировать, будет круто, если поможете это сделать. Просто остальные методы используются в 1% случаев.
+They can be typed, we'll appreciate if you help implementing it. The case is that other methods are used in 1% of cases.
+
