@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.2.0](https://www.github.com/yandex-cloud/i18n/compare/v0.1.1...v0.2.0) (2022-02-07)
+
+
+### build
+
+* compile with tsc instead of babel ([22cf7ed](https://www.github.com/yandex-cloud/i18n/commit/22cf7ededf4be276259f5177b45333a23602b6f6))
+
 ### [0.1.1](https://www.github.com/yandex-cloud/i18n/compare/v0.1.0...v0.1.1) (2022-01-04)
 
 
