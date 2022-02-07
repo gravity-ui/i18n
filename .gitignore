@@ -21,7 +21,7 @@ npm-debug.log
 .vscode
 
 node_modules
-lib
+build
 
 .cache/*
 
