@@ -8,5 +8,5 @@
     "baseUrl": ".",
     "importHelpers": true,
   },
-  "include": ["src/*.js"]
+  "include": ["src/*.ts"]
 }

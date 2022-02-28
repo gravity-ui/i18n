@@ -1,14 +1,18 @@
 const warnCache = new Set();
 
+type KeysData = Record<string, string | string[]>;
+type KeysetData = Record<string, KeysData>;
+type L10nLangs = 'ru' | 'en';
+
 export class I18N {
-    static LANGS = {
+    static LANGS: Record<L10nLangs, string> = {
         ru: 'ru',
         en: 'en',
     };
 
-    static defaultLang = undefined;
+    static defaultLang: string | undefined = undefined;
 
-    static setDefaultLang(lang) {
+    static setDefaultLang(lang: L10nLangs) {
         if (I18N.LANGS[lang]) {
             I18N.defaultLang = lang;
         } else {
@@ -17,14 +21,14 @@ export class I18N {
         }
     }
 
-    data = {
+    data: Record<string, KeysetData> = {
         [I18N.LANGS.ru]: {},
         [I18N.LANGS.en]: {},
     };
 
-    lang = undefined;
+    lang: string | undefined = undefined;
 
-    setLang(lang) {
+    setLang(lang: L10nLangs) {
         if (I18N.LANGS[lang]) {
             this.lang = lang;
         } else {
@@ -33,28 +37,28 @@ export class I18N {
         }
     }
 
-    registerKeyset(lang, keysetName, data = {}) {
+    registerKeyset(lang: string, keysetName: string, data: KeysData = {}) {
         if (this.data[lang] && Object.prototype.hasOwnProperty.call(this.data[lang], keysetName)) {
             throw new Error(`Keyset '${keysetName}' is already registered, aborting!`);
         }
         this.data[lang] = Object.assign({}, this.data[lang], {[keysetName]: data});
     }
 
-    registerKeysets(lang, data) {
+    registerKeysets(lang: string, data: KeysetData) {
         Object.keys(data).forEach((keysetName) => {
             this.registerKeyset(lang, keysetName, data[keysetName]);
         });
     }
 
-    has(keysetName, key) {
-        const lang = this.lang || I18N.defaultLang || I18N.lang;
+    has(keysetName: string, key: string) {
+        const lang = (this.lang || I18N.defaultLang) as string;
         const languageData = this.data[lang];
 
         return Boolean(languageData && languageData[keysetName] && languageData[keysetName][key]);
     }
 
-    i18n(keysetName, key, params) {
-        const lang = this.lang || I18N.defaultLang || I18N.lang;
+    i18n(keysetName: string, key: string, params?: {[key: string]: any}): string | string[] {
+        const lang = (this.lang || I18N.defaultLang) as string;
         const languageData = this.data[lang];
         if (typeof languageData === 'undefined') {
             // eslint-disable-next-line max-len
@@ -91,7 +95,7 @@ export class I18N {
         }
 
         const keyValue = keyset && keyset[key];
-        let result;
+        let result: string | string[];
 
         if (typeof keyValue === 'undefined') {
             this.warn(
@@ -142,8 +146,11 @@ export class I18N {
                     // заменить все одиночные символы '$' на '$$'
                     replacer = replacer.replace(/(?:([^$])\$|^\$)(?!\$)/g, '$1$$$$');
                 }
-                // eslint-disable-next-line security/detect-non-literal-regexp
-                result = (result || '').replace(new RegExp(`({{${param}}})`, 'g'), replacer);
+
+                result = ([] as string[]).concat(result || '').map(
+                    // eslint-disable-next-line security/detect-non-literal-regexp
+                    (result) => result.replace(new RegExp(`({{${param}}})`, 'g'), replacer)
+                );
             });
         } else {
             result = keyValue;
@@ -152,13 +159,13 @@ export class I18N {
         return result;
     }
 
-    keyset(keysetName) {
-        return (...args) => {
+    keyset(keysetName: string) {
+        return (...args: [string, {[key: string]: any}]): string | string[] => {
             return this.i18n(keysetName, ...args);
         };
     }
 
-    warn(msg, keyset, key) {
+    warn(msg: string, keyset?: string, key?: string) {
         let cacheKey = '';
 
         if (keyset) {
@@ -177,15 +184,15 @@ export class I18N {
 
             /* eslint-disable no-undef */
             if (typeof window !== 'undefined'
-                && window.Ya
-                && window.Ya.Rum
-                && typeof window.Ya.Rum.logError === 'function')
+                && (window as any).Ya
+                && (window as any).Ya.Rum
+                && typeof (window as any).Ya.Rum.logError === 'function')
             {
                 try {
-                    window.Ya.Rum.logError({
+                    (window as any).Ya.Rum.logError({
                         message: `I18n: ${msg}`,
                         type: 'i18n',
-                        level: window.Ya.Rum.ERROR_LEVEL.INFO,
+                        level: (window as any).Ya.Rum.ERROR_LEVEL.INFO,
                         block: cacheKey,
                     });
                 } catch (err) {
@@ -196,7 +203,5 @@ export class I18N {
 
             warnCache.add(cacheKey);
         }
-
-
     }
 }
