@@ -64,15 +64,22 @@ export class I18N {
     }
 
     has(keysetName: string, key: string) {
-        const lang = (this.lang || I18N.defaultLang) as string;
-        const languageData = this.data[lang];
+        const lang = this.lang || I18N.defaultLang;
+        let languageData: KeysetData | undefined;
+        if (lang) {
+            languageData = this.data[lang];
+        }
 
         return Boolean(languageData && languageData[keysetName] && languageData[keysetName][key]);
     }
 
     i18n(keysetName: string, key: string, params?: {[key: string]: any}): string | string[] {
-        const lang = (this.lang || I18N.defaultLang) as string;
-        const languageData = this.data[lang];
+        const lang = this.lang || I18N.defaultLang;
+        let languageData: KeysetData | undefined;
+        if (lang) {
+            languageData = this.data[lang];
+        }
+
         if (typeof languageData === 'undefined') {
             // eslint-disable-next-line max-len
             throw new Error(`Language '${lang}' is not defined, make sure you call setLang for the same language you called registerKeysets for!`);
