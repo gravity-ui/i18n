@@ -4,6 +4,19 @@ type KeysData = Record<string, string | string[]>;
 type KeysetData = Record<string, KeysData>;
 type L10nLangs = 'ru' | 'en';
 
+declare global {
+    interface Window {
+        Ya: {
+            Rum: {
+                logError: (arg?: any) => void;
+                ERROR_LEVEL: {
+                    INFO: string;
+                };
+            };
+        };
+    }
+}
+
 export class I18N {
     static LANGS: Record<L10nLangs, string> = {
         ru: 'ru',
@@ -187,15 +200,15 @@ export class I18N {
 
             /* eslint-disable no-undef */
             if (typeof window !== 'undefined'
-                && (window as any).Ya
-                && (window as any).Ya.Rum
-                && typeof (window as any).Ya.Rum.logError === 'function')
+                && window.Ya
+                && window.Ya.Rum
+                && typeof window.Ya.Rum.logError === 'function')
             {
                 try {
-                    (window as any).Ya.Rum.logError({
+                    window.Ya.Rum.logError({
                         message: `I18n: ${msg}`,
                         type: 'i18n',
-                        level: (window as any).Ya.Rum.ERROR_LEVEL.INFO,
+                        level: window.Ya.Rum.ERROR_LEVEL.INFO,
                         block: cacheKey,
                     });
                 } catch (err) {
