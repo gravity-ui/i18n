@@ -151,6 +151,9 @@ export class I18N {
                     // eslint-disable-next-line security/detect-non-literal-regexp
                     (result) => result.replace(new RegExp(`({{${param}}})`, 'g'), replacer)
                 );
+                if (result.length === 1) {
+                    result = result[0];
+                }
             });
         } else {
             result = keyValue;
