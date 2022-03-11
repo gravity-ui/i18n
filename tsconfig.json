@@ -3,7 +3,6 @@
   "compilerOptions": {
     "outDir": "build/esm",
     "module": "esnext",
-    "jsx": "react",
     "baseUrl": ".",
     "importHelpers": true,
     "declaration": true
