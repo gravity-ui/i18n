@@ -6,6 +6,7 @@
     "jsx": "react",
     "baseUrl": ".",
     "importHelpers": true,
+    "declaration": true
   },
   "include": ["src/*.ts"]
 }
