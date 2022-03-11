@@ -129,7 +129,7 @@ export class I18N {
             const count = Number(params.count);
 
             if (Array.isArray(keyValue)) {
-                if (typeof count !== 'number') {
+                if (Number.isNaN(count)) {
                     this.warn(
                         'Missing params.count for key.',
                         keysetName,
