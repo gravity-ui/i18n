@@ -80,7 +80,6 @@ export class I18N {
         }
 
         if (typeof languageData === 'undefined') {
-            // eslint-disable-next-line max-len
             throw new Error(`Language '${lang}' is not defined, make sure you call setLang for the same language you called registerKeysets for!`);
         }
 
@@ -200,7 +199,6 @@ export class I18N {
         if (!warnCache.has(cacheKey)) {
             console.warn(`[i18n][${cacheKey}] ${msg}`);
 
-            /* eslint-disable no-undef */
             if (typeof window !== 'undefined'
                 && window.Ya
                 && window.Ya.Rum
@@ -217,7 +215,6 @@ export class I18N {
                     console.error(err);
                 }
             }
-            /* eslint-enable no-undef */
 
             warnCache.add(cacheKey);
         }
