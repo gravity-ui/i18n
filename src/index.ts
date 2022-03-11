@@ -2,7 +2,6 @@ const warnCache = new Set();
 
 type KeysData = Record<string, string | string[]>;
 type KeysetData = Record<string, KeysData>;
-type L10nLangs = 'ru' | 'en';
 
 declare global {
     interface Window {
@@ -18,14 +17,14 @@ declare global {
 }
 
 export class I18N {
-    static LANGS: Record<L10nLangs, string> = {
+    static LANGS: Record<string, string> = {
         ru: 'ru',
         en: 'en',
     };
 
     static defaultLang: string | undefined = undefined;
 
-    static setDefaultLang(lang: L10nLangs) {
+    static setDefaultLang(lang: string) {
         if (I18N.LANGS[lang]) {
             I18N.defaultLang = lang;
         } else {
@@ -41,7 +40,7 @@ export class I18N {
 
     lang: string | undefined = undefined;
 
-    setLang(lang: L10nLangs) {
+    setLang(lang: string) {
         if (I18N.LANGS[lang]) {
             this.lang = lang;
         } else {
