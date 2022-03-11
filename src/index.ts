@@ -167,13 +167,9 @@ export class I18N {
                     replacer = replacer.replace(/(?:([^$])\$|^\$)(?!\$)/g, '$1$$$$');
                 }
 
-                result = ([] as string[]).concat(result || '').map(
-                    // eslint-disable-next-line security/detect-non-literal-regexp
-                    (result) => result.replace(new RegExp(`({{${param}}})`, 'g'), replacer)
-                );
-                if (result.length === 1) {
-                    result = result[0];
-                }
+                result = (result || '') as string;
+                // eslint-disable-next-line security/detect-non-literal-regexp
+                result = result.replace(new RegExp(`({{${param}}})`, 'g'), replacer)
             });
         } else {
             result = keyValue;
