@@ -1,14 +1,30 @@
 const warnCache = new Set();
 
+type KeysData = Record<string, string | string[]>;
+type KeysetData = Record<string, KeysData>;
+
+declare global {
+    interface Window {
+        Ya: {
+            Rum: {
+                logError: (arg?: any) => void;
+                ERROR_LEVEL: {
+                    INFO: string;
+                };
+            };
+        };
+    }
+}
+
 export class I18N {
-    static LANGS = {
+    static LANGS: Record<string, string> = {
         ru: 'ru',
         en: 'en',
     };
 
-    static defaultLang = undefined;
+    static defaultLang: string | undefined = undefined;
 
-    static setDefaultLang(lang) {
+    static setDefaultLang(lang: string) {
         if (I18N.LANGS[lang]) {
             I18N.defaultLang = lang;
         } else {
@@ -17,14 +33,14 @@ export class I18N {
         }
     }
 
-    data = {
+    data: Record<string, KeysetData> = {
         [I18N.LANGS.ru]: {},
         [I18N.LANGS.en]: {},
     };
 
-    lang = undefined;
+    lang: string | undefined = undefined;
 
-    setLang(lang) {
+    setLang(lang: string) {
         if (I18N.LANGS[lang]) {
             this.lang = lang;
         } else {
@@ -33,31 +49,37 @@ export class I18N {
         }
     }
 
-    registerKeyset(lang, keysetName, data = {}) {
+    registerKeyset(lang: string, keysetName: string, data: KeysData = {}) {
         if (this.data[lang] && Object.prototype.hasOwnProperty.call(this.data[lang], keysetName)) {
             throw new Error(`Keyset '${keysetName}' is already registered, aborting!`);
         }
         this.data[lang] = Object.assign({}, this.data[lang], {[keysetName]: data});
     }
 
-    registerKeysets(lang, data) {
+    registerKeysets(lang: string, data: KeysetData) {
         Object.keys(data).forEach((keysetName) => {
             this.registerKeyset(lang, keysetName, data[keysetName]);
         });
     }
 
-    has(keysetName, key) {
-        const lang = this.lang || I18N.defaultLang || I18N.lang;
-        const languageData = this.data[lang];
+    has(keysetName: string, key: string) {
+        const lang = this.lang || I18N.defaultLang;
+        let languageData: KeysetData | undefined;
+        if (lang) {
+            languageData = this.data[lang];
+        }
 
         return Boolean(languageData && languageData[keysetName] && languageData[keysetName][key]);
     }
 
-    i18n(keysetName, key, params) {
-        const lang = this.lang || I18N.defaultLang || I18N.lang;
-        const languageData = this.data[lang];
+    i18n(keysetName: string, key: string, params?: {[key: string]: any}): string | string[] {
+        const lang = this.lang || I18N.defaultLang;
+        let languageData: KeysetData | undefined;
+        if (lang) {
+            languageData = this.data[lang];
+        }
+
         if (typeof languageData === 'undefined') {
-            // eslint-disable-next-line max-len
             throw new Error(`Language '${lang}' is not defined, make sure you call setLang for the same language you called registerKeysets for!`);
         }
 
@@ -91,7 +113,7 @@ export class I18N {
         }
 
         const keyValue = keyset && keyset[key];
-        let result;
+        let result: string | string[];
 
         if (typeof keyValue === 'undefined') {
             this.warn(
@@ -107,7 +129,7 @@ export class I18N {
             const count = Number(params.count);
 
             if (Array.isArray(keyValue)) {
-                if (typeof count !== 'number') {
+                if (Number.isNaN(count)) {
                     this.warn(
                         'Missing params.count for key.',
                         keysetName,
@@ -142,8 +164,10 @@ export class I18N {
                     // заменить все одиночные символы '$' на '$$'
                     replacer = replacer.replace(/(?:([^$])\$|^\$)(?!\$)/g, '$1$$$$');
                 }
+
+                result = (result || '') as string;
                 // eslint-disable-next-line security/detect-non-literal-regexp
-                result = (result || '').replace(new RegExp(`({{${param}}})`, 'g'), replacer);
+                result = result.replace(new RegExp(`({{${param}}})`, 'g'), replacer)
             });
         } else {
             result = keyValue;
@@ -152,13 +176,13 @@ export class I18N {
         return result;
     }
 
-    keyset(keysetName) {
-        return (...args) => {
-            return this.i18n(keysetName, ...args);
+    keyset(keysetName: string) {
+        return (key: string, params?: {[key: string]: any}): string | string[] => {
+            return this.i18n(keysetName, key, params);
         };
     }
 
-    warn(msg, keyset, key) {
+    warn(msg: string, keyset?: string, key?: string) {
         let cacheKey = '';
 
         if (keyset) {
@@ -175,7 +199,6 @@ export class I18N {
         if (!warnCache.has(cacheKey)) {
             console.warn(`[i18n][${cacheKey}] ${msg}`);
 
-            /* eslint-disable no-undef */
             if (typeof window !== 'undefined'
                 && window.Ya
                 && window.Ya.Rum
@@ -192,11 +215,8 @@ export class I18N {
                     console.error(err);
                 }
             }
-            /* eslint-enable no-undef */
 
             warnCache.add(cacheKey);
         }
-
-
     }
 }
