@@ -1,5 +1,12 @@
 # Changelog
 
+### [0.2.1](https://www.github.com/yandex-cloud/i18n/compare/v0.2.0...v0.2.1) (2022-03-21)
+
+
+### chore
+
+* freeze direct dependencies ([e741995](https://www.github.com/yandex-cloud/i18n/commit/e7419950840a85b7c23d53464903a6589829b052))
+
 ## [0.2.0](https://www.github.com/yandex-cloud/i18n/compare/v0.1.1...v0.2.0) (2022-02-07)
 
 
