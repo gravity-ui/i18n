@@ -5,8 +5,8 @@ type KeysetData = Record<string, KeysData>;
 
 declare global {
     interface Window {
-        Ya: {
-            Rum: {
+        Ya?: {
+            Rum?: {
                 logError: (arg?: any) => void;
                 ERROR_LEVEL: {
                     INFO: string;
@@ -15,6 +15,8 @@ declare global {
         };
     }
 }
+
+export * from './types';
 
 export class I18N {
     static LANGS: Record<string, string> = {

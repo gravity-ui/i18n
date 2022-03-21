@@ -9,16 +9,14 @@
     "build": "tsc",
     "lint": "eslint src/*",
     "prepublish": "rm -rf build && npm run build",
-    "test": "jest"
+    "test": "jest",
+    "typecheck": "tsc --noEmit"
   },
   "files": [
-    "example/keysets",
-    "example/index",
-    "src/index",
-    "build/esm/index",
-    "index.d.ts"
+    "example",
+    "build"
   ],
-  "types": "index.d.ts",
+  "types": "build/esm/index.d.ts",
   "publishConfig": {
     "access": "public"
   },
