@@ -160,7 +160,7 @@ In your `ui/utils/i18n` directories (where you configure i18n and export it to b
 ```ts
 // Example from the console
 
-import {I18NFn} from '@yandex-data-ui/i18n';
+import {I18NFn} from '@yandex-cloud/i18n';
 // This must be a typed import!
 import type Keysets from '../../../dist/public/build/i18n/data.json';
 
