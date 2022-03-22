@@ -163,7 +163,7 @@ export class I18N {
     }
 
     keyset(keysetName: string) {
-        return (key: string, params?: {[key: string]: any}): string => {
+        return (key: string, params?: Params): string => {
             return this.i18n(keysetName, key, params);
         };
     }
