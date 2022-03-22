@@ -5,6 +5,12 @@ const warnCache = new Set();
 
 type KeysData = Record<string, string | string[]>;
 type KeysetData = Record<string, KeysData>;
+enum Plural {
+    Singular,
+    Few,
+    Many,
+    None
+}
 
 declare global {
     interface Window {
@@ -148,19 +154,19 @@ export class I18N {
             let index;
 
             if (count === 0) {
-                index = 3;
+                index = Plural.None;
             } else if (lastNumber === 1 && lastNumbers !== 11) {
-                index = 0;
+                index = Plural.Singular;
             } else if ((lastNumber > 1 && lastNumber < 5) && (lastNumbers < 10 || lastNumbers > 20)) {
-                index = 1;
+                index = Plural.Few;
             } else {
-                index = 2;
+                index = Plural.Many;
             }
 
             result = keyValue[index];
 
             // Fallback to 2nd plural form, if key is missing
-            if (result === undefined) {
+            if (result === undefined && index === Plural.None) {
                 result = keyValue[1];
 
                 this.warn('Missing key for 0', keysetName, key);
