@@ -132,6 +132,16 @@ export class I18N {
         }
 
         if (Array.isArray(keyValue)) {
+            if (keyValue.length < 3) {
+                this.warn(
+                    'Missing required plurals',
+                    keysetName,
+                    key,
+                );
+
+                return key;
+            }
+
             const count = Number(params?.count);
 
             if (Number.isNaN(count)) {
