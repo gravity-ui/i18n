@@ -21,7 +21,7 @@ export function pluralize(keyValue: string[], count: number): string {
 
     // Fallback to 2nd plural form, if key is missing
     if (result === undefined) {
-        result = keyValue[Plural.Few];
+        result = keyValue[Plural.Many];
     }
 
     return result;

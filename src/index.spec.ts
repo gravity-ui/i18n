@@ -133,11 +133,11 @@ describe('i18n', () => {
     it('should return second plural form with count 0 and missing translation', () => {
         i18n.setLang('ru');
         i18n.registerKeyset('ru', 'app', {
-            users: ['{{count}} user', '{{count}} users', '{{count}} users']
+            users: ['{{count}} пользователь', '{{count}} пользователя', '{{count}} пользователей']
         });
 
         expect(i18n.i18n('app', 'users', {
             count: 0
-        })).toBe('0 users');
+        })).toBe('0 пользователей');
     });
 });
