@@ -115,7 +115,7 @@ export class I18N {
         }
 
         const keyValue = keyset && keyset[key];
-        let result: string | string[];
+        let result: string;
 
         if (typeof keyValue === 'undefined') {
             this.warn(
@@ -156,6 +156,13 @@ export class I18N {
                 }
 
                 result = keyValue[index];
+
+                // Fallback to 2nd plural form, if key is missing
+                if (result === undefined) {
+                    result = keyValue[1];
+
+                    this.warn('Missing key for 0', keysetName, key);
+                }
             } else {
                 result = keyValue;
             }
@@ -172,7 +179,7 @@ export class I18N {
                 result = result.replace(new RegExp(`({{${param}}})`, 'g'), replacer)
             });
         } else {
-            result = keyValue;
+            result = keyValue as string;
         }
 
         return result;
