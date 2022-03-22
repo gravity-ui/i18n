@@ -48,3 +48,10 @@ export type I18NFn<T = any> = {
 };
 
 export type Params = {[key: string]: any};
+
+export enum Plural {
+    Singular,
+    Few,
+    Many,
+    None
+}
