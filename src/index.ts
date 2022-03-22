@@ -74,7 +74,7 @@ export class I18N {
         return Boolean(languageData && languageData[keysetName] && languageData[keysetName][key]);
     }
 
-    i18n(keysetName: string, key: string, params?: {[key: string]: any}): string | string[] {
+    i18n(keysetName: string, key: string, params?: {[key: string]: any}): string {
         const lang = this.lang || I18N.defaultLang;
         let languageData: KeysetData | undefined;
         if (lang) {
