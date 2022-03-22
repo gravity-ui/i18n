@@ -163,11 +163,9 @@ export class I18N {
             result = keyValue;
         }
 
-        if (!params) {
-            return result;
+        if (params) {
+            result = replaceParams(result, params);
         }
-
-        result = replaceParams(result, params);
 
         return result;
     }
