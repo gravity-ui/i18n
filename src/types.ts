@@ -46,3 +46,5 @@ export type I18NFn<T = any> = {
         params?: {[key: string]: any},
     ): () => S extends G ? T[K][G] : string;
 };
+
+export type Params = {[key: string]: any};

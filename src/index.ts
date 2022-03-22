@@ -1,3 +1,6 @@
+import {replaceParams} from "./replace-params";
+import {Params} from "./types";
+
 const warnCache = new Set();
 
 type KeysData = Record<string, string | string[]>;
@@ -74,7 +77,7 @@ export class I18N {
         return Boolean(languageData && languageData[keysetName] && languageData[keysetName][key]);
     }
 
-    i18n(keysetName: string, key: string, params?: {[key: string]: any}): string {
+    i18n(keysetName: string, key: string, params?: Params): string {
         const lang = this.lang || I18N.defaultLang;
         let languageData: KeysetData | undefined;
         if (lang) {
@@ -127,64 +130,50 @@ export class I18N {
             return key;
         }
 
-        if (params) {
-            const count = Number(params.count);
+        if (Array.isArray(keyValue)) {
+            const count = Number(params?.count);
 
-            if (Array.isArray(keyValue)) {
-                if (Number.isNaN(count)) {
-                    this.warn(
-                        'Missing params.count for key.',
-                        keysetName,
-                        key,
-                    );
+            if (Number.isNaN(count)) {
+                this.warn(
+                    'Missing params.count for key.',
+                    keysetName,
+                    key,
+                );
 
-                    return key;
-                }
+                return key;
+            }
 
-                const lastNumber = count % 10;
-                const lastNumbers = count % 100;
-                let index;
+            const lastNumber = count % 10;
+            const lastNumbers = count % 100;
+            let index;
 
-                if (count === 0) {
-                    index = 3;
-                } else if (lastNumber === 1 && lastNumbers !== 11) {
-                    index = 0;
-                } else if ((lastNumber > 1 && lastNumber < 5) && (lastNumbers < 10 || lastNumbers > 20)) {
-                    index = 1;
-                } else {
-                    index = 2;
-                }
-
-                result = keyValue[index];
-
-                // Fallback to 2nd plural form, if key is missing
-                if (result === undefined) {
-                    result = keyValue[1];
-
-                    this.warn('Missing key for 0', keysetName, key);
-                }
+            if (count === 0) {
+                index = 3;
+            } else if (lastNumber === 1 && lastNumbers !== 11) {
+                index = 0;
+            } else if ((lastNumber > 1 && lastNumber < 5) && (lastNumbers < 10 || lastNumbers > 20)) {
+                index = 1;
             } else {
-                result = keyValue;
+                index = 2;
             }
 
-            Object.keys(params).forEach((param) => {
-                let replacer = params[param];
-                if (typeof replacer === 'string' && replacer.indexOf('$') > -1) {
-                    // заменить все одиночные символы '$' на '$$'
-                    replacer = replacer.replace(/(?:([^$])\$|^\$)(?!\$)/g, '$1$$$$');
-                }
+            result = keyValue[index];
 
-                result = (result || '') as string;
-                // eslint-disable-next-line security/detect-non-literal-regexp
-                result = result.replace(new RegExp(`({{${param}}})`, 'g'), replacer)
-            });
+            // Fallback to 2nd plural form, if key is missing
+            if (result === undefined) {
+                result = keyValue[1];
+
+                this.warn('Missing key for 0', keysetName, key);
+            }
         } else {
-            result = keyValue as string;
-
-            if (Array.isArray(result)) {
-                this.warn('Using plural key without params', keysetName, key);
-            }
+            result = keyValue;
         }
+
+        if (!params) {
+            return result;
+        }
+
+        result = replaceParams(result, params);
 
         return result;
     }
