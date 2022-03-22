@@ -180,6 +180,10 @@ export class I18N {
             });
         } else {
             result = keyValue as string;
+
+            if (Array.isArray(result)) {
+                this.warn('Using plural key without params', keysetName, key);
+            }
         }
 
         return result;
