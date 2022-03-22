@@ -1,5 +1,12 @@
 # Changelog
 
+### [0.2.2](https://www.github.com/yandex-cloud/i18n/compare/v0.2.1...v0.2.2) (2022-03-22)
+
+
+### Bug Fixes
+
+* correctly export types from package ([1d29acd](https://www.github.com/yandex-cloud/i18n/commit/1d29acd69f339808c1246074bcddadb9c63d4215))
+
 ### [0.2.1](https://www.github.com/yandex-cloud/i18n/compare/v0.2.0...v0.2.1) (2022-03-21)
 
 
