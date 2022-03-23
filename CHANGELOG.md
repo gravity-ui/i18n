@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.3.0](https://www.github.com/yandex-cloud/i18n/compare/v0.2.2...v0.3.0) (2022-03-23)
+
+
+### Features
+
+* add fallback for missing `count` 0 key ([#18](https://www.github.com/yandex-cloud/i18n/issues/18)) ([fff521f](https://www.github.com/yandex-cloud/i18n/commit/fff521f7228693af1f1a94b6c279b2234b63138e))
+
 ### [0.2.2](https://www.github.com/yandex-cloud/i18n/compare/v0.2.1...v0.2.2) (2022-03-22)
 
 
