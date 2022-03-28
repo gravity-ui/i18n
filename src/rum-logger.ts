@@ -15,6 +15,9 @@ declare global {
 
 const warnCache = new Set();
 
+/**
+ * @deprecated
+ */
 export const rumLogger: Logger = {
     log(message, {level, logger, extra} = {}) {
         if (typeof process !== 'undefined' && process.env.NODE_ENV === 'development') {
