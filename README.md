@@ -17,7 +17,7 @@ Accepts `options` object with optional `logger` that would be used for logging l
 Logger should have explicit `log` method with following signature:
 
  * `message` - string of message that would be logged
- * `extra` - object of logging options:
+ * `options` - object of logging options:
    * `level` - level for logging message, always `'info'`
    * `logger` - where to log library messages
    * `extra` - additional options object, with a single `type` string, that is always `i18n`
