@@ -1,24 +1,10 @@
 import {pluralize} from "./pluralize";
 import {replaceParams} from "./replace-params";
-import {Params, Plural} from "./types";
-
-const warnCache = new Set();
+import {rumLogger} from "./rum-logger";
+import {Logger, Params, Plural} from "./types";
 
 type KeysData = Record<string, string | string[]>;
 type KeysetData = Record<string, KeysData>;
-
-declare global {
-    interface Window {
-        Ya?: {
-            Rum?: {
-                logError: (arg?: any) => void;
-                ERROR_LEVEL: {
-                    INFO: string;
-                };
-            };
-        };
-    }
-}
 
 export * from './types';
 
@@ -45,6 +31,12 @@ export class I18N {
     };
 
     lang: string | undefined = undefined;
+
+    logger: Logger | null = null;
+
+    constructor(options: {logger?: Logger} = {logger: rumLogger}) {
+        this.logger = options?.logger || null;
+    }
 
     setLang(lang: string) {
         if (I18N.LANGS[lang]) {
@@ -189,28 +181,12 @@ export class I18N {
             cacheKey = 'languageData';
         }
 
-
-        if (!warnCache.has(cacheKey)) {
-            console.warn(`[i18n][${cacheKey}] ${msg}`);
-
-            if (typeof window !== 'undefined'
-                && window.Ya
-                && window.Ya.Rum
-                && typeof window.Ya.Rum.logError === 'function')
-            {
-                try {
-                    window.Ya.Rum.logError({
-                        message: `I18n: ${msg}`,
-                        type: 'i18n',
-                        level: window.Ya.Rum.ERROR_LEVEL.INFO,
-                        block: cacheKey,
-                    });
-                } catch (err) {
-                    console.error(err);
-                }
+        this.logger?.log(`I18n: ${msg}`, {
+            level: 'info',
+            logger: cacheKey,
+            extra: {
+                type: 'i18n'
             }
-
-            warnCache.add(cacheKey);
-        }
+        });
     }
 }
