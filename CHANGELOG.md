@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.4.0](https://www.github.com/yandex-cloud/i18n/compare/v0.3.0...v0.4.0) (2022-04-04)
+
+
+### Features
+
+* add `logger` option to constructor ([#20](https://www.github.com/yandex-cloud/i18n/issues/20)) ([b135807](https://www.github.com/yandex-cloud/i18n/commit/b1358071a215b85c9e34d611a84b184d85511bfc))
+
 ## [0.3.0](https://www.github.com/yandex-cloud/i18n/compare/v0.2.2...v0.3.0) (2022-03-23)
 
 
