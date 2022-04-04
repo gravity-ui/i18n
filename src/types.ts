@@ -57,5 +57,5 @@ export enum Plural {
 }
 
 export interface Logger {
-    log(message: string, extra?: {level?: string; logger?: string; extra?: Record<string, unknown>}): void;
+    log(message: string, options?: {level?: string; logger?: string; extra?: Record<string, unknown>}): void;
 }
