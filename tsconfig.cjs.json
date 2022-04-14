@@ -1,0 +1,9 @@
+{
+  "extends": "@yandex-cloud/tsconfig/tsconfig",
+  "compilerOptions": {
+    "outDir": "build/cjs",
+    "declaration": true
+  },
+  "include": ["src/*.ts"],
+  "exclude": ["**/*.spec.ts"]
+}
