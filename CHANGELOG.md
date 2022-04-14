@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.5.0](https://www.github.com/yandex-cloud/i18n/compare/v0.4.0...v0.5.0) (2022-04-14)
+
+
+### Features
+
+* add cjs build ([#22](https://www.github.com/yandex-cloud/i18n/issues/22)) ([59c09a2](https://www.github.com/yandex-cloud/i18n/commit/59c09a272e9537a2bd1a269a19a3b8a8d71c8031))
+
 ## [0.4.0](https://www.github.com/yandex-cloud/i18n/compare/v0.3.0...v0.4.0) (2022-04-04)
 
 
