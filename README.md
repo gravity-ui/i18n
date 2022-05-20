@@ -2,6 +2,12 @@
 
 Utilities in the I18N package are designed for internationalization of Yandex Cloud UI services.
 
+### Breaking changes in 0.6.0
+
+- Removed static method setDefaultLang, you have to use i18n.setLang instead
+- Removed default Rum Logger, you have to connect your own logger from application side
+- Removed static property LANGS
+
 ### Install
 
 `npm install --save @yandex-cloud/i18n`
@@ -56,12 +62,12 @@ const i18n = new I18N();
 i18n.registerKeysets('ru', ru);
 i18n.registerKeysets('en', en);
 
-I18N.setDefaultLang('ru');
+i18n.setLang('ru');
 console.log(
     i18n.i18n('wizard', 'label_error-widget-no-access')
 ); // -> "Нет доступа к чарту"
 
-I18N.setDefaultLang('en');
+i18n.setLang('en');
 console.log(
     i18n.i18n('wizard', 'label_error-widget-no-access')
 ); // -> "No access to the chart
@@ -73,7 +79,7 @@ console.log(
 ); // -> "No access to the chart"
 
 
-I18N.setDefaultLang('ru');
+i18n.setLang('ru');
 console.log(
     keyset('label_error-widget-no-access')
 ); // -> "Нет доступа к чарту"
@@ -92,7 +98,7 @@ The library supports templating. Templated variables are enclosed in double curl
 
 ```json
 {
-  "label_template": "No matches found for "{{inputValue}}" in "{{folderName}}"
+  "label_template": "No matches found for '{{inputValue}}' in '{{folderName}}'"
 }
 ```
 

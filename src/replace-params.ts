@@ -1,4 +1,4 @@
-import {Params} from "./types";
+import {Params} from './types';
 
 export function replaceParams(keyValue: string, params: Params): string {
     let result = keyValue;

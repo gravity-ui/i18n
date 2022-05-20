@@ -1,4 +1,4 @@
-import {I18N} from "./index";
+import {I18N} from './index';
 
 let i18n: I18N;
 
@@ -42,6 +42,7 @@ describe('has', () => {
 describe('i18n', () => {
     it('should return key when translation missing', () => {
         i18n.setLang('ru');
+        i18n.registerKeyset('ru', 'notification', {});
         expect(i18n.i18n('notification', 'title')).toBe('title');
     });
 
