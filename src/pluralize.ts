@@ -1,4 +1,4 @@
-import {Plural} from "./types";
+import {Plural} from './types';
 
 export function pluralize(keyValue: string[], count: number): string {
     let result: string;

@@ -1,7 +1,7 @@
-import {pluralize} from "./pluralize";
-import {replaceParams} from "./replace-params";
-import {rumLogger} from "./rum-logger";
-import {Logger, Params, Plural} from "./types";
+import {pluralize} from './pluralize';
+import {replaceParams} from './replace-params';
+import {Logger, Params, Plural} from './types';
+
 
 type KeysData = Record<string, string | string[]>;
 type KeysetData = Record<string, KeysData>;
@@ -9,42 +9,16 @@ type KeysetData = Record<string, KeysData>;
 export * from './types';
 
 export class I18N {
-    static LANGS: Record<string, string> = {
-        ru: 'ru',
-        en: 'en',
-    };
-
-    static defaultLang: string | undefined = undefined;
-
-    static setDefaultLang(lang: string) {
-        if (I18N.LANGS[lang]) {
-            I18N.defaultLang = lang;
-        } else {
-            console.warn('Attempted to set unknown lang as default.');
-            I18N.defaultLang = I18N.LANGS.ru;
-        }
-    }
-
-    data: Record<string, KeysetData> = {
-        [I18N.LANGS.ru]: {},
-        [I18N.LANGS.en]: {},
-    };
-
-    lang: string | undefined = undefined;
-
+    data: Record<string, KeysetData> = {};
+    lang?: string = undefined;
     logger: Logger | null = null;
 
-    constructor(options: {logger?: Logger} = {logger: rumLogger}) {
+    constructor(options?: {logger?: Logger}) {
         this.logger = options?.logger || null;
     }
 
     setLang(lang: string) {
-        if (I18N.LANGS[lang]) {
-            this.lang = lang;
-        } else {
-            console.warn('Attempted to set unknown lang.');
-            this.lang = I18N.LANGS.ru;
-        }
+        this.lang = lang;
     }
 
     registerKeyset(lang: string, keysetName: string, data: KeysData = {}) {
@@ -60,28 +34,19 @@ export class I18N {
         });
     }
 
-    has(keysetName: string, key: string) {
-        const lang = this.lang || I18N.defaultLang;
-        let languageData: KeysetData | undefined;
-        if (lang) {
-            languageData = this.data[lang];
-        }
+    has(keysetName: string, key: string, lang?: string) {
+        const languageData = this.getLanguageData(lang);
 
         return Boolean(languageData && languageData[keysetName] && languageData[keysetName][key]);
     }
 
     i18n(keysetName: string, key: string, params?: Params): string {
-        const lang = this.lang || I18N.defaultLang;
-        let languageData: KeysetData | undefined;
-        if (lang) {
-            languageData = this.data[lang];
-        }
+        const languageData = this.getLanguageData(this.lang);
 
         if (typeof languageData === 'undefined') {
-            throw new Error(`Language '${lang}' is not defined, make sure you call setLang for the same language you called registerKeysets for!`);
+            throw new Error(`Language '${this.lang}' is not defined, make sure you call setLang for the same language you called registerKeysets for!`);
         }
 
-        // если нет переводов
         if (Object.keys(languageData).length === 0) {
             this.warn('Language data is empty.');
 
@@ -90,7 +55,6 @@ export class I18N {
 
         const keyset = languageData[keysetName];
 
-        // если нет кейсета
         if (!keyset) {
             this.warn(
                 'Keyset not found.',
@@ -100,7 +64,6 @@ export class I18N {
             return key;
         }
 
-        // если в кейсете нет переводов
         if (Object.keys(keyset).length === 0) {
             this.warn(
                 'Keyset is empty.',
@@ -188,5 +151,10 @@ export class I18N {
                 type: 'i18n'
             }
         });
+    }
+
+    protected getLanguageData(lang?: string): KeysetData | undefined {
+        const langCode = lang || this.lang;
+        return langCode ? this.data[langCode] : undefined;
     }
 }
