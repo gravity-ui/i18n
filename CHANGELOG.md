@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.6.0](https://github.com/yandex-cloud/i18n/compare/v0.5.0...v0.6.0) (2022-05-24)
+
+
+### Features
+
+* remove static methods for prior instance method setLang, remove default rumLogger ([#25](https://github.com/yandex-cloud/i18n/issues/25)) ([9a07c54](https://github.com/yandex-cloud/i18n/commit/9a07c5465fc8ddd6a0cfa833a07582e90776d75b))
+
 ## [0.5.0](https://www.github.com/yandex-cloud/i18n/compare/v0.4.0...v0.5.0) (2022-04-14)
 
 

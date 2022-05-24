@@ -1,7 +1,7 @@
 {
   "name": "@yandex-cloud/i18n",
   "description": "i18n library for Yandex Cloud UI services",
-  "version": "0.5.0",
+  "version": "0.6.0",
   "license": "MIT",
   "main": "build/cjs/index.js",
   "module": "build/esm/index.js",
