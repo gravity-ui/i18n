@@ -8,6 +8,8 @@ type KeysetData = Record<string, KeysData>;
 
 export * from './types';
 
+let tempGlobalLang: string | undefined;
+
 export class I18N {
     data: Record<string, KeysetData> = {};
     lang?: string = undefined;
@@ -154,7 +156,21 @@ export class I18N {
     }
 
     protected getLanguageData(lang?: string): KeysetData | undefined {
-        const langCode = lang || this.lang;
+        const langCode = lang || tempGlobalLang || this.lang;
         return langCode ? this.data[langCode] : undefined;
     }
 }
+
+// @ts-ignore
+I18N.setDefaultLang = (lang: string) => {
+    tempGlobalLang = lang;
+};
+
+Object.defineProperty(I18N, 'defaultLang', {
+    get() {
+        return tempGlobalLang;
+    },
+    set(newValue: string) {
+        tempGlobalLang = newValue;
+    },
+});
