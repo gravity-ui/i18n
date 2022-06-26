@@ -109,7 +109,7 @@ export class I18N {
                 return key;
             }
 
-            result = pluralize(keyValue, count);
+            result = pluralize(keyValue, count, this.lang);
 
             if (keyValue[Plural.None] === undefined) {
                 this.warn('Missing key for 0', keysetName, key);
