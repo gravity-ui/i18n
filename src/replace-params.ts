@@ -1,18 +1,28 @@
 import {Params} from './types';
 
+const PARAM_REGEXP = /{{(.*?)}}/g;
+
 export function replaceParams(keyValue: string, params: Params): string {
-    let result = keyValue;
+    let result = '';
 
-    Object.keys(params).forEach((param) => {
-        let replacer = params[param];
-        if (typeof replacer === 'string' && replacer.indexOf('$') > -1) {
-            // заменить все одиночные символы '$' на '$$'
-            replacer = replacer.replace(/(?:([^$])\$|^\$)(?!\$)/g, '$1$$$$');
+    let lastIndex = (PARAM_REGEXP.lastIndex = 0);
+    let match;
+    while ((match = PARAM_REGEXP.exec(keyValue))) {
+        if (lastIndex !== match.index) {
+            result += keyValue.slice(lastIndex, match.index);
         }
+        lastIndex = PARAM_REGEXP.lastIndex;
 
-        // eslint-disable-next-line security/detect-non-literal-regexp
-        result = result.replace(new RegExp(`({{${param}}})`, 'g'), replacer)
-    });
+        const [all, key] = match;
+        if (Object.prototype.hasOwnProperty.call(params, key)) {
+            result += params[key];
+        } else {
+            result += all;
+        }
+    }
+    if (lastIndex < keyValue.length) {
+        result += keyValue.slice(lastIndex);
+    }
 
     return result;
 }
