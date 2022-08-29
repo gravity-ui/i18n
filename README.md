@@ -90,7 +90,7 @@ if (i18n.has('wizard', 'label_error-widget-no-access')) {
 }
 ```
 
-### Templating and pluralization
+### Templating
 
 The library supports templating. Templated variables are enclosed in double curly brackets, and the values are passed to the i18n function as a key-value dictionary:
 
@@ -108,9 +108,9 @@ The library supports templating. Templated variables are enclosed in double curl
 i18n('label_template', {inputValue: 'something', folderName: 'somewhere'});  // => No matches found for "something" "somewhere"
 ```
 
-Pluralization can be used for easy localization of keys that depend on numeric values.
-The pluralized key contains 4 values (for the numerals 1, 2-4, 5-9, and 0, respectively). Variable name for pluralization: `count`.
-For example:
+### Pluralization
+
+Pluralization can be used for easy localization of keys that depend on numeric values:
 
 #### `keysets.json`
 
@@ -129,6 +129,50 @@ i18n('label_seconds', {count: 7});  // => 7 seconds
 i18n('label_seconds', {count: 10}); // => 10 seconds
 i18n('label_seconds', {count: 0});  // => No time left
 ```
+
+A pluralized key contains 4 values, each corresponding to a `PluralForm` enum value. The enum values are: `One`, `Few`, `Many`, and `None`, respectively. Template variable name for pluralization is `count`.
+
+#### Custom pluralization
+
+Since every language has its own way of pluralization, the library provides a method to configure the rules for any chosen language.
+
+The configuration function accepts an object with languages as keys, and pluralization functions as values.
+
+A pluralization function accepts a number and the `PluralForm` enum, and is expected to return one of the enum values depending on the provided number.
+
+```js
+const {I18N} = require('@yandex-cloud/i18n');
+
+const i18n = new I18N();
+
+i18n.configurePluralization({
+  en: (count, pluralForms) => {
+    if (!count) return pluralForms.None;
+    if (count === 1) return pluralForms.One;
+    return pluralForms.Many;
+  },
+});
+```
+
+#### Provided pluralization rulesets
+The two languages supported out of the box are English and Russian.
+
+##### English
+Language key: `en`.
+* `One` corresponds to 1.
+* `Few` is not used.
+* `Many` corresponds to any other number, except 0.
+* `None` corresponds to 0.
+
+##### Russian
+Language key: `ru`.
+* `One` corresponds to any number ending in 1, except 11.
+* `Few` corresponds to any number ending in 2, 3 or 4, except 12, 13 and 14.
+* `Many` corresponds to any other number, except 0.
+* `None` corresponds to 0.
+
+##### Default
+The English ruleset is used by default, for any language without a configured pluralization function.
 
 ### Typing
 
