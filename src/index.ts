@@ -170,6 +170,9 @@ export class I18N {
 
     protected getLanguagePluralizer(lang?: string): Pluralizer {
         const pluralizer = lang ? this.pluralizers[lang] : undefined;
+        if (!pluralizer) {
+            this.warn(`Pluralization is not configured for language '${lang}', falling back to the english ruleset`);
+        }
         return pluralizer || pluralizerEn;
     }
 }
