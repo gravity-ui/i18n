@@ -291,4 +291,20 @@ describe('i18n', () => {
         expect(negative[0]).toBe(positive[0]);
         expect(negative[1]).toBe(positive[1]);
     });
+
+    it('should warn about unconfigured pluralization', () => {
+        const logger = {log: jest.fn()};
+        i18n = new I18N({logger});
+
+        i18n.setLang('fr');
+        i18n.registerKeyset('fr', 'app', {
+            title: ['one', 'few', 'many', 'none'],
+        });
+
+        const callsLength = logger.log.mock.calls.length;
+
+        i18n.i18n('app', 'title', {count: 1});
+
+        expect(logger.log).toHaveBeenCalledTimes(callsLength + 1);
+    });
 });
