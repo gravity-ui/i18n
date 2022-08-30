@@ -239,4 +239,56 @@ describe('i18n', () => {
         expect(i18n.i18n('app', 'title', {count: 12})).toBe('many');
         expect(i18n.i18n('app', 'title', {count: 21})).toBe('many');
     });
+
+    it('should use the same pluralization rules for both positive and negative numbers in russian', () => {
+        i18n.setLang('ru');
+        i18n.registerKeyset('ru', 'scoreboard', {
+            points: ['одно очко', 'два очка', 'пять очков', 'ноль очков']
+        });
+
+        const positive = [
+            i18n.i18n('scoreboard', 'points', {count: 1}),
+            i18n.i18n('scoreboard', 'points', {count: 2}),
+            i18n.i18n('scoreboard', 'points', {count: 5}),
+            i18n.i18n('scoreboard', 'points', {count: 11}),
+            i18n.i18n('scoreboard', 'points', {count: 12}),
+            i18n.i18n('scoreboard', 'points', {count: 21}),
+        ];
+
+        const negative = [
+            i18n.i18n('scoreboard', 'points', {count: -1}),
+            i18n.i18n('scoreboard', 'points', {count: -2}),
+            i18n.i18n('scoreboard', 'points', {count: -5}),
+            i18n.i18n('scoreboard', 'points', {count: -11}),
+            i18n.i18n('scoreboard', 'points', {count: -12}),
+            i18n.i18n('scoreboard', 'points', {count: -21}),
+        ];
+
+        expect(negative[0]).toBe(positive[0]);
+        expect(negative[1]).toBe(positive[1]);
+        expect(negative[2]).toBe(positive[2]);
+        expect(negative[3]).toBe(positive[3]);
+        expect(negative[4]).toBe(positive[4]);
+        expect(negative[5]).toBe(positive[5]);
+    });
+
+    it('should use the same pluralization rules for both positive and negative numbers in english', () => {
+        i18n.setLang('en');
+        i18n.registerKeyset('en', 'scoreboard', {
+            points: ['one point', '', 'some points', 'no points']
+        });
+
+        const positive = [
+            i18n.i18n('scoreboard', 'points', {count: 1}),
+            i18n.i18n('scoreboard', 'points', {count: 2}),
+        ];
+
+        const negative = [
+            i18n.i18n('scoreboard', 'points', {count: -1}),
+            i18n.i18n('scoreboard', 'points', {count: -2}),
+        ];
+
+        expect(negative[0]).toBe(positive[0]);
+        expect(negative[1]).toBe(positive[1]);
+    });
 });
