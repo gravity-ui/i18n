@@ -159,15 +159,15 @@ The two languages supported out of the box are English and Russian.
 
 ##### English
 Language key: `en`.
-* `One` corresponds to 1.
+* `One` corresponds to 1 and -1.
 * `Few` is not used.
 * `Many` corresponds to any other number, except 0.
 * `None` corresponds to 0.
 
 ##### Russian
 Language key: `ru`.
-* `One` corresponds to any number ending in 1, except 11.
-* `Few` corresponds to any number ending in 2, 3 or 4, except 12, 13 and 14.
+* `One` corresponds to any number ending in 1, except ±11.
+* `Few` corresponds to any number ending in 2, 3 or 4, except ±12, ±13 and ±14.
 * `Many` corresponds to any other number, except 0.
 * `None` corresponds to 0.
 
