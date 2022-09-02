@@ -1,7 +1,8 @@
-import {pluralize} from './pluralize';
 import {replaceParams} from './replace-params';
-import {Logger, Params, Plural} from './types';
+import {Logger, Params, PluralForm, Pluralizer} from './types';
 
+import pluralizerEn from './plural/en';
+import pluralizerRu from './plural/ru';
 
 type KeysData = Record<string, string | string[]>;
 type KeysetData = Record<string, KeysData>;
@@ -11,6 +12,10 @@ export * from './types';
 export class I18N {
     data: Record<string, KeysetData> = {};
     lang?: string = undefined;
+    pluralizers: Record<string, Pluralizer> = {
+        en: pluralizerEn,
+        ru: pluralizerRu,
+    };
     logger: Logger | null = null;
 
     constructor(options?: {logger?: Logger}) {
@@ -19,6 +24,10 @@ export class I18N {
 
     setLang(lang: string) {
         this.lang = lang;
+    }
+
+    configurePluralization(pluralizers: Record<string, Pluralizer>) {
+        this.pluralizers = Object.assign({}, this.pluralizers, pluralizers);
     }
 
     registerKeyset(lang: string, keysetName: string, data: KeysData = {}) {
@@ -109,9 +118,10 @@ export class I18N {
                 return key;
             }
 
-            result = pluralize(keyValue, count);
+            const pluralizer = this.getLanguagePluralizer(this.lang);
+            result = keyValue[pluralizer(count, PluralForm)] || keyValue[PluralForm.Many];
 
-            if (keyValue[Plural.None] === undefined) {
+            if (keyValue[PluralForm.None] === undefined) {
                 this.warn('Missing key for 0', keysetName, key);
             }
         } else {
@@ -156,5 +166,13 @@ export class I18N {
     protected getLanguageData(lang?: string): KeysetData | undefined {
         const langCode = lang || this.lang;
         return langCode ? this.data[langCode] : undefined;
+    }
+
+    protected getLanguagePluralizer(lang?: string): Pluralizer {
+        const pluralizer = lang ? this.pluralizers[lang] : undefined;
+        if (!pluralizer) {
+            this.warn(`Pluralization is not configured for language '${lang}', falling back to the english ruleset`);
+        }
+        return pluralizer || pluralizerEn;
     }
 }

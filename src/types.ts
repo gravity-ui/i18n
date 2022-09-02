@@ -49,8 +49,10 @@ export type I18NFn<T = any> = {
 
 export type Params = {[key: string]: any};
 
-export enum Plural {
-    Singular,
+export type Pluralizer = (count: number, pluralForms: typeof PluralForm) => PluralForm;
+
+export enum PluralForm {
+    One,
     Few,
     Many,
     None
