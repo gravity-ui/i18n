@@ -1,5 +1,18 @@
 # Changelog
 
+## [1.0.0](https://github.com/gravity-ui/i18n/compare/v0.6.0...v1.0.0) (2022-09-08)
+
+
+### Features
+
+* transfer package to gravity-ui ([#32](https://github.com/gravity-ui/i18n/issues/32)) ([c61a0bf](https://github.com/gravity-ui/i18n/commit/c61a0bfe17139431b4948cc7cbd67fd667830e33))
+
+
+### Bug Fixes
+
+* **pluralize:** add pluralization configuration & fix english ([#31](https://github.com/gravity-ui/i18n/issues/31)) ([1d01348](https://github.com/gravity-ui/i18n/commit/1d013481a81f0e57ca23929b3c369843fecca73b))
+* **replaceParams:** correctly substitute params with special content ([#29](https://github.com/gravity-ui/i18n/issues/29)) ([4f791c5](https://github.com/gravity-ui/i18n/commit/4f791c56822dc9d1645cbe852738056412d5d0e6))
+
 ## [0.6.0](https://github.com/yandex-cloud/i18n/compare/v0.5.0...v0.6.0) (2022-05-24)
 
 
