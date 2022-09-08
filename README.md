@@ -1,6 +1,6 @@
 ## I18N utilities
 
-Utilities in the I18N package are designed for internationalization of Yandex Cloud UI services.
+Utilities in the I18N package are designed for internationalization of Gravity UI services.
 
 ### Breaking changes in 0.6.0
 
@@ -10,7 +10,7 @@ Utilities in the I18N package are designed for internationalization of Yandex Cl
 
 ### Install
 
-`npm install --save @yandex-cloud/i18n`
+`npm install --save @gravity-ui/i18n`
 
 ### API
 
@@ -141,7 +141,7 @@ The configuration function accepts an object with languages as keys, and plurali
 A pluralization function accepts a number and the `PluralForm` enum, and is expected to return one of the enum values depending on the provided number.
 
 ```js
-const {I18N} = require('@yandex-cloud/i18n');
+const {I18N} = require('@gravity-ui/i18n');
 
 const i18n = new I18N();
 
@@ -226,7 +226,7 @@ In your `ui/utils/i18n` directories (where you configure i18n and export it to b
 ```ts
 // Example from the console
 
-import {I18NFn} from '@yandex-cloud/i18n';
+import {I18NFn} from '@gravity-ui/i18n';
 // This must be a typed import!
 import type Keysets from '../../../dist/public/build/i18n/data.json';
 
