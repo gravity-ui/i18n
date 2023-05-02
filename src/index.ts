@@ -135,8 +135,8 @@ export class I18N {
         return result;
     }
 
-    keyset(keysetName: string) {
-        return (key: string, params?: Params): string => {
+    keyset<TKey extends string = string>(keysetName: string) {
+        return (key: TKey, params?: Params): string => {
             return this.i18n(keysetName, key, params);
         };
     }
