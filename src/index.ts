@@ -4,7 +4,7 @@ import {Logger, Params, PluralForm, Pluralizer} from './types';
 import pluralizerEn from './plural/en';
 import pluralizerRu from './plural/ru';
 
-type KeysData = Record<string, string | string[]>;
+export type KeysData = Record<string, string | string[]>;
 type KeysetData = Record<string, KeysData>;
 
 export * from './types';
