@@ -1,3 +1,6 @@
+export type KeysData = Record<string, string | string[]>;
+export type KeysetData = Record<string, KeysData>;
+
 type NoEnumLikeStringLiteral<T> = string extends T ? T : never;
 
 export type I18NFn<T = any> = {

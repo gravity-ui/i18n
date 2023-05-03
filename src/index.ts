@@ -1,11 +1,8 @@
 import {replaceParams} from './replace-params';
-import {Logger, Params, PluralForm, Pluralizer} from './types';
+import {Logger, Params, PluralForm, Pluralizer, KeysData, KeysetData} from './types';
 
 import pluralizerEn from './plural/en';
 import pluralizerRu from './plural/ru';
-
-type KeysData = Record<string, string | string[]>;
-type KeysetData = Record<string, KeysData>;
 
 export * from './types';
 
@@ -135,8 +132,8 @@ export class I18N {
         return result;
     }
 
-    keyset(keysetName: string) {
-        return (key: string, params?: Params): string => {
+    keyset<TKey extends string = string>(keysetName: string) {
+        return (key: TKey, params?: Params): string => {
             return this.i18n(keysetName, key, params);
         };
     }
