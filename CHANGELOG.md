@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.1.0](https://github.com/gravity-ui/i18n/compare/v1.0.0...v1.1.0) (2023-05-03)
+
+
+### Features
+
+* **keyset:** allow to narrow the type of keyset keys ([#33](https://github.com/gravity-ui/i18n/issues/33)) ([e2c0076](https://github.com/gravity-ui/i18n/commit/e2c00765acc400b25e06ea05ed3a0f895adb92b7))
+
 ## [1.0.0](https://github.com/gravity-ui/i18n/compare/v0.6.0...v1.0.0) (2022-09-08)
 
 
