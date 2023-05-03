@@ -6,7 +6,7 @@ on:
 
 jobs:
   commitlint:
-    if: github.actor != 'yc-ui-bot'
+    if: github.actor != 'yc-ui-bot' && github.event_name == 'pull_request'
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
