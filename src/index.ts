@@ -14,9 +14,11 @@ export class I18N {
         ru: pluralizerRu,
     };
     logger: Logger | null = null;
+    defaultLang: string;
 
-    constructor(options?: {logger?: Logger}) {
+    constructor(options?: {logger?: Logger; defaultLang?: string}) {
         this.logger = options?.logger || null;
+        this.defaultLang = options?.defaultLang || 'en';
     }
 
     setLang(lang: string) {
@@ -47,50 +49,18 @@ export class I18N {
     }
 
     i18n(keysetName: string, key: string, params?: Params): string {
-        const languageData = this.getLanguageData(this.lang);
+        let keyValue = this.getValue(keysetName, key, this.lang);
 
-        if (typeof languageData === 'undefined') {
-            throw new Error(`Language '${this.lang}' is not defined, make sure you call setLang for the same language you called registerKeysets for!`);
+        if (!keyValue) {
+            this.warn(`Switch to default lang ${this.defaultLang}`);
+
+            keyValue = this.getValue(keysetName, key, this.defaultLang);
+            if (!keyValue) {
+                return key
+            }
         }
-
-        if (Object.keys(languageData).length === 0) {
-            this.warn('Language data is empty.');
-
-            return key;
-        }
-
-        const keyset = languageData[keysetName];
-
-        if (!keyset) {
-            this.warn(
-                'Keyset not found.',
-                keysetName,
-            );
-
-            return key;
-        }
-
-        if (Object.keys(keyset).length === 0) {
-            this.warn(
-                'Keyset is empty.',
-                keysetName,
-            );
-
-            return key;
-        }
-
-        const keyValue = keyset && keyset[key];
+        
         let result: string;
-
-        if (typeof keyValue === 'undefined') {
-            this.warn(
-                'Missing key.',
-                keysetName,
-                key,
-            );
-
-            return key;
-        }
 
         if (Array.isArray(keyValue)) {
             if (keyValue.length < 3) {
@@ -162,7 +132,60 @@ export class I18N {
 
     protected getLanguageData(lang?: string): KeysetData | undefined {
         const langCode = lang || this.lang;
-        return langCode ? this.data[langCode] : undefined;
+
+        if (!langCode) {
+            this.warn(`Language '${lang}' is not defined, make sure you call setLang for the same language you called registerKeysets for!`);
+        }
+
+        const langData = langCode ? this.data[langCode] : undefined;
+
+        if (typeof langData === 'undefined') {
+            this.warn(`Language data is not defined`);
+        }
+
+        if (langData && Object.keys(langData).length === 0) {
+            this.warn('Language data is empty.');
+            return undefined;
+        }
+
+        return langData;
+    }
+
+    protected getKeysetData(keysetName: string, lang?: string) {
+        const languageData = this.getLanguageData(lang);
+
+        if (!languageData) {
+            return undefined;
+        }
+
+        const keyset = languageData[keysetName];
+
+        if (!keyset) {
+            this.warn('Keyset not found.', keysetName);
+            return undefined;
+        }
+
+        if (Object.keys(keyset).length === 0) {
+            this.warn('Keyset is empty.', keysetName);
+
+            return undefined;
+        }
+
+        return keyset;
+    }
+
+    protected getValue(keysetName: string, key: string, lang?: string) {
+        const keyset = this.getKeysetData(keysetName, lang);
+
+        const value = keyset && keyset[key];
+
+        if (!value) {
+            this.warn('Missing key.', keysetName, key);
+
+            return key;
+        }
+
+        return value;
     }
 
     protected getLanguagePluralizer(lang?: string): Pluralizer {
