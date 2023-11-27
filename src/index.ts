@@ -14,11 +14,11 @@ export class I18N {
         ru: pluralizerRu,
     };
     logger: Logger | null = null;
-    defaultLang: string;
+    defaultLang?: string;
 
     constructor(options?: {logger?: Logger; defaultLang?: string}) {
         this.logger = options?.logger || null;
-        this.defaultLang = options?.defaultLang || 'en';
+        this.defaultLang = options?.defaultLang;
     }
 
     setLang(lang: string) {
