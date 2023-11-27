@@ -49,10 +49,12 @@ export class I18N {
     }
 
     i18n(keysetName: string, key: string, params?: Params): string {
+        this.checkLangDefinitionOrThrow();
+
         let keyValue = this.getValue(keysetName, key, this.lang);
 
         if (!keyValue) {
-            if (this.lang === this.defaultLang) {
+            if (this.lang === this.defaultLang || !this.defaultLang) {
                 return key;
             }
             
@@ -134,21 +136,19 @@ export class I18N {
         });
     }
 
+    protected checkLangDefinitionOrThrow() {
+        if (!this.lang || !this.getLanguageData(this.lang)) {
+            throw Error(`Language '${this.lang}' is not defined, make sure you call setLang for the same language you called registerKeysets for!`);
+        }
+    }
+
     protected getLanguageData(lang?: string): KeysetData | undefined {
         const langCode = lang || this.lang;
-
-        if (!langCode) {
-            this.warn(`Language '${lang}' is not defined, make sure you call setLang for the same language you called registerKeysets for!`);
-        }
 
         const langData = langCode ? this.data[langCode] : undefined;
 
         if (typeof langData === 'undefined') {
-            this.warn(`Language data is not defined`);
-        }
-
-        if (langData && Object.keys(langData).length === 0) {
-            this.warn('Language data is empty.');
+            this.warn(`Language data not found.`);
             return undefined;
         }
 
