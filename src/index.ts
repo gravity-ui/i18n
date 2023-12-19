@@ -186,7 +186,7 @@ export class I18N {
         if (!value) {
             this.warn('Missing key.', keysetName, key);
 
-            return key;
+            return undefined;
         }
 
         return value;
