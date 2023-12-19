@@ -58,7 +58,7 @@ export class I18N {
                 return key;
             }
             
-            this.warn(`Switch to default lang ${this.defaultLang}`);
+            this.warn(`Switch to default language ${this.defaultLang}`);
 
             keyValue = this.getValue(keysetName, key, this.defaultLang);
             if (!keyValue) {
