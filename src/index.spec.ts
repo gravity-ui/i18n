@@ -308,3 +308,51 @@ describe('i18n', () => {
         expect(logger.log).toHaveBeenCalledTimes(callsLength + 1);
     });
 });
+
+const logger = {log: jest.fn()};
+describe('Incorrect instance initialization', () => {
+    beforeEach(() => {
+        i18n = new I18N({logger});
+        jest.clearAllMocks();
+    })
+
+    test('Throw while lang or keyset are not defined', () => {
+        expect(() => i18n.i18n('wizard', 'title')).toThrow();
+        i18n.setLang('en');
+        expect(() => i18n.i18n('wizard', 'title')).toThrow();
+        i18n.registerKeysets('en', {});
+        expect(() => i18n.i18n('wizard', 'title')).toThrow();
+    })
+
+    test('Call log while keyset is empty and return key', () => {
+        i18n.setLang('en');
+        i18n.registerKeysets('en', {wizard: {}});
+        expect(i18n.i18n('wizard', 'title')).toEqual('title');
+        expect(logger.log).toHaveBeenCalled();
+    })
+})
+
+describe('Language fallback', () => {
+    beforeEach(() => {
+        i18n = new I18N({defaultLang: 'en'});
+        i18n.setLang('ru');
+        i18n.registerKeyset('en', 'wizard', {title: 'Wizard', type: 'alchemist'})
+        i18n.registerKeyset('en', 'archer', {title: 'Archer'})
+        i18n.registerKeyset('ru', 'wizard', {title: 'Волшебник'})
+    })
+
+    test('Will return value if key is missed in keyset', () => {
+        expect(i18n.i18n('wizard', 'title')).toEqual('Волшебник');
+        expect(i18n.i18n('wizard', 'type')).toEqual('alchemist');
+        expect(i18n.i18n('wizard', 'title')).toEqual('Волшебник');
+    })
+
+    test('Will return value if keyset is missed', () => {
+        expect(i18n.i18n('archer', 'title')).toEqual('Archer');
+    })
+
+    test('Will return value for incorrect lang', () => {
+        i18n.setLang('incorrectLang');
+        expect(i18n.i18n('archer', 'title')).toEqual('Archer');
+    })
+})
