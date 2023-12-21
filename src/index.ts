@@ -43,7 +43,7 @@ export class I18N {
     }
 
     has(keysetName: string, key: string, lang?: string) {
-        const languageData = this.getLanguageData(lang);
+        const languageData = this.getLanguageData(lang || this.lang);
 
         return Boolean(languageData && languageData[keysetName] && languageData[keysetName][key]);
     }
@@ -137,15 +137,13 @@ export class I18N {
     }
 
     protected checkLangDefinitionOrThrow() {
-        if ((!this.lang || !this.getLanguageData(this.lang)) && (!this.defaultLang || !this.getLanguageData(this.defaultLang))) {
+        if (!this.getLanguageData(this.lang) && !this.getLanguageData(this.defaultLang)) {
             throw Error(`Language '${this.lang}' is not defined, make sure you call setLang for the same language you called registerKeysets for!`);
         }
     }
 
     protected getLanguageData(lang?: string): KeysetData | undefined {
-        const langCode = lang || this.lang;
-
-        const langData = langCode ? this.data[langCode] : undefined;
+        const langData = lang ? this.data[lang] : undefined;
 
         if (typeof langData === 'undefined') {
             this.warn(`Language data not found.`);
