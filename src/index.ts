@@ -53,7 +53,7 @@ export class I18N {
 
         let keyValue = this.getValue(keysetName, key, this.lang);
 
-        if (!keyValue) {
+        if (keyValue === undefined) {
             if (this.lang === this.defaultLang || !this.defaultLang) {
                 return key;
             }
@@ -61,7 +61,7 @@ export class I18N {
             this.warn(`Switch to default language ${this.defaultLang}`);
 
             keyValue = this.getValue(keysetName, key, this.defaultLang);
-            if (!keyValue) {
+            if (keyValue === undefined) {
                 return key
             }
         }
@@ -145,7 +145,7 @@ export class I18N {
     protected getLanguageData(lang?: string): KeysetData | undefined {
         const langData = lang ? this.data[lang] : undefined;
 
-        if (typeof langData === 'undefined') {
+        if (langData === undefined) {
             this.warn(`Language data not found.`);
             return undefined;
         }
@@ -181,7 +181,7 @@ export class I18N {
 
         const value = keyset && keyset[key];
 
-        if (!value) {
+        if (value === undefined) {
             this.warn('Missing key.', keysetName, key);
 
             return undefined;

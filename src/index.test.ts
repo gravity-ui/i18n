@@ -310,13 +310,13 @@ describe('i18n', () => {
 });
 
 const logger = {log: jest.fn()};
-describe('Incorrect instance initialization', () => {
+describe('Instance initialization', () => {
     beforeEach(() => {
         i18n = new I18N({logger});
         jest.clearAllMocks();
     })
 
-    test('throw while lang or keyset are not defined', () => {
+    test('should throw while lang or keyset are not defined', () => {
         expect(() => i18n.i18n('wizard', 'title')).toThrow();
         i18n.setLang('en');
         expect(() => i18n.i18n('wizard', 'title')).toThrow();
