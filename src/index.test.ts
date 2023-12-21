@@ -316,7 +316,7 @@ describe('Incorrect instance initialization', () => {
         jest.clearAllMocks();
     })
 
-    test('Throw while lang or keyset are not defined', () => {
+    test('throw while lang or keyset are not defined', () => {
         expect(() => i18n.i18n('wizard', 'title')).toThrow();
         i18n.setLang('en');
         expect(() => i18n.i18n('wizard', 'title')).toThrow();
@@ -324,7 +324,7 @@ describe('Incorrect instance initialization', () => {
         expect(() => i18n.i18n('wizard', 'title')).toThrow();
     })
 
-    test('Call log while keyset is empty and return key', () => {
+    test('call log while keyset is empty and return key', () => {
         i18n.setLang('en');
         i18n.registerKeysets('en', {wizard: {}});
         expect(i18n.i18n('wizard', 'title')).toEqual('title');
@@ -341,17 +341,17 @@ describe('Language fallback', () => {
         i18n.registerKeyset('ru', 'wizard', {title: 'Волшебник'})
     })
 
-    test('Will return value if key is missed in keyset', () => {
+    test('should return value if key is missed in keyset', () => {
         expect(i18n.i18n('wizard', 'title')).toEqual('Волшебник');
         expect(i18n.i18n('wizard', 'type')).toEqual('alchemist');
         expect(i18n.i18n('wizard', 'title')).toEqual('Волшебник');
     })
 
-    test('Will return value if keyset is missed', () => {
+    test('should return value if keyset is missed', () => {
         expect(i18n.i18n('archer', 'title')).toEqual('Archer');
     })
 
-    test('Will return value for incorrect lang', () => {
+    test('should return value for incorrect lang', () => {
         i18n.setLang('incorrectLang');
         expect(i18n.i18n('archer', 'title')).toEqual('Archer');
     })
