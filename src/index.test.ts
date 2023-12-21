@@ -309,13 +309,7 @@ describe('i18n', () => {
     });
 });
 
-const logger = {log: jest.fn()};
 describe('Instance initialization', () => {
-    beforeEach(() => {
-        i18n = new I18N({logger});
-        jest.clearAllMocks();
-    })
-
     test('should throw while lang or keyset are not defined', () => {
         expect(() => i18n.i18n('wizard', 'title')).toThrow();
         i18n.setLang('en');
@@ -325,6 +319,8 @@ describe('Instance initialization', () => {
     })
 
     test('call log while keyset is empty and return key', () => {
+        const logger = {log: jest.fn()};
+        i18n = new I18N({logger});
         i18n.setLang('en');
         i18n.registerKeysets('en', {wizard: {}});
         expect(i18n.i18n('wizard', 'title')).toEqual('title');
