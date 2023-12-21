@@ -137,7 +137,7 @@ export class I18N {
     }
 
     protected checkLangDefinitionOrThrow() {
-        if (!this.lang || !this.getLanguageData(this.lang)) {
+        if ((!this.lang || !this.getLanguageData(this.lang)) && (!this.defaultLang || !this.getLanguageData(this.defaultLang))) {
             throw Error(`Language '${this.lang}' is not defined, make sure you call setLang for the same language you called registerKeysets for!`);
         }
     }
