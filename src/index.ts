@@ -76,7 +76,6 @@ type TranslationData = {
     fallbackText?: string;
     details?: {
         code: ErrorCodeType;
-        error?: boolean;
         keysetName?: string;
         key?: string;
     };
@@ -137,42 +136,52 @@ export class I18N {
     }
 
     i18n(keysetName: string, key: string, params?: Params): string {
-        const languages = [this.lang, this.fallbackLang].filter(Boolean) as string[];
-
-        if (!languages.length) {
-            throw new Error('There are no defined languages. You should define at least one of these languages: lang, fallbackLang');
+        if (!this.lang && !this.fallbackLang) {
+            throw new Error('There are no available languages. You should set at least one of these languages: lang, fallbackLang');
         }
 
         let text: string | undefined;
         let fallbackText: string | undefined;
         let details: TranslationData['details'];
 
-        for (const lang of languages) {
-            ({text, fallbackText, details} = this.getTranslation({keysetName, key, params, lang}));
+        ({text, fallbackText, details} = this.getTranslationData({keysetName, key, params, lang: this.lang}));
 
-            if (details && (!details.error || (details.error && lang !== this.fallbackLang))) {
-                const message = mapErrorCodeToMessage({
-                    code: details.code,
-                    lang,
-                    ...(this.fallbackLang && lang !== this.fallbackLang && {fallbackLang: this.fallbackLang})
-                });
-                
-                this.warn(message, details.keysetName, details.key);
-            }
-
-            if (text) {
-                break;
-            }
-        }
-        
-        if (details?.error) {
+        if (details && details.code !== ErrorCode.NO_LANGUAGE_DATA) {
             const message = mapErrorCodeToMessage({
                 code: details.code,
-                lang: languages[languages.length - 1],
+                lang: this.lang,
+                fallbackLang: this.fallbackLang,
+            });
+            this.warn(message, details.keysetName, details.key);
+        }
+
+        if (this.fallbackLang) {
+            ({text, fallbackText, details} = this.getTranslationData({
+                keysetName,
+                key,
+                params,
+                lang: this.fallbackLang,
+            }));
+
+            if (details && details.code !== ErrorCode.NO_LANGUAGE_DATA) {
+                const message = mapErrorCodeToMessage({
+                    code: details.code,
+                    lang: this.lang,
+                    fallbackLang: this.fallbackLang,
+                });
+                this.warn(message, details.keysetName, details.key);
+            }
+        }
+
+        if (!text && !fallbackText) {
+            const message = mapErrorCodeToMessage({
+                code: details?.code,
+                lang: this.lang,
+                fallbackLang: this.fallbackLang,
             });
             throw new Error(message);
         }
-        
+
         return (text || fallbackText) as string;
     }
 
@@ -217,7 +226,7 @@ export class I18N {
         return pluralizer || pluralizerEn;
     }
 
-    private getTranslation(args: {
+    private getTranslationData(args: {
         keysetName: string;
         key: string;
         lang?: string;
@@ -227,7 +236,7 @@ export class I18N {
         const languageData = this.getLanguageData(lang);
 
         if (typeof languageData === 'undefined') {
-            return {details: {code: ErrorCode.NO_LANGUAGE_DATA, error: true}};
+            return {details: {code: ErrorCode.NO_LANGUAGE_DATA}};
         }
 
         if (Object.keys(languageData).length === 0) {
