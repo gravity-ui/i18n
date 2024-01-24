@@ -138,6 +138,11 @@ export class I18N {
 
     i18n(keysetName: string, key: string, params?: Params): string {
         const languages = [this.lang, this.fallbackLang].filter(Boolean) as string[];
+
+        if (!languages.length) {
+            throw new Error('There are no defined languages. You should define at least one of these languages: lang, fallbackLang');
+        }
+
         let text: string | undefined;
         let fallbackText: string | undefined;
         let details: TranslationData['details'];

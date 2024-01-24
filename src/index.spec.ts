@@ -310,6 +310,11 @@ describe('i18n', () => {
 });
 
 describe('constructor options', () => {
+    it('should throw an error in case of languages absence', () => {
+        i18n = new I18N();
+        expect(() => i18n.i18n('notification', 'title')).toThrow();
+    });
+
     describe('lang', () => {
         it('should return translation [set lang via options.lang]', () => {
             i18n = new I18N({lang: 'en'});
