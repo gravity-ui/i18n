@@ -1,5 +1,5 @@
 import {replaceParams} from './replace-params';
-import {Logger, Params, PluralForm, Pluralizer, KeysData, KeysetData} from './types';
+import {KeysData, KeysetData, Logger, Params, PluralForm, Pluralizer} from './types';
 
 import pluralizerEn from './plural/en';
 import pluralizerRu from './plural/ru';
