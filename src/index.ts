@@ -38,16 +38,23 @@ type I18NOptions = {
 
         const i18n = new I18N({
             lang: 'sr',
-            defaultLang: 'en',
+            fallbackLang: 'en',
             data: {
                 en: {notification: {title: 'New version'}},
                 sr: {notification: {}},
             },
         });
         i18n.i18n('notification', 'title'); // 'New version'
+        // Equivalent approach via public api of i18n instance
+        i18n = new I18N();
+        i18n.setLang('sr');
+        i18n.setFallbackLang('en');
+        i18n.registerKeysets('en', {notification: {title: 'New version'}});
+        i18n.registerKeysets('sr', {notification: {}});
+        i18n.i18n('notification', 'title'); // 'New version'
      * ```
      */
-    defaultLang?: string;
+    fallbackLang?: string;
     /**
      * Target language for the i18n instance.
      * @example
@@ -82,12 +89,12 @@ export class I18N {
         ru: pluralizerRu,
     };
     logger: Logger | null = null;
-    defaultLang?: string;
+    fallbackLang?: string;
     lang?: string;
 
     constructor(options: I18NOptions = {}) {
-        const {data, defaultLang, lang, logger = null} = options;
-        this.defaultLang = defaultLang;
+        const {data, fallbackLang, lang, logger = null} = options;
+        this.fallbackLang = fallbackLang;
         this.lang = lang;
         this.logger = logger;
 
@@ -102,8 +109,8 @@ export class I18N {
         this.lang = lang;
     }
 
-    setDefaultLang(defaultLang: string) {
-        this.defaultLang = defaultLang;
+    setFallbackLang(fallbackLang: string) {
+        this.fallbackLang = fallbackLang;
     }
 
     configurePluralization(pluralizers: Record<string, Pluralizer>) {
@@ -130,7 +137,7 @@ export class I18N {
     }
 
     i18n(keysetName: string, key: string, params?: Params): string {
-        const languages = [this.lang, this.defaultLang].filter(Boolean) as string[];
+        const languages = [this.lang, this.fallbackLang].filter(Boolean) as string[];
         let text: string | undefined;
         let fallbackText: string | undefined;
         let details: TranslationData['details'];
@@ -138,11 +145,11 @@ export class I18N {
         for (const lang of languages) {
             ({text, fallbackText, details} = this.getTranslation({keysetName, key, params, lang}));
 
-            if (details && (!details.error || (details.error && lang !== this.defaultLang))) {
+            if (details && (!details.error || (details.error && lang !== this.fallbackLang))) {
                 const message = mapErrorCodeToMessage({
                     code: details.code,
                     lang,
-                    ...(this.defaultLang && lang !== this.defaultLang && {defaultLang: this.defaultLang})
+                    ...(this.fallbackLang && lang !== this.fallbackLang && {fallbackLang: this.fallbackLang})
                 });
                 
                 this.warn(message, details.keysetName, details.key);

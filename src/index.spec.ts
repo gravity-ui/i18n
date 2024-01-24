@@ -343,25 +343,25 @@ describe('constructor options', () => {
         });
     });
 
-    describe('defaultLang', () => {
+    describe('fallbackLang', () => {
         it('should return translation from default language in case of language data absence', () => {
             i18n = new I18N({
                 lang: 'sr',
-                defaultLang: 'en',
+                fallbackLang: 'en',
                 data: {en: {notification: {title: 'New version'}}},
             });
             expect(i18n.i18n('notification', 'title')).toBe('New version');
         });
 
         it('should return fallback from default language in case of language data absence', () => {
-            i18n = new I18N({lang: 'sr', defaultLang: 'en', data: {en: {notification: {}}}});
+            i18n = new I18N({lang: 'sr', fallbackLang: 'en', data: {en: {notification: {}}}});
             expect(i18n.i18n('notification', 'title')).toBe('title');
         });
 
         it('should return translation from default language in case of empty keyset', () => {
             i18n = new I18N({
                 lang: 'sr',
-                defaultLang: 'en',
+                fallbackLang: 'en',
                 data: {
                     en: {notification: {title: 'New version'}},
                     sr: {notification: {}},
@@ -373,7 +373,7 @@ describe('constructor options', () => {
         it('should return translation from default language in case of missing key', () => {
             i18n = new I18N({
                 lang: 'sr',
-                defaultLang: 'en',
+                fallbackLang: 'en',
                 data: {
                     en: {notification: {title: 'New version'}},
                     sr: {notification: {hey: 'Zdravo!'}},
@@ -385,7 +385,7 @@ describe('constructor options', () => {
         it('should return fallback from default language in case of missing key', () => {
             i18n = new I18N({
                 lang: 'sr',
-                defaultLang: 'en',
+                fallbackLang: 'en',
                 data: {
                     en: {notification: {hey: 'Hello!'}},
                     sr: {notification: {hey: 'Zdravo!'}},

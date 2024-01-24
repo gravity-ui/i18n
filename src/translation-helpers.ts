@@ -12,8 +12,8 @@ export const ErrorCode = {
 const codeValues = Object.values(ErrorCode);
 export type ErrorCodeType = (typeof codeValues)[number];
 
-export function mapErrorCodeToMessage(args: {lang: string; defaultLang?: string; code?: ErrorCodeType}) {
-    const {code, defaultLang, lang} = args;
+export function mapErrorCodeToMessage(args: {lang: string; fallbackLang?: string; code?: ErrorCodeType}) {
+    const {code, fallbackLang, lang} = args;
     let message = '';
 
     switch (code) {
@@ -50,8 +50,8 @@ export function mapErrorCodeToMessage(args: {lang: string; defaultLang?: string;
         }
     }
 
-    if (defaultLang) {
-        message += ` Trying to use default language "${defaultLang}"...`;
+    if (fallbackLang) {
+        message += ` Trying to use default language "${fallbackLang}"...`;
     }
 
     return message;
