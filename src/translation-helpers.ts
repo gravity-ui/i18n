@@ -1,12 +1,12 @@
 export const ErrorCode = {
-    NO_LANGUAGE_DATA: 'NO_LANGUAGE_DATA',
-    EMPTY_LANGUAGE_DATA: 'EMPTY_LANGUAGE_DATA',
-    KEYSET_NOT_FOUND: 'KEYSET_NOT_FOUND',
-    EMPTY_KEYSET: 'EMPTY_KEYSET',
-    MISSING_KEY: 'MISSING_KEY',
-    MISSING_REQUIRED_PLURALS: 'MISSING_REQUIRED_PLURALS',
-    MISSING_KEY_PARAMS_COUNT: 'MISSING_KEY_PARAMS_COUNT',
-    MISSING_KEY_FOR_0: 'MISSING_KEY_FOR_0',
+    EmptyKeyset: 'EMPTY_KEYSET',
+    EmptyLanguageData: 'EMPTY_LANGUAGE_DATA',
+    KeysetNotFound: 'KEYSET_NOT_FOUND',
+    MissingKey: 'MISSING_KEY',
+    MissingKeyFor0: 'MISSING_KEY_FOR_0',
+    MissingKeyParamsCount: 'MISSING_KEY_PARAMS_COUNT',
+    MissingKeyPlurals: 'MISSING_KEY_PLURALS',
+    NoLanguageData: 'NO_LANGUAGE_DATA',
 } as const;
 
 const codeValues = Object.values(ErrorCode);
@@ -41,7 +41,7 @@ export function mapErrorCodeToMessage(args: {lang?: string; fallbackLang?: strin
             message = 'Missing params.count for key.';
             break;
         }
-        case 'MISSING_REQUIRED_PLURALS': {
+        case 'MISSING_KEY_PLURALS': {
             message = 'Missing required plurals';
             break;
         }

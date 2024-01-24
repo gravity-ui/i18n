@@ -146,7 +146,7 @@ export class I18N {
 
         ({text, fallbackText, details} = this.getTranslationData({keysetName, key, params, lang: this.lang}));
 
-        if (details && details.code !== ErrorCode.NO_LANGUAGE_DATA) {
+        if (details && details.code !== ErrorCode.NoLanguageData) {
             const message = mapErrorCodeToMessage({
                 code: details.code,
                 lang: this.lang,
@@ -163,7 +163,7 @@ export class I18N {
                 lang: this.fallbackLang,
             }));
 
-            if (details && details.code !== ErrorCode.NO_LANGUAGE_DATA) {
+            if (details && details.code !== ErrorCode.NoLanguageData) {
                 const message = mapErrorCodeToMessage({
                     code: details.code,
                     lang: this.lang,
@@ -236,13 +236,13 @@ export class I18N {
         const languageData = this.getLanguageData(lang);
 
         if (typeof languageData === 'undefined') {
-            return {details: {code: ErrorCode.NO_LANGUAGE_DATA}};
+            return {details: {code: ErrorCode.NoLanguageData}};
         }
 
         if (Object.keys(languageData).length === 0) {
             return {
                 fallbackText: key,
-                details: {code: ErrorCode.EMPTY_LANGUAGE_DATA},
+                details: {code: ErrorCode.EmptyLanguageData},
             };
         }
 
@@ -251,14 +251,14 @@ export class I18N {
         if (!keyset) {
             return {
                 fallbackText: key,
-                details: {code: ErrorCode.KEYSET_NOT_FOUND, keysetName},
+                details: {code: ErrorCode.KeysetNotFound, keysetName},
             };
         }
 
         if (Object.keys(keyset).length === 0) {
             return {
                 fallbackText: key,
-                details: {code: ErrorCode.EMPTY_KEYSET, keysetName},
+                details: {code: ErrorCode.EmptyKeyset, keysetName},
             };
         }
 
@@ -268,7 +268,7 @@ export class I18N {
         if (typeof keyValue === 'undefined') {
             return {
                 fallbackText: key,
-                details: {code: ErrorCode.MISSING_KEY, keysetName, key},
+                details: {code: ErrorCode.MissingKey, keysetName, key},
             };
         }
 
@@ -276,7 +276,7 @@ export class I18N {
             if (keyValue.length < 3) {
                 return {
                     fallbackText: key,
-                    details: {code: ErrorCode.MISSING_REQUIRED_PLURALS, keysetName, key},
+                    details: {code: ErrorCode.MissingKeyPlurals, keysetName, key},
                 };
             }
 
@@ -285,7 +285,7 @@ export class I18N {
             if (Number.isNaN(count)) {
                 return {
                     fallbackText: key,
-                    details: {code: ErrorCode.MISSING_KEY_PARAMS_COUNT, keysetName, key},
+                    details: {code: ErrorCode.MissingKeyParamsCount, keysetName, key},
                 };
             }
 
@@ -294,7 +294,7 @@ export class I18N {
 
             if (keyValue[PluralForm.None] === undefined) {
                 result.details = {
-                    code: ErrorCode.MISSING_KEY_FOR_0,
+                    code: ErrorCode.MissingKeyFor0,
                     keysetName,
                     key,
                 };
