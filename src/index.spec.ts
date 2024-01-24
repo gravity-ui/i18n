@@ -308,3 +308,90 @@ describe('i18n', () => {
         expect(logger.log).toHaveBeenCalledTimes(callsLength + 1);
     });
 });
+
+describe('constructor options', () => {
+    describe('lang', () => {
+        it('should return translation [set lang via options.lang]', () => {
+            i18n = new I18N({lang: 'en'});
+            i18n.registerKeyset('en', 'notification', {
+                title: 'New version'
+            });
+            expect(i18n.i18n('notification', 'title')).toBe('New version');
+        });
+
+        it('should return translation [set lang via i18n.setLang]', () => {
+            i18n.setLang('en');
+            i18n.registerKeyset('en', 'notification', {
+                title: 'New version'
+            });
+            expect(i18n.i18n('notification', 'title')).toBe('New version');
+        });
+    });
+
+    describe('data', () => {
+        it('should return translation [set data via options.data]', () => {
+            i18n = new I18N({lang: 'en', data: {en: {notification: {title: 'New version'}}}});
+            expect(i18n.i18n('notification', 'title')).toBe('New version');
+        });
+
+        it('should return translation [set data via i18n.registerKeyset]', () => {
+            i18n = new I18N({lang: 'en'});
+            i18n.registerKeyset('en', 'notification', {
+                title: 'New version'
+            });
+            expect(i18n.i18n('notification', 'title')).toBe('New version');
+        });
+    });
+
+    describe('defaultLang', () => {
+        it('should return translation from default language in case of language data absence', () => {
+            i18n = new I18N({
+                lang: 'sr',
+                defaultLang: 'en',
+                data: {en: {notification: {title: 'New version'}}},
+            });
+            expect(i18n.i18n('notification', 'title')).toBe('New version');
+        });
+
+        it('should return fallback from default language in case of language data absence', () => {
+            i18n = new I18N({lang: 'sr', defaultLang: 'en', data: {en: {notification: {}}}});
+            expect(i18n.i18n('notification', 'title')).toBe('title');
+        });
+
+        it('should return translation from default language in case of empty keyset', () => {
+            i18n = new I18N({
+                lang: 'sr',
+                defaultLang: 'en',
+                data: {
+                    en: {notification: {title: 'New version'}},
+                    sr: {notification: {}},
+                },
+            });
+            expect(i18n.i18n('notification', 'title')).toBe('New version');
+        });
+
+        it('should return translation from default language in case of missing key', () => {
+            i18n = new I18N({
+                lang: 'sr',
+                defaultLang: 'en',
+                data: {
+                    en: {notification: {title: 'New version'}},
+                    sr: {notification: {hey: 'Zdravo!'}},
+                },
+            });
+            expect(i18n.i18n('notification', 'title')).toBe('New version');
+        });
+
+        it('should return fallback from default language in case of missing key', () => {
+            i18n = new I18N({
+                lang: 'sr',
+                defaultLang: 'en',
+                data: {
+                    en: {notification: {hey: 'Hello!'}},
+                    sr: {notification: {hey: 'Zdravo!'}},
+                },
+            });
+            expect(i18n.i18n('notification', 'title')).toBe('title');
+        });
+    });
+});
