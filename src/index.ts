@@ -1,10 +1,12 @@
 import {replaceParams} from './replace-params';
 import {ErrorCode, mapErrorCodeToMessage} from './translation-helpers';
 import type {ErrorCodeType} from './translation-helpers';
-import {PluralForm} from './types';
+import {isPluralValue} from './types';
 import type {KeysData, KeysetData, Logger, Params, Pluralizer} from './types';
+
 import pluralizerEn from './plural/en';
 import pluralizerRu from './plural/ru';
+import {getPluralValue} from './plural/general';
 
 export * from './types';
 
@@ -124,7 +126,7 @@ export class I18N {
         } else if (isAlreadyRegistered) {
             this.warn(`Keyset '${keysetName}' is already registered.`);
         }
-        
+
         this.data[lang] = Object.assign({}, this.data[lang], {[keysetName]: data});
     }
 
@@ -216,14 +218,6 @@ export class I18N {
         return langCode ? this.data[langCode] : undefined;
     }
 
-    protected getLanguagePluralizer(lang?: string): Pluralizer {
-        const pluralizer = lang ? this.pluralizers[lang] : undefined;
-        if (!pluralizer) {
-            this.warn(`Pluralization is not configured for language '${lang}', falling back to the english ruleset`);
-        }
-        return pluralizer || pluralizerEn;
-    }
-
     private getTranslationData(args: {
         keysetName: string;
         key: string;
@@ -258,27 +252,21 @@ export class I18N {
             return {details: {code: ErrorCode.MissingKey, keysetName, key}};
         }
 
-        if (Array.isArray(keyValue)) {
-            if (keyValue.length < 3) {
-                return {details: {code: ErrorCode.MissingKeyPlurals, keysetName, key}};
-            }
-
+        if (isPluralValue(keyValue)) {
             const count = Number(params?.count);
 
             if (Number.isNaN(count)) {
                 return {details: {code: ErrorCode.MissingKeyParamsCount, keysetName, key}};
             }
 
-            const pluralizer = this.getLanguagePluralizer(lang);
-            result.text = keyValue[pluralizer(count, PluralForm)] || keyValue[PluralForm.Many];
-
-            if (result.text === undefined) {
-                return {details: {code: ErrorCode.MissingKeyPlurals, keysetName, key}};
-            }
-
-            if (keyValue[PluralForm.None] === undefined) {
-                result.details = {code: ErrorCode.MissingKeyFor0, keysetName, key};
-            }
+            result.text = getPluralValue({
+                key,
+                value: keyValue,
+                count,
+                lang: this.lang || 'en',
+                pluralizers: this.pluralizers,
+                log: (message) => this.warn(message, keysetName, key),
+            });
         } else {
             result.text = keyValue;
         }
