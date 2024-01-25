@@ -17,35 +17,35 @@ export function mapErrorCodeToMessage(args: {lang?: string; fallbackLang?: strin
     let message = '';
 
     switch (code) {
-        case 'EMPTY_KEYSET': {
+        case ErrorCode.EmptyKeyset: {
             message = `Keyset is empty.`;
             break;
         }
-        case 'EMPTY_LANGUAGE_DATA': {
+        case ErrorCode.EmptyLanguageData: {
             message = 'Language data is empty.';
             break;
         }
-        case 'KEYSET_NOT_FOUND': {
+        case ErrorCode.KeysetNotFound: {
             message = 'Keyset not found.';
             break;
         }
-        case 'MISSING_KEY': {
+        case ErrorCode.MissingKey: {
             message = 'Missing key.';
             break;
         }
-        case 'MISSING_KEY_FOR_0': {
+        case ErrorCode.MissingKeyFor0: {
             message = 'Missing key for 0';
             break;
         }
-        case 'MISSING_KEY_PARAMS_COUNT': {
+        case ErrorCode.MissingKeyParamsCount: {
             message = 'Missing params.count for key.';
             break;
         }
-        case 'MISSING_KEY_PLURALS': {
+        case ErrorCode.MissingKeyPlurals: {
             message = 'Missing required plurals';
             break;
         }
-        case 'NO_LANGUAGE_DATA': {
+        case ErrorCode.NoLanguageData: {
             message = `Language "${lang}" is not defined, make sure you call setLang for the same language you called registerKeysets for!`;
         }
     }

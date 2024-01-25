@@ -137,7 +137,7 @@ export class I18N {
 
     i18n(keysetName: string, key: string, params?: Params): string {
         if (!this.lang && !this.fallbackLang) {
-            throw new Error('There are no available languages. You should set at least one of these languages: lang, fallbackLang');
+            throw new Error('Language not specified. You should set at least one of these: "lang", "fallbackLang"');
         }
 
         let text: string | undefined;
