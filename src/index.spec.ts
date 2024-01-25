@@ -307,4 +307,59 @@ describe('i18n', () => {
 
         expect(logger.log).toHaveBeenCalledTimes(callsLength + 1);
     });
+
+    it('add description for test new plural form', () => {
+        i18n.setLang('ru');
+        i18n.registerKeyset('ru', 'app', {
+            users: {
+                'zero': 'нет пользователей',
+                'other': 'sdf',
+                'one': '{{count}} пользователь',
+                'few': '{{count}} пользователя',
+                'many': '{{count}} пользователей',
+                [-1]: 'Отрицательный пользователь',
+                2: 'Пара пользователей'
+            }
+        });
+
+        expect(i18n.i18n('app', 'users', {
+            count: 0
+        })).toBe('нет пользователей');
+
+        expect(i18n.i18n('app', 'users', {
+            count: 1
+        })).toBe('1 пользователь');
+
+        expect(i18n.i18n('app', 'users', {
+            count: 2
+        })).toBe('Пара пользователей');
+
+        expect(i18n.i18n('app', 'users', {
+            count: 3
+        })).toBe('3 пользователя');
+
+        expect(i18n.i18n('app', 'users', {
+            count: 5
+        })).toBe('5 пользователей');
+
+        expect(i18n.i18n('app', 'users', {
+            count: 11
+        })).toBe('11 пользователей');
+
+        expect(i18n.i18n('app', 'users', {
+            count: -1
+        })).toBe('Отрицательный пользователь');
+    });
+
+    it('should return key when missing required plural forms', () => {
+        i18n.setLang('ru');
+        i18n.registerKeyset('ru', 'app', {
+            // @ts-ignore
+            users: {'many': '{{count}} пользователей'}
+        });
+
+        expect(i18n.i18n('app', 'users', {
+            count: -1
+        })).toBe('users');
+    });
 });

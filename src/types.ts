@@ -1,4 +1,4 @@
-export type KeysData = Record<string, string | string[]>;
+export type KeysData = Record<string, string | string[] | PluralValue>;
 export type KeysetData = Record<string, KeysData>;
 
 type NoEnumLikeStringLiteral<T> = string extends T ? T : never;
@@ -60,6 +60,17 @@ export enum PluralForm {
     Many,
     None
 }
+
+export type PluralValue = {
+    [x: number]: string;
+    zero: string;
+    one: string;
+    two?: string;
+    few?: string;
+    many?: string;
+    other: string;
+}
+
 
 export interface Logger {
     log(message: string, options?: {level?: string; logger?: string; extra?: Record<string, unknown>}): void;
