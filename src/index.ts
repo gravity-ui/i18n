@@ -73,7 +73,6 @@ type I18NOptions = {
 
 type TranslationData = {
     text?: string;
-    fallbackText?: string;
     details?: {
         code: ErrorCodeType;
         keysetName?: string;
@@ -141,10 +140,9 @@ export class I18N {
         }
 
         let text: string | undefined;
-        let fallbackText: string | undefined;
         let details: TranslationData['details'];
 
-        ({text, fallbackText, details} = this.getTranslationData({keysetName, key, params, lang: this.lang}));
+        ({text, details} = this.getTranslationData({keysetName, key, params, lang: this.lang}));
 
         if (details) {
             const message = mapErrorCodeToMessage({
@@ -156,7 +154,7 @@ export class I18N {
         }
 
         if (text === undefined && this.fallbackLang && this.fallbackLang !== this.lang) {
-            ({text, fallbackText, details} = this.getTranslationData({
+            ({text, details} = this.getTranslationData({
                 keysetName,
                 key,
                 params,
@@ -172,9 +170,7 @@ export class I18N {
             }
         }
 
-        // this.getTranslationData method necessarily returns either a `text` or a `fallbackText` value.
-        // Both of these fields are described in the `TranslationData` type as optional so as not to complicate the code.
-        return (text ?? fallbackText) as string;
+        return text ?? key;
     }
 
     keyset<TKey extends string = string>(keysetName: string) {
@@ -228,78 +224,50 @@ export class I18N {
         const languageData = this.getLanguageData(lang);
 
         if (typeof languageData === 'undefined') {
-            return {
-                fallbackText: key,
-                details: {code: ErrorCode.NoLanguageData}
-            };
+            return {details: {code: ErrorCode.NoLanguageData}};
         }
 
         if (Object.keys(languageData).length === 0) {
-            return {
-                fallbackText: key,
-                details: {code: ErrorCode.EmptyLanguageData},
-            };
+            return {details: {code: ErrorCode.EmptyLanguageData}};
         }
 
         const keyset = languageData[keysetName];
 
         if (!keyset) {
-            return {
-                fallbackText: key,
-                details: {code: ErrorCode.KeysetNotFound, keysetName},
-            };
+            return {details: {code: ErrorCode.KeysetNotFound, keysetName}};
         }
 
         if (Object.keys(keyset).length === 0) {
-            return {
-                fallbackText: key,
-                details: {code: ErrorCode.EmptyKeyset, keysetName},
-            };
+            return {details: {code: ErrorCode.EmptyKeyset, keysetName}};
         }
 
         const keyValue = keyset && keyset[key];
         const result: TranslationData = {};
 
         if (keyValue === undefined) {
-            return {
-                fallbackText: key,
-                details: {code: ErrorCode.MissingKey, keysetName, key},
-            };
+            return {details: {code: ErrorCode.MissingKey, keysetName, key}};
         }
 
         if (Array.isArray(keyValue)) {
             if (keyValue.length < 3) {
-                return {
-                    fallbackText: key,
-                    details: {code: ErrorCode.MissingKeyPlurals, keysetName, key},
-                };
+                return {details: {code: ErrorCode.MissingKeyPlurals, keysetName, key}};
             }
 
             const count = Number(params?.count);
 
             if (Number.isNaN(count)) {
-                return {
-                    fallbackText: key,
-                    details: {code: ErrorCode.MissingKeyParamsCount, keysetName, key},
-                };
+                return {details: {code: ErrorCode.MissingKeyParamsCount, keysetName, key}};
             }
 
             const pluralizer = this.getLanguagePluralizer(lang);
             result.text = keyValue[pluralizer(count, PluralForm)] || keyValue[PluralForm.Many];
 
             if (result.text === undefined) {
-                return {
-                    fallbackText: key,
-                    details: {code: ErrorCode.MissingKeyPlurals, keysetName, key},
-                };
+                return {details: {code: ErrorCode.MissingKeyPlurals, keysetName, key}};
             }
 
             if (keyValue[PluralForm.None] === undefined) {
-                result.details = {
-                    code: ErrorCode.MissingKeyFor0,
-                    keysetName,
-                    key,
-                };
+                result.details = {code: ErrorCode.MissingKeyFor0, keysetName, key};
             }
         } else {
             result.text = keyValue;
