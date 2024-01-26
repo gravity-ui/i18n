@@ -12,37 +12,37 @@ export const ErrorCode = {
 const codeValues = Object.values(ErrorCode);
 export type ErrorCodeType = (typeof codeValues)[number];
 
-export function mapErrorCodeToMessage(args: {code: ErrorCodeType; lang?: string; fallbackLang?: string}) {
+export function mapErrorCodeToMessage(args: {code: ErrorCodeType; lang: string; fallbackLang?: string}) {
     const {code, fallbackLang, lang} = args;
-    let message = '';
+    let message = `Using language ${lang}. `;
 
     switch (code) {
         case ErrorCode.EmptyKeyset: {
-            message = `Keyset is empty.`;
+            message += `Keyset is empty.`;
             break;
         }
         case ErrorCode.EmptyLanguageData: {
-            message = 'Language data is empty.';
+            message += 'Language data is empty.';
             break;
         }
         case ErrorCode.KeysetNotFound: {
-            message = 'Keyset not found.';
+            message += 'Keyset not found.';
             break;
         }
         case ErrorCode.MissingKey: {
-            message = 'Missing key.';
+            message += 'Missing key.';
             break;
         }
         case ErrorCode.MissingKeyFor0: {
-            message = 'Missing key for 0';
-            break;
+            message += 'Missing key for 0';
+            return message
         }
         case ErrorCode.MissingKeyParamsCount: {
-            message = 'Missing params.count for key.';
+            message += 'Missing params.count for key.';
             break;
         }
         case ErrorCode.MissingKeyPlurals: {
-            message = 'Missing required plurals.';
+            message += 'Missing required plurals.';
             break;
         }
         case ErrorCode.NoLanguageData: {

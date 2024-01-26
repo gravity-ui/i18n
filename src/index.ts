@@ -136,21 +136,25 @@ export class I18N {
 
     i18n(keysetName: string, key: string, params?: Params): string {
         if (!this.lang && !this.fallbackLang) {
-            throw new Error('Language not specified. You should set at least one of these: "lang", "fallbackLang"');
+            throw new Error('Language is not specified. You should set at least one of these: "lang", "fallbackLang"');
         }
 
         let text: string | undefined;
         let details: TranslationData['details'];
 
-        ({text, details} = this.getTranslationData({keysetName, key, params, lang: this.lang}));
+        if (this.lang) {
+            ({text, details} = this.getTranslationData({keysetName, key, params, lang: this.lang}));
 
-        if (details) {
-            const message = mapErrorCodeToMessage({
-                code: details.code,
-                lang: this.lang,
-                fallbackLang: this.fallbackLang === this.lang ? undefined : this.fallbackLang,
-            });
-            this.warn(message, details.keysetName, details.key);
+            if (details) {
+                const message = mapErrorCodeToMessage({
+                    code: details.code,
+                    lang: this.lang,
+                    fallbackLang: this.fallbackLang === this.lang ? undefined : this.fallbackLang,
+                });
+                this.warn(message, details.keysetName, details.key);
+            }
+        } else {
+            this.warn('Target language is not specified.');
         }
 
         if (text === undefined && this.fallbackLang && this.fallbackLang !== this.lang) {
@@ -217,7 +221,7 @@ export class I18N {
     private getTranslationData(args: {
         keysetName: string;
         key: string;
-        lang?: string;
+        lang: string;
         params?: Params;
     }): TranslationData {
         const {lang, key, keysetName, params} = args;
