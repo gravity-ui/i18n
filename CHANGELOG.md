@@ -1,5 +1,13 @@
 # Changelog
 
+## [1.2.0](https://github.com/gravity-ui/i18n/compare/v1.1.0...v1.2.0) (2024-01-26)
+
+
+### Features
+
+* add codeowners ([#41](https://github.com/gravity-ui/i18n/issues/41)) ([9907b8c](https://github.com/gravity-ui/i18n/commit/9907b8c82769447cabce152473f9f2534c162ed6))
+* add data, fallbackLang & lang options as constructor arguments ([#40](https://github.com/gravity-ui/i18n/issues/40)) ([a26ee50](https://github.com/gravity-ui/i18n/commit/a26ee507db1d87162ae4486ef99f54db9749be5c))
+
 ## [1.1.0](https://github.com/gravity-ui/i18n/compare/v1.0.0...v1.1.0) (2023-05-03)
 
 
