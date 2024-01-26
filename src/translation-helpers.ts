@@ -42,7 +42,7 @@ export function mapErrorCodeToMessage(args: {lang?: string; fallbackLang?: strin
             break;
         }
         case ErrorCode.MissingKeyPlurals: {
-            message = 'Missing required plurals';
+            message = 'Missing required plurals.';
             break;
         }
         case ErrorCode.NoLanguageData: {
@@ -51,7 +51,7 @@ export function mapErrorCodeToMessage(args: {lang?: string; fallbackLang?: strin
     }
 
     if (fallbackLang) {
-        message += ` Trying to use default language "${fallbackLang}"...`;
+        message += ` Trying to use fallback language "${fallbackLang}"...`;
     }
 
     return message;

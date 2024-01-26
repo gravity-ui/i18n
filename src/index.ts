@@ -132,7 +132,7 @@ export class I18N {
     has(keysetName: string, key: string, lang?: string) {
         const languageData = this.getLanguageData(lang);
 
-        return Boolean(languageData && languageData[keysetName] && languageData[keysetName][key]);
+        return Boolean(languageData && languageData[keysetName] && languageData[keysetName]?.[key]);
     }
 
     i18n(keysetName: string, key: string, params?: Params): string {
@@ -150,12 +150,12 @@ export class I18N {
             const message = mapErrorCodeToMessage({
                 code: details.code,
                 lang: this.lang,
-                fallbackLang: this.fallbackLang,
+                fallbackLang: this.fallbackLang === this.lang ? undefined : this.fallbackLang,
             });
             this.warn(message, details.keysetName, details.key);
         }
 
-        if (this.fallbackLang) {
+        if (text === undefined && this.fallbackLang && this.fallbackLang !== this.lang) {
             ({text, fallbackText, details} = this.getTranslationData({
                 keysetName,
                 key,
@@ -166,14 +166,14 @@ export class I18N {
             if (details && details.code !== ErrorCode.NoLanguageData) {
                 const message = mapErrorCodeToMessage({
                     code: details.code,
-                    lang: this.lang,
-                    fallbackLang: this.fallbackLang,
+                    lang: this.fallbackLang,
                 });
                 this.warn(message, details.keysetName, details.key);
             }
         }
 
-        if (!text && !fallbackText) {
+        const result = text ?? fallbackText;
+        if (result === undefined) {
             const message = mapErrorCodeToMessage({
                 code: details?.code,
                 lang: this.lang,
@@ -182,7 +182,7 @@ export class I18N {
             throw new Error(message);
         }
 
-        return (text || fallbackText) as string;
+        return result;
     }
 
     keyset<TKey extends string = string>(keysetName: string) {
@@ -265,7 +265,7 @@ export class I18N {
         const keyValue = keyset && keyset[key];
         const result: TranslationData = {};
 
-        if (typeof keyValue === 'undefined') {
+        if (keyValue === undefined) {
             return {
                 fallbackText: key,
                 details: {code: ErrorCode.MissingKey, keysetName, key},
@@ -291,6 +291,12 @@ export class I18N {
 
             const pluralizer = this.getLanguagePluralizer(lang);
             result.text = keyValue[pluralizer(count, PluralForm)] || keyValue[PluralForm.Many];
+            if (result.text === undefined) {
+                return {
+                    fallbackText: key,
+                    details: {code: ErrorCode.MissingKeyPlurals, keysetName, key},
+                };
+            }
 
             if (keyValue[PluralForm.None] === undefined) {
                 result.details = {
