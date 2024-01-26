@@ -175,7 +175,7 @@ export class I18N {
         const result = text ?? fallbackText;
         if (result === undefined) {
             const message = mapErrorCodeToMessage({
-                code: details?.code,
+                code: ErrorCode.NoLanguageData,
                 lang: this.lang,
                 fallbackLang: this.fallbackLang,
             });

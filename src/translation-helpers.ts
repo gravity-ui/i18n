@@ -12,7 +12,7 @@ export const ErrorCode = {
 const codeValues = Object.values(ErrorCode);
 export type ErrorCodeType = (typeof codeValues)[number];
 
-export function mapErrorCodeToMessage(args: {lang?: string; fallbackLang?: string; code?: ErrorCodeType}) {
+export function mapErrorCodeToMessage(args: {code: ErrorCodeType; lang?: string; fallbackLang?: string}) {
     const {code, fallbackLang, lang} = args;
     let message = '';
 
