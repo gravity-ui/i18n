@@ -1,26 +1,114 @@
 import {replaceParams} from './replace-params';
-import {KeysData, KeysetData, Logger, Params, PluralForm, Pluralizer} from './types';
-
+import {ErrorCode, mapErrorCodeToMessage} from './translation-helpers';
+import type {ErrorCodeType} from './translation-helpers';
+import {PluralForm} from './types';
+import type {KeysData, KeysetData, Logger, Params, Pluralizer} from './types';
 import pluralizerEn from './plural/en';
 import pluralizerRu from './plural/ru';
 
 export * from './types';
 
+type I18NOptions = {
+    /**
+     * Keysets mapped data.
+     * @example
+     * ```
+        import {I18N} from '@gravity-ui/i18n';
+
+        let i18n = new I18N({
+            lang: 'en',
+            data: {
+                en: {notification: {title: 'New version'}},
+                sr: {notification: {title: 'Нова верзија'}},
+            },
+        });
+        // Equivalent approach via public api of i18n instance
+        i18n = new I18N();
+        i18n.setLang('en');
+        i18n.registerKeysets('en', {notification: {title: 'New version'}});
+        i18n.registerKeysets('sr', {notification: {title: 'Нова верзија'}});
+     * ```
+     */
+    data?: Record<string, KeysetData>;
+    /**
+     * Language used as fallback in case there is no translation in the target language.
+     * @example
+     * ```
+        import {I18N} from '@gravity-ui/i18n';
+
+        const i18n = new I18N({
+            lang: 'sr',
+            fallbackLang: 'en',
+            data: {
+                en: {notification: {title: 'New version'}},
+                sr: {notification: {}},
+            },
+        });
+        i18n.i18n('notification', 'title'); // 'New version'
+        // Equivalent approach via public api of i18n instance
+        i18n = new I18N();
+        i18n.setLang('sr');
+        i18n.setFallbackLang('en');
+        i18n.registerKeysets('en', {notification: {title: 'New version'}});
+        i18n.registerKeysets('sr', {notification: {}});
+        i18n.i18n('notification', 'title'); // 'New version'
+     * ```
+     */
+    fallbackLang?: string;
+    /**
+     * Target language for the i18n instance.
+     * @example
+     * ```
+        import {I18N} from '@gravity-ui/i18n';
+
+        let i18n = new I18N({lang: 'en'});
+        // Equivalent approach via public api of i18n instance
+        i18n = new I18N();
+        i18n.setLang('en');
+     * ```
+     */
+    lang?: string;
+    logger?: Logger;
+};
+
+type TranslationData = {
+    text?: string;
+    details?: {
+        code: ErrorCodeType;
+        keysetName?: string;
+        key?: string;
+    };
+};
+
 export class I18N {
     data: Record<string, KeysetData> = {};
-    lang?: string = undefined;
     pluralizers: Record<string, Pluralizer> = {
         en: pluralizerEn,
         ru: pluralizerRu,
     };
     logger: Logger | null = null;
+    fallbackLang?: string;
+    lang?: string;
 
-    constructor(options?: {logger?: Logger}) {
-        this.logger = options?.logger || null;
+    constructor(options: I18NOptions = {}) {
+        const {data, fallbackLang, lang, logger = null} = options;
+        this.fallbackLang = fallbackLang;
+        this.lang = lang;
+        this.logger = logger;
+
+        if (data) {
+            Object.entries(data).forEach(([keysetLang, keysetData]) => {
+                this.registerKeysets(keysetLang, keysetData)
+            });
+        }
     }
 
     setLang(lang: string) {
         this.lang = lang;
+    }
+
+    setFallbackLang(fallbackLang: string) {
+        this.fallbackLang = fallbackLang;
     }
 
     configurePluralization(pluralizers: Record<string, Pluralizer>) {
@@ -43,93 +131,50 @@ export class I18N {
     has(keysetName: string, key: string, lang?: string) {
         const languageData = this.getLanguageData(lang);
 
-        return Boolean(languageData && languageData[keysetName] && languageData[keysetName][key]);
+        return Boolean(languageData && languageData[keysetName] && languageData[keysetName]?.[key]);
     }
 
     i18n(keysetName: string, key: string, params?: Params): string {
-        const languageData = this.getLanguageData(this.lang);
-
-        if (typeof languageData === 'undefined') {
-            throw new Error(`Language '${this.lang}' is not defined, make sure you call setLang for the same language you called registerKeysets for!`);
+        if (!this.lang && !this.fallbackLang) {
+            throw new Error('Language is not specified. You should set at least one of these: "lang", "fallbackLang"');
         }
 
-        if (Object.keys(languageData).length === 0) {
-            this.warn('Language data is empty.');
+        let text: string | undefined;
+        let details: TranslationData['details'];
 
-            return key;
-        }
+        if (this.lang) {
+            ({text, details} = this.getTranslationData({keysetName, key, params, lang: this.lang}));
 
-        const keyset = languageData[keysetName];
-
-        if (!keyset) {
-            this.warn(
-                'Keyset not found.',
-                keysetName,
-            );
-
-            return key;
-        }
-
-        if (Object.keys(keyset).length === 0) {
-            this.warn(
-                'Keyset is empty.',
-                keysetName,
-            );
-
-            return key;
-        }
-
-        const keyValue = keyset && keyset[key];
-        let result: string;
-
-        if (typeof keyValue === 'undefined') {
-            this.warn(
-                'Missing key.',
-                keysetName,
-                key,
-            );
-
-            return key;
-        }
-
-        if (Array.isArray(keyValue)) {
-            if (keyValue.length < 3) {
-                this.warn(
-                    'Missing required plurals',
-                    keysetName,
-                    key,
-                );
-
-                return key;
-            }
-
-            const count = Number(params?.count);
-
-            if (Number.isNaN(count)) {
-                this.warn(
-                    'Missing params.count for key.',
-                    keysetName,
-                    key,
-                );
-
-                return key;
-            }
-
-            const pluralizer = this.getLanguagePluralizer(this.lang);
-            result = keyValue[pluralizer(count, PluralForm)] || keyValue[PluralForm.Many];
-
-            if (keyValue[PluralForm.None] === undefined) {
-                this.warn('Missing key for 0', keysetName, key);
+            if (details) {
+                const message = mapErrorCodeToMessage({
+                    code: details.code,
+                    lang: this.lang,
+                    fallbackLang: this.fallbackLang === this.lang ? undefined : this.fallbackLang,
+                });
+                this.warn(message, details.keysetName, details.key);
             }
         } else {
-            result = keyValue;
+            this.warn('Target language is not specified.');
         }
 
-        if (params) {
-            result = replaceParams(result, params);
+        if (text === undefined && this.fallbackLang && this.fallbackLang !== this.lang) {
+            ({text, details} = this.getTranslationData({
+                keysetName,
+                key,
+                params,
+                lang: this.fallbackLang,
+            }));
+
+            if (details) {
+                const message = mapErrorCodeToMessage({
+                    code: details.code,
+                    lang: this.fallbackLang,
+                });
+                this.warn(message, details.keysetName, details.key);
+            }
         }
 
-        return result;
+        return text ?? key;
     }
 
     keyset<TKey extends string = string>(keysetName: string) {
@@ -171,5 +216,71 @@ export class I18N {
             this.warn(`Pluralization is not configured for language '${lang}', falling back to the english ruleset`);
         }
         return pluralizer || pluralizerEn;
+    }
+
+    private getTranslationData(args: {
+        keysetName: string;
+        key: string;
+        lang: string;
+        params?: Params;
+    }): TranslationData {
+        const {lang, key, keysetName, params} = args;
+        const languageData = this.getLanguageData(lang);
+
+        if (typeof languageData === 'undefined') {
+            return {details: {code: ErrorCode.NoLanguageData}};
+        }
+
+        if (Object.keys(languageData).length === 0) {
+            return {details: {code: ErrorCode.EmptyLanguageData}};
+        }
+
+        const keyset = languageData[keysetName];
+
+        if (!keyset) {
+            return {details: {code: ErrorCode.KeysetNotFound, keysetName}};
+        }
+
+        if (Object.keys(keyset).length === 0) {
+            return {details: {code: ErrorCode.EmptyKeyset, keysetName}};
+        }
+
+        const keyValue = keyset && keyset[key];
+        const result: TranslationData = {};
+
+        if (keyValue === undefined) {
+            return {details: {code: ErrorCode.MissingKey, keysetName, key}};
+        }
+
+        if (Array.isArray(keyValue)) {
+            if (keyValue.length < 3) {
+                return {details: {code: ErrorCode.MissingKeyPlurals, keysetName, key}};
+            }
+
+            const count = Number(params?.count);
+
+            if (Number.isNaN(count)) {
+                return {details: {code: ErrorCode.MissingKeyParamsCount, keysetName, key}};
+            }
+
+            const pluralizer = this.getLanguagePluralizer(lang);
+            result.text = keyValue[pluralizer(count, PluralForm)] || keyValue[PluralForm.Many];
+
+            if (result.text === undefined) {
+                return {details: {code: ErrorCode.MissingKeyPlurals, keysetName, key}};
+            }
+
+            if (keyValue[PluralForm.None] === undefined) {
+                result.details = {code: ErrorCode.MissingKeyFor0, keysetName, key};
+            }
+        } else {
+            result.text = keyValue;
+        }
+
+        if (params) {
+            result.text = replaceParams(result.text, params);
+        }
+
+        return result;
     }
 }
