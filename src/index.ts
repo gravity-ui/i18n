@@ -146,7 +146,7 @@ export class I18N {
 
         ({text, fallbackText, details} = this.getTranslationData({keysetName, key, params, lang: this.lang}));
 
-        if (details && details.code !== ErrorCode.NoLanguageData) {
+        if (details) {
             const message = mapErrorCodeToMessage({
                 code: details.code,
                 lang: this.lang,
@@ -163,7 +163,7 @@ export class I18N {
                 lang: this.fallbackLang,
             }));
 
-            if (details && details.code !== ErrorCode.NoLanguageData) {
+            if (details) {
                 const message = mapErrorCodeToMessage({
                     code: details.code,
                     lang: this.fallbackLang,
@@ -172,17 +172,9 @@ export class I18N {
             }
         }
 
-        const result = text ?? fallbackText;
-        if (result === undefined) {
-            const message = mapErrorCodeToMessage({
-                code: ErrorCode.NoLanguageData,
-                lang: this.lang,
-                fallbackLang: this.fallbackLang,
-            });
-            throw new Error(message);
-        }
-
-        return result;
+        // this.getTranslationData method necessarily returns either a `text` or a `fallbackText` value.
+        // Both of these fields are described in the `TranslationData` type as optional so as not to complicate the code.
+        return (text ?? fallbackText) as string;
     }
 
     keyset<TKey extends string = string>(keysetName: string) {
@@ -236,7 +228,10 @@ export class I18N {
         const languageData = this.getLanguageData(lang);
 
         if (typeof languageData === 'undefined') {
-            return {details: {code: ErrorCode.NoLanguageData}};
+            return {
+                fallbackText: key,
+                details: {code: ErrorCode.NoLanguageData}
+            };
         }
 
         if (Object.keys(languageData).length === 0) {
@@ -291,6 +286,7 @@ export class I18N {
 
             const pluralizer = this.getLanguagePluralizer(lang);
             result.text = keyValue[pluralizer(count, PluralForm)] || keyValue[PluralForm.Many];
+
             if (result.text === undefined) {
                 return {
                     fallbackText: key,
