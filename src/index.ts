@@ -116,9 +116,15 @@ export class I18N {
     }
 
     registerKeyset(lang: string, keysetName: string, data: KeysData = {}) {
-        if (this.data[lang] && Object.prototype.hasOwnProperty.call(this.data[lang], keysetName)) {
+        const isAlreadyRegistered = this.data[lang]
+            && Object.prototype.hasOwnProperty.call(this.data[lang], keysetName);
+
+        if (isAlreadyRegistered && process.env.NODE_ENV === 'production') {
             throw new Error(`Keyset '${keysetName}' is already registered, aborting!`);
+        } else if (isAlreadyRegistered) {
+            this.warn(`Keyset '${keysetName}' is already registered.`);
         }
+        
         this.data[lang] = Object.assign({}, this.data[lang], {[keysetName]: data});
     }
 
