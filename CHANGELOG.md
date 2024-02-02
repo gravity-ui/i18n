@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.3.0](https://github.com/gravity-ui/i18n/compare/v1.2.0...v1.3.0) (2024-02-02)
+
+
+### Features
+
+* do not throw an error on duplicated keysets out of production ([#45](https://github.com/gravity-ui/i18n/issues/45)) ([aa46095](https://github.com/gravity-ui/i18n/commit/aa4609583a7a5d7215347b6f0d84b31e9f0bb1a7))
+
 ## [1.2.0](https://github.com/gravity-ui/i18n/compare/v1.1.0...v1.2.0) (2024-01-26)
 
 
