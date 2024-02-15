@@ -317,8 +317,6 @@ describe('i18n', () => {
                 'one': '{{count}} пользователь',
                 'few': '{{count}} пользователя',
                 'many': '{{count}} пользователей',
-                [-1]: 'Отрицательный пользователь',
-                2: 'Пара пользователей'
             }
         });
 
@@ -332,7 +330,7 @@ describe('i18n', () => {
 
         expect(i18n.i18n('app', 'users', {
             count: 2
-        })).toBe('Пара пользователей');
+        })).toBe('2 пользователя');
 
         expect(i18n.i18n('app', 'users', {
             count: 3
@@ -345,21 +343,132 @@ describe('i18n', () => {
         expect(i18n.i18n('app', 'users', {
             count: 11
         })).toBe('11 пользователей');
-
-        expect(i18n.i18n('app', 'users', {
-            count: -1
-        })).toBe('Отрицательный пользователь');
     });
 
-    it('should return key when missing required plural forms', () => {
+    it('should throw exception when missing required plural form', () => {
         i18n.setLang('ru');
         i18n.registerKeyset('ru', 'app', {
             // @ts-ignore
             users: {'many': '{{count}} пользователей'}
         });
 
+        expect(() => {
+            i18n.i18n('app', 'users', {
+                count: 11,
+            })
+        }).toThrow(new Error(`Missing required plural form 'other' for key 'users'`));
+    });
+
+    it('should use `other` form when no other forms are specified', () => {
+        i18n.setLang('ru');
+        i18n.registerKeyset('ru', 'app', {
+            users: {'other': '{{count}} пользователей'}
+        });
+
         expect(i18n.i18n('app', 'users', {
-            count: -1
-        })).toBe('users');
+            count: 21,
+        })).toBe('21 пользователей');
+
+        expect(i18n.i18n('app', 'users', {
+            count: 0,
+        })).toBe('0 пользователей');
+
+        expect(i18n.i18n('app', 'users', {
+            count: 10,
+        })).toBe('10 пользователей');
+
+        expect(i18n.i18n('app', 'users', {
+            count: 2,
+        })).toBe('2 пользователей');
+
+        expect(i18n.i18n('app', 'users', {
+            count: 1,
+        })).toBe('1 пользователей');
+    });
+
+    it('should use `other` form when no other forms are specified', () => {
+        i18n.setLang('ru');
+        i18n.registerKeyset('ru', 'app', {
+            users: {'other': '{{count}} пользователей'},
+            articles: {'one': '{{count}} статья', 'other': '{{count}} статей'},
+        });
+
+        expect(i18n.i18n('app', 'users', {
+            count: 21,
+        })).toBe('21 пользователей');
+
+        expect(i18n.i18n('app', 'users', {
+            count: 0,
+        })).toBe('0 пользователей');
+
+        expect(i18n.i18n('app', 'users', {
+            count: 10,
+        })).toBe('10 пользователей');
+
+        expect(i18n.i18n('app', 'users', {
+            count: 2,
+        })).toBe('2 пользователей');
+
+        expect(i18n.i18n('app', 'users', {
+            count: 1,
+        })).toBe('1 пользователей');
+
+        expect(i18n.i18n('app', 'articles', {
+            count: 1,
+        })).toBe('1 статья');
+
+        expect(i18n.i18n('app', 'articles', {
+            count: 21,
+        })).toBe('21 статья');
+
+        expect(i18n.i18n('app', 'articles', {
+            count: 0,
+        })).toBe('0 статей');
+
+        expect(i18n.i18n('app', 'articles', {
+            count: 5,
+        })).toBe('5 статей');
+
+        expect(i18n.i18n('app', 'articles', {
+            count: 3,
+        })).toBe('3 статей');
+    });
+
+    it('compare with depricated pluralizer', () => {
+        i18n.setLang('ru');
+        i18n.registerKeyset('ru', 'app', {
+            users_old: ['нет пользователей', '{{count}} пользователь', '{{count}} пользователя', '{{count}} пользователей'],
+            users: {
+                'zero': 'нет пользователей',
+                'one': '{{count}} пользователь',
+                'few': '{{count}} пользователя',
+                'many': '{{count}} пользователей',
+                'other': '',
+            },
+        });
+
+        expect(i18n.i18n('app', 'users', {
+            count: 0
+        })).toBe('нет пользователей');
+
+        expect(i18n.i18n('app', 'users', {
+            count: 1
+        })).toBe('1 пользователь');
+
+        expect(i18n.i18n('app', 'users', {
+            count: 2
+        })).toBe('2 пользователя');
+
+        expect(i18n.i18n('app', 'users', {
+            count: 3
+        })).toBe('3 пользователя');
+
+        expect(i18n.i18n('app', 'users', {
+            count: 5
+        })).toBe('5 пользователей');
+
+        expect(i18n.i18n('app', 'users', {
+            count: 11
+        })).toBe('11 пользователей');
     });
 });

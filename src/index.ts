@@ -1,9 +1,9 @@
 import {replaceParams} from './replace-params';
-import {KeysData, KeysetData, Logger, Params, PluralForm, PluralValue, Pluralizer} from './types';
+import {KeysData, KeysetData, Logger, Params, Pluralizer, isPluralValue} from './types';
 
 import pluralizerEn from './plural/en';
 import pluralizerRu from './plural/ru';
-import {pluralizer} from './plural/general';
+import {getPluralValue} from './plural/general';
 
 export * from './types';
 
@@ -48,15 +48,14 @@ export class I18N {
     }
 
     i18n(keysetName: string, key: string, params?: Params): string {
-        const languageData = this.getLanguageData(this.lang);
-
-        if (typeof languageData === 'undefined') {
-            throw new Error(`Language '${this.lang}' is not defined, make sure you call setLang for the same language you called registerKeysets for!`);
+        if (!this.lang) {
+            throw new Error(`Language is not defined, make sure you call setLang for the same language you called registerKeysets for!`);
         }
 
-        if (Object.keys(languageData).length === 0) {
-            this.warn('Language data is empty.');
+        const languageData = this.getLanguageData();
 
+        if (!languageData || Object.keys(languageData).length === 0) {
+            this.warn(`Data for language '${this.lang}' is empty.`);
             return key;
         }
 
@@ -93,17 +92,7 @@ export class I18N {
             return key;
         }
 
-        if (Array.isArray(keyValue)) {
-            if (keyValue.length < 3) {
-                this.warn(
-                    'Missing required plurals',
-                    keysetName,
-                    key,
-                );
-
-                return key;
-            }
-
+        if (isPluralValue(keyValue)) {
             const count = Number(params?.count);
 
             if (Number.isNaN(count)) {
@@ -116,21 +105,14 @@ export class I18N {
                 return key;
             }
 
-            const pluralizer = this.getLanguagePluralizer(this.lang);
-            result = keyValue[pluralizer(count, PluralForm)] || keyValue[PluralForm.Many];
-
-            if (keyValue[PluralForm.None] === undefined) {
-                this.warn('Missing key for 0', keysetName, key);
-            }
-        } else if (typeof keyValue === 'object') {
-            const count = Number(params?.count);
-
-            if (this.checkErrorRequiredPluralForms(key, keysetName, keyValue)) {
-                return key;
-            }
-
-            result = this.getTranslationFromObject(key, keysetName, keyValue, this.lang ?? 'en', count)
-
+            result = getPluralValue({
+                key,
+                value: keyValue,
+                count,
+                lang: this.lang,
+                pluralizers: this.pluralizers,
+                log: (message) => this.warn(message, keysetName, key),
+            });
         } else {
             result = keyValue;
         }
@@ -173,72 +155,5 @@ export class I18N {
     protected getLanguageData(lang?: string): KeysetData | undefined {
         const langCode = lang || this.lang;
         return langCode ? this.data[langCode] : undefined;
-    }
-
-    protected getLanguagePluralizer(lang?: string): Pluralizer {
-        const pluralizer = lang ? this.pluralizers[lang] : undefined;
-        if (!pluralizer) {
-            this.warn(`Pluralization is not configured for language '${lang}', falling back to the english ruleset`);
-        }
-        return pluralizer || pluralizerEn;
-    }
-
-    protected getTranslationFromObject(key: string, keysetName: string, keyValue: PluralValue, lang: string, count: number): string {
-        const pluralForm = pluralizer(count, lang);
-        const valueByCount = keyValue[count];
-        const valueByPlural = keyValue[pluralForm];
-        const valueForOther = keyValue['other'];
-
-        if (valueByCount !== undefined) {
-            return valueByCount;
-        }
-
-        if (valueByPlural !== undefined) {
-            return valueByPlural;
-        }
-
-        if (valueForOther !== undefined) {
-            return valueForOther;
-        }
-
-        this.warn(
-            'Missing translation for count.',
-            keysetName,
-            key,
-        );
-
-        return key; 
-    }
-
-    protected checkErrorRequiredPluralForms(key: string, keysetName: string, keyValue: PluralValue): boolean  {
-        let error = false;
-        if (keyValue['zero'] === undefined) {
-            this.warn(
-                'Missing required \'zero\' form',
-                keysetName,
-                key,
-            );
-            error = true;
-        }
-
-        if (keyValue['one'] === undefined) {
-            this.warn(
-                'Missing required \'one\' form',
-                keysetName,
-                key,
-            );
-            error = true;
-        }
-
-        if (keyValue['other'] === undefined) {
-            this.warn(
-                'Missing required \'other\' form',
-                keysetName,
-                key,
-            );
-            error = true;
-        }
-
-        return error;
     }
 }
