@@ -1,5 +1,5 @@
 import {replaceParams} from './replace-params';
-import {KeysData, KeysetData, Logger, Params, Pluralizer, isPluralValue} from './types';
+import {KeysData, KeysetData, Logger, Params, PluralValue, Pluralizer, isPluralValue} from './types';
 
 import pluralizerEn from './plural/en';
 import pluralizerRu from './plural/ru';
@@ -150,6 +150,41 @@ export class I18N {
                 type: 'i18n'
             }
         });
+    }
+
+    convertArrayPluralToObject() {
+        for (const keySet in this.data) {
+            for (const keysData in this.data[keySet]) {
+                for (const keyData in this.data[keySet][keysData]) {
+                    if (Array.isArray(this.data[keySet][keysData][keyData])) {
+                        this.data[keySet][keysData][keyData] = this.convertPluralValue(keySet, this.data[keySet][keysData][keyData] as string[]);
+                    }
+                }                
+            }
+        }
+        return this.data;
+    }
+
+    protected convertPluralValue(keySet: string, value: string[]): PluralValue {
+        if (keySet === 'en') {
+            return {
+                zero: value[0],
+                one: value[1],
+                other: value[2],
+            };
+        }
+        if (keySet === 'ru') {
+            return {
+                zero: value[0],
+                one: value[1],
+                few: value[2],
+                many: value[3],
+                other: '',
+            };
+        }
+        return {
+            other: ''
+        }
     }
 
     protected getLanguageData(lang?: string): KeysetData | undefined {
