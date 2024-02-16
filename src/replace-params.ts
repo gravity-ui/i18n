@@ -14,7 +14,7 @@ export function replaceParams(keyValue: string, params: Params): string {
         lastIndex = PARAM_REGEXP.lastIndex;
 
         const [all, key] = match;
-        if (Object.prototype.hasOwnProperty.call(params, key)) {
+        if (key && Object.prototype.hasOwnProperty.call(params, key)) {
             result += params[key];
         } else {
             result += all;

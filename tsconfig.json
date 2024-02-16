@@ -5,7 +5,8 @@
     "module": "esnext",
     "baseUrl": ".",
     "importHelpers": true,
-    "declaration": true
+    "declaration": true,
+    "noUncheckedIndexedAccess": true
   },
   "include": ["src/*.ts"],
   "exclude": ["**/*.spec.ts"]

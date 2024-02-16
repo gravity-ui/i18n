@@ -58,7 +58,7 @@ Logger should have explicit `log` method with following signature:
 const ru = require('./keysets/ru.json');
 const en = require('./keysets/en.json');
 
-const {I18N} = require('../src');
+const {I18N} = require('@gravity-ui/i18n');
 
 const i18n = new I18N();
 i18n.registerKeysets('ru', ru);
@@ -107,7 +107,7 @@ The library supports templating. Templated variables are enclosed in double curl
 #### `index.js`
 
 ```js
-i18n('label_template', {inputValue: 'something', folderName: 'somewhere'});  // => No matches found for "something" "somewhere"
+i18n('label_template', {inputValue: 'something', folderName: 'somewhere'});  // => No matches found for "something" in "somewhere"
 ```
 
 ### Pluralization
