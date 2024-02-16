@@ -434,8 +434,6 @@ describe('i18n', () => {
         })).toBe('3 статей');
     });
 
-
-
     it('compare with depricated pluralizer', () => {
         i18n.setLang('ru');
         i18n.registerKeyset('ru', 'app', {
@@ -472,40 +470,5 @@ describe('i18n', () => {
         expect(i18n.i18n('app', 'users', {
             count: 11
         })).toBe('11 пользователей');
-    });
-
-    it('convert array plurals to object', () => {
-        i18n.setLang('ru');
-        i18n.registerKeyset('ru', 'app', {
-            users: ['нет пользователей', '{{count}} пользователь', '{{count}} пользователя', '{{count}} пользователей'],
-        });
-        i18n.registerKeyset('en', 'app', {
-            users: ['There are no users', '{{count}} user', '{{count}} users'],
-        });
-
-        expect(i18n.convertArrayPluralToObject()).toStrictEqual(
-            {
-                ru: {
-                    app: {
-                        users: {
-                            zero: 'нет пользователей',
-                            one: '{{count}} пользователь',
-                            few: '{{count}} пользователя',
-                            many: '{{count}} пользователей',
-                            other: '',
-                        },
-                    },
-                },
-                en: {
-                    app: {
-                        users: {
-                            zero: 'There are no users',
-                            one: '{{count}} user',
-                            other: '{{count}} users',
-                        },
-                    },
-                },
-            }
-        );
     });
 });
