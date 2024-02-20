@@ -4,12 +4,6 @@
 
 Utilities in the I18N package are designed for internationalization of Gravity UI services.
 
-### Breaking changes in 0.6.0
-
-- Removed static method setDefaultLang, you have to use i18n.setLang instead
-- Removed default Rum Logger, you have to connect your own logger from application side
-- Removed static property LANGS
-
 ### Install
 
 `npm install --save @gravity-ui/i18n`
@@ -112,17 +106,32 @@ i18n('label_template', {inputValue: 'something', folderName: 'somewhere'});  // 
 
 ### Pluralization
 
-Pluralization can be used for easy localization of keys that depend on numeric values:
+Pluralization can be used for easy localization of keys that depend on numeric values. Current library uses [CLDR Plural Rules](https://unicode-org.github.io/cldr-staging/charts/latest/supplemental/language_plural_rules.html) via [Intl.PluralRules API](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Intl/PluralRules).
 
-#### `keysets.json`
+You may need to [polyfill](https://github.com/eemeli/intl-pluralrules) the [Intl.Plural Rules API](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Intl/PluralRules) if it is not available in the browser.
+
+There are 6 plural forms (see [resolvedOptions](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Intl/PluralRules/resolvedOptions)):
+
+- zero (also will be used when count = 0 even if the form is not supported in the language)
+- one (singular)
+- two (dual)
+- few (paucal)
+- many (also used for fractions if they have a separate class)
+- other (required form for all languages — general plural form — also used if the language only has a single form)
+
+#### Example of `keysets.json` with plural key
 
 ```json
 {
-  "label_seconds": ["{{count}} second is left", "{{count}} seconds are left", "{{count}} seconds are left", "No time left"]
+  "label_seconds": {
+    "one": "{{count}} second is left",
+    "other":"{{count}} seconds are left",
+    "zero": "No time left"
+  }
 }
 ```
 
-#### `index.js`
+#### Usage in JS
 
 ```js
 i18n('label_seconds', {count: 1});  // => 1 second
@@ -132,9 +141,19 @@ i18n('label_seconds', {count: 10}); // => 10 seconds
 i18n('label_seconds', {count: 0});  // => No time left
 ```
 
-A pluralized key contains 4 values, each corresponding to a `PluralForm` enum value. The enum values are: `One`, `Few`, `Many`, and `None`, respectively. Template variable name for pluralization is `count`.
+#### [Deprecated] Old plurals format
 
-#### Custom pluralization
+Old format will be removed in v2.
+
+```json
+{
+  "label_seconds": ["{{count}} second is left", "{{count}} seconds are left", "{{count}} seconds are left", "No time left"]
+}
+```
+
+A pluralized key contains 4 values, each |corresponding to a `PluralForm` enum value. The enum values are: `One`, `Few`, `Many`, and `None`, respectively. Template variable name for pluralization is `count`.
+
+#### [Deprecated] Custom pluralization
 
 Since every language has its own way of pluralization, the library provides a method to configure the rules for any chosen language.
 
@@ -156,10 +175,12 @@ i18n.configurePluralization({
 });
 ```
 
-#### Provided pluralization rulesets
+#### [Deprecated] Provided pluralization rulesets
+
 The two languages supported out of the box are English and Russian.
 
 ##### English
+
 Language key: `en`.
 * `One` corresponds to 1 and -1.
 * `Few` is not used.
@@ -167,6 +188,7 @@ Language key: `en`.
 * `None` corresponds to 0.
 
 ##### Russian
+
 Language key: `ru`.
 * `One` corresponds to any number ending in 1, except ±11.
 * `Few` corresponds to any number ending in 2, 3 or 4, except ±12, ±13 and ±14.
@@ -174,6 +196,7 @@ Language key: `ru`.
 * `None` corresponds to 0.
 
 ##### Default
+
 The English ruleset is used by default, for any language without a configured pluralization function.
 
 ### Typing
@@ -185,8 +208,6 @@ To type the `i18nInstance.i18n` function, follow the steps:
 Prepare a JSON keyset file so that the typing procedure can fetch data. Where you fetch keysets from, add creation of an additional `data.json` file. To decrease the file size and speed up IDE parsing, you can replace all values by `'str'`.
 
 ```ts
-// Example from the console
-
 async function createFiles(keysets: Record<Lang, LangKeysets>) {
     await mkdirp(DEST_PATH);
 
@@ -226,8 +247,6 @@ async function createFiles(keysets: Record<Lang, LangKeysets>) {
 In your `ui/utils/i18n` directories (where you configure i18n and export it to be used by all interfaces), import the typing function `I18NFn` with your `Keysets`. After your i18n has been configured, return the casted function
 
 ```ts
-// Example from the console
-
 import {I18NFn} from '@gravity-ui/i18n';
 // This must be a typed import!
 import type Keysets from '../../../dist/public/build/i18n/data.json';

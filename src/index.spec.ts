@@ -308,16 +308,16 @@ describe('i18n', () => {
         expect(logger.log).toHaveBeenCalledTimes(callsLength + 1);
     });
 
-    it('add description for test new plural form', () => {
+    it('basic checks for plurals with Intl.PluralRules', () => {
         i18n.setLang('ru');
         i18n.registerKeyset('ru', 'app', {
             users: {
                 'zero': 'нет пользователей',
-                'other': 'sdf',
                 'one': '{{count}} пользователь',
                 'few': '{{count}} пользователя',
                 'many': '{{count}} пользователей',
-            }
+                'other': '',
+            },
         });
 
         expect(i18n.i18n('app', 'users', {
@@ -434,10 +434,15 @@ describe('i18n', () => {
         })).toBe('3 статей');
     });
 
-    it('compare with depricated pluralizer', () => {
+    it('compare results between old and new plural formats', () => {
         i18n.setLang('ru');
         i18n.registerKeyset('ru', 'app', {
-            users_old: ['нет пользователей', '{{count}} пользователь', '{{count}} пользователя', '{{count}} пользователей'],
+            usersOldPlural: [
+                '{{count}} пользователь',
+                '{{count}} пользователя',
+                '{{count}} пользователей',
+                'нет пользователей',
+            ],
             users: {
                 'zero': 'нет пользователей',
                 'one': '{{count}} пользователь',
@@ -449,27 +454,39 @@ describe('i18n', () => {
 
         expect(i18n.i18n('app', 'users', {
             count: 0
-        })).toBe('нет пользователей');
+        })).toBe(i18n.i18n('app', 'usersOldPlural', {
+            count: 0
+        }));
 
         expect(i18n.i18n('app', 'users', {
             count: 1
-        })).toBe('1 пользователь');
+        })).toBe(i18n.i18n('app', 'usersOldPlural', {
+            count: 1
+        }));
 
         expect(i18n.i18n('app', 'users', {
             count: 2
-        })).toBe('2 пользователя');
+        })).toBe(i18n.i18n('app', 'usersOldPlural', {
+            count: 2
+        }));
 
         expect(i18n.i18n('app', 'users', {
             count: 3
-        })).toBe('3 пользователя');
+        })).toBe(i18n.i18n('app', 'usersOldPlural', {
+            count: 3
+        }));
 
         expect(i18n.i18n('app', 'users', {
             count: 5
-        })).toBe('5 пользователей');
+        })).toBe(i18n.i18n('app', 'usersOldPlural', {
+            count: 5
+        }));
 
         expect(i18n.i18n('app', 'users', {
             count: 11
-        })).toBe('11 пользователей');
+        })).toBe(i18n.i18n('app', 'usersOldPlural', {
+            count: 11
+        }));
     });
 });
 

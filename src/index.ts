@@ -113,6 +113,9 @@ export class I18N {
         this.fallbackLang = fallbackLang;
     }
 
+    /**
+     * @deprecated Plurals automatically used from Intl.PluralRules. You can safely remove this call. Will be removed in v2.
+     */
     configurePluralization(pluralizers: Record<string, Pluralizer>) {
         this.pluralizers = Object.assign({}, this.pluralizers, pluralizers);
     }

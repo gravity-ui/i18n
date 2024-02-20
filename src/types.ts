@@ -62,6 +62,9 @@ export enum PluralForm {
     None
 }
 
+/**
+ * @deprecated Old plurals format. Use new format from type PluralValue. Will be removed in v2.
+ */
 export type DeprecatedPluralValue = string[]
 
 export type PluralValue = {
