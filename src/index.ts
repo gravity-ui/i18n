@@ -112,6 +112,7 @@ export class I18N {
         this.fallbackLang = fallbackLang;
     }
 
+    //** @deprecated */
     configurePluralization(pluralizers: Record<string, Pluralizer>) {
         this.pluralizers = Object.assign({}, this.pluralizers, pluralizers);
     }
