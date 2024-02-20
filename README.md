@@ -114,11 +114,23 @@ i18n('label_template', {inputValue: 'something', folderName: 'somewhere'});  // 
 
 Pluralization can be used for easy localization of keys that depend on numeric values:
 
-#### `keysets.json`
+#### ```Deprecated``` `keysets.json`
 
 ```json
 {
   "label_seconds": ["{{count}} second is left", "{{count}} seconds are left", "{{count}} seconds are left", "No time left"]
+}
+```
+
+#### Current format `keysets.json`
+
+```json
+{
+  "label_seconds": {
+    "one": "{{count}} second is left",
+    "other":"{{count}} seconds are left", 
+    "zero": "No time left"
+  }
 }
 ```
 
@@ -132,9 +144,11 @@ i18n('label_seconds', {count: 10}); // => 10 seconds
 i18n('label_seconds', {count: 0});  // => No time left
 ```
 
-A pluralized key contains 4 values, each corresponding to a `PluralForm` enum value. The enum values are: `One`, `Few`, `Many`, and `None`, respectively. Template variable name for pluralization is `count`.
+Pluralization based on [Intl.PluralRules](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Intl/PluralRules). A pluralized key contains 6 values: `few`, `many`, `one`, `two`, `zero`, `other`. Use the keys that are appropriate for a particular language. (See [resolvedOptions](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Intl/PluralRules/resolvedOptions) in docs)
 
-#### Custom pluralization
+`deprecated`: A pluralized key contains 4 values, each |corresponding to a `PluralForm` enum value. The enum values are: `One`, `Few`, `Many`, and `None`, respectively. Template variable name for pluralization is `count`.
+
+#### `Deprecated` Custom pluralization
 
 Since every language has its own way of pluralization, the library provides a method to configure the rules for any chosen language.
 
@@ -156,7 +170,7 @@ i18n.configurePluralization({
 });
 ```
 
-#### Provided pluralization rulesets
+#### ```Deprecated``` Provided pluralization rulesets
 The two languages supported out of the box are English and Russian.
 
 ##### English
