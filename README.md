@@ -4,12 +4,6 @@
 
 Utilities in the I18N package are designed for internationalization of Gravity UI services.
 
-### Breaking changes in 0.6.0
-
-- Removed static method setDefaultLang, you have to use i18n.setLang instead
-- Removed default Rum Logger, you have to connect your own logger from application side
-- Removed static property LANGS
-
 ### Install
 
 `npm install --save @gravity-ui/i18n`
@@ -214,8 +208,6 @@ To type the `i18nInstance.i18n` function, follow the steps:
 Prepare a JSON keyset file so that the typing procedure can fetch data. Where you fetch keysets from, add creation of an additional `data.json` file. To decrease the file size and speed up IDE parsing, you can replace all values by `'str'`.
 
 ```ts
-// Example from the console
-
 async function createFiles(keysets: Record<Lang, LangKeysets>) {
     await mkdirp(DEST_PATH);
 
@@ -255,8 +247,6 @@ async function createFiles(keysets: Record<Lang, LangKeysets>) {
 In your `ui/utils/i18n` directories (where you configure i18n and export it to be used by all interfaces), import the typing function `I18NFn` with your `Keysets`. After your i18n has been configured, return the casted function
 
 ```ts
-// Example from the console
-
 import {I18NFn} from '@gravity-ui/i18n';
 // This must be a typed import!
 import type Keysets from '../../../dist/public/build/i18n/data.json';
