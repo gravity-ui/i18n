@@ -112,29 +112,32 @@ i18n('label_template', {inputValue: 'something', folderName: 'somewhere'});  // 
 
 ### Pluralization
 
-Pluralization can be used for easy localization of keys that depend on numeric values:
+Pluralization can be used for easy localization of keys that depend on numeric values. Current library uses [CLDR Plural Rules](https://unicode-org.github.io/cldr-staging/charts/latest/supplemental/language_plural_rules.html) via [Intl.PluralRules API](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Intl/PluralRules).
 
-#### ```Deprecated``` `keysets.json`
+You may need to [polyfill](https://github.com/eemeli/intl-pluralrules) the [Intl.Plural Rules API](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Intl/PluralRules) if it is not available in the browser.
 
-```json
-{
-  "label_seconds": ["{{count}} second is left", "{{count}} seconds are left", "{{count}} seconds are left", "No time left"]
-}
-```
+There are 6 plural forms (see [resolvedOptions](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Intl/PluralRules/resolvedOptions)):
 
-#### Current format `keysets.json`
+- zero (also will be used when count = 0 even if the form is not supported in the language)
+- one (singular)
+- two (dual)
+- few (paucal)
+- many (also used for fractions if they have a separate class)
+- other (required form for all languages — general plural form — also used if the language only has a single form)
+
+#### Example of `keysets.json` with plural key
 
 ```json
 {
   "label_seconds": {
     "one": "{{count}} second is left",
-    "other":"{{count}} seconds are left", 
+    "other":"{{count}} seconds are left",
     "zero": "No time left"
   }
 }
 ```
 
-#### `index.js`
+#### Usage in JS
 
 ```js
 i18n('label_seconds', {count: 1});  // => 1 second
@@ -144,11 +147,19 @@ i18n('label_seconds', {count: 10}); // => 10 seconds
 i18n('label_seconds', {count: 0});  // => No time left
 ```
 
-Pluralization based on [Intl.PluralRules](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Intl/PluralRules). A pluralized key contains 6 values: `few`, `many`, `one`, `two`, `zero`, `other`. Use the keys that are appropriate for a particular language. (See [resolvedOptions](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Intl/PluralRules/resolvedOptions) in docs)
+#### [Deprecated] Old plurals format
 
-`deprecated`: A pluralized key contains 4 values, each |corresponding to a `PluralForm` enum value. The enum values are: `One`, `Few`, `Many`, and `None`, respectively. Template variable name for pluralization is `count`.
+Old format will be removed in v2.
 
-#### `Deprecated` Custom pluralization
+```json
+{
+  "label_seconds": ["{{count}} second is left", "{{count}} seconds are left", "{{count}} seconds are left", "No time left"]
+}
+```
+
+A pluralized key contains 4 values, each |corresponding to a `PluralForm` enum value. The enum values are: `One`, `Few`, `Many`, and `None`, respectively. Template variable name for pluralization is `count`.
+
+#### [Deprecated] Custom pluralization
 
 Since every language has its own way of pluralization, the library provides a method to configure the rules for any chosen language.
 
@@ -170,10 +181,12 @@ i18n.configurePluralization({
 });
 ```
 
-#### ```Deprecated``` Provided pluralization rulesets
+#### [Deprecated] Provided pluralization rulesets
+
 The two languages supported out of the box are English and Russian.
 
 ##### English
+
 Language key: `en`.
 * `One` corresponds to 1 and -1.
 * `Few` is not used.
@@ -181,6 +194,7 @@ Language key: `en`.
 * `None` corresponds to 0.
 
 ##### Russian
+
 Language key: `ru`.
 * `One` corresponds to any number ending in 1, except ±11.
 * `Few` corresponds to any number ending in 2, 3 or 4, except ±12, ±13 and ±14.
@@ -188,6 +202,7 @@ Language key: `ru`.
 * `None` corresponds to 0.
 
 ##### Default
+
 The English ruleset is used by default, for any language without a configured pluralization function.
 
 ### Typing

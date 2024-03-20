@@ -1,6 +1,5 @@
 import type {PluralForm} from '../types';
 
-//** @deprecated */
 export default function(count: number, pluralForms: typeof PluralForm): PluralForm {
     if (count === 0) {
         return pluralForms.None;

@@ -112,7 +112,9 @@ export class I18N {
         this.fallbackLang = fallbackLang;
     }
 
-    //** @deprecated */
+    /**
+     * @deprecated Plurals automatically used from Intl.PluralRules. You can safely remove this call. Will be removed in v2.
+     */
     configurePluralization(pluralizers: Record<string, Pluralizer>) {
         this.pluralizers = Object.assign({}, this.pluralizers, pluralizers);
     }
@@ -126,7 +128,7 @@ export class I18N {
         } else if (isAlreadyRegistered) {
             this.warn(`Keyset '${keysetName}' is already registered.`);
         }
-        
+
         this.data[lang] = Object.assign({}, this.data[lang], {[keysetName]: data});
     }
 
@@ -216,14 +218,6 @@ export class I18N {
     protected getLanguageData(lang?: string): KeysetData | undefined {
         const langCode = lang || this.lang;
         return langCode ? this.data[langCode] : undefined;
-    }
-
-    protected getLanguagePluralizer(lang?: string): Pluralizer {
-        const pluralizer = lang ? this.pluralizers[lang] : undefined;
-        if (!pluralizer) {
-            this.warn(`Pluralization is not configured for language '${lang}', falling back to the english ruleset`);
-        }
-        return pluralizer || pluralizerEn;
     }
 
     private getTranslationData(args: {

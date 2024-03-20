@@ -1,6 +1,5 @@
 import type {PluralForm} from '../types';
 
-//** @deprecated */
 export default function(count: number, pluralForms: typeof PluralForm): PluralForm {
     // the rules for negative numbers are the same
     const lastDigit = Math.abs(count % 10);
