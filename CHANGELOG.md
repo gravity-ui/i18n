@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.4.0](https://github.com/gravity-ui/i18n/compare/v1.3.0...v1.4.0) (2024-03-22)
+
+
+### Features
+
+* use Intl.PluralRules for plural keys ([#43](https://github.com/gravity-ui/i18n/issues/43)) ([1777df6](https://github.com/gravity-ui/i18n/commit/1777df667eef9c6d10ed1170375b6b547ac68da8))
+
 ## [1.3.0](https://github.com/gravity-ui/i18n/compare/v1.2.0...v1.3.0) (2024-02-02)
 
 
