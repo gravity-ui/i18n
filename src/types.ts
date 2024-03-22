@@ -1,4 +1,5 @@
-export type KeysData = Record<string, string | string[]>;
+export type KeyData = string | DeprecatedPluralValue | PluralValue;
+export type KeysData = Record<string, KeyData>;
 export type KeysetData = Record<string, KeysData>;
 
 type NoEnumLikeStringLiteral<T> = string extends T ? T : never;
@@ -59,6 +60,24 @@ export enum PluralForm {
     Few,
     Many,
     None
+}
+
+/**
+ * @deprecated Old plurals format. Use new format from type PluralValue. Will be removed in v2.
+ */
+export type DeprecatedPluralValue = string[]
+
+export type PluralValue = {
+    zero?: string;
+    one?: string;
+    two?: string;
+    few?: string;
+    many?: string;
+    other: string;
+}
+
+export function isPluralValue(value: KeyData): value is DeprecatedPluralValue | PluralValue {
+    return typeof value !== 'string';
 }
 
 export interface Logger {
