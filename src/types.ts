@@ -73,7 +73,7 @@ export type PluralValue = {
     two?: string;
     few?: string;
     many?: string;
-    other: string;
+    other?: string;
 }
 
 export function isPluralValue(value: KeyData): value is DeprecatedPluralValue | PluralValue {

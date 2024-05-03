@@ -15,7 +15,14 @@ export function getPluralViaIntl(key: string, value: PluralValue, count: number,
     }
 
     const pluralRules = new Intl.PluralRules(lang);
-    return value[pluralRules.select(count)] || value.other;
+
+    const form = pluralRules.select(count);
+
+    if (form === 'other' && typeof value.other === 'undefined') {
+        return value.many || value.few;
+    }
+
+    return value[form];
 }
 
 type FormatPluralArgs = {
