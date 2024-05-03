@@ -22,7 +22,7 @@ export function getPluralViaIntl(key: string, value: PluralValue, count: number,
         return value.many || value.few;
     }
 
-    return value[form];
+    return value[form] || value.other;
 }
 
 type FormatPluralArgs = {
