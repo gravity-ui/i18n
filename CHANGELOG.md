@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.5.0](https://github.com/gravity-ui/i18n/compare/v1.4.0...v1.5.0) (2024-05-04)
+
+
+### Features
+
+* make other form optional ([#49](https://github.com/gravity-ui/i18n/issues/49)) ([cec6a95](https://github.com/gravity-ui/i18n/commit/cec6a9552359783afa61c836738cee38d552ac03))
+
 ## [1.4.0](https://github.com/gravity-ui/i18n/compare/v1.3.0...v1.4.0) (2024-03-22)
 
 
