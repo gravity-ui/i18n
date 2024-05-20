@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.5.1](https://github.com/gravity-ui/i18n/compare/v1.5.0...v1.5.1) (2024-05-20)
+
+
+### Bug Fixes
+
+* optional other plural form ([e6ee304](https://github.com/gravity-ui/i18n/commit/e6ee30469c25f6d64b53ad4df32d14265f2f3a62))
+
 ## [1.5.0](https://github.com/gravity-ui/i18n/compare/v1.4.0...v1.5.0) (2024-05-04)
 
 
