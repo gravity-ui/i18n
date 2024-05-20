@@ -345,20 +345,6 @@ describe('i18n', () => {
         })).toBe('11 пользователей');
     });
 
-    it('should throw exception when missing required plural form', () => {
-        i18n.setLang('ru');
-        i18n.registerKeyset('ru', 'app', {
-            // @ts-ignore
-            users: {'many': '{{count}} пользователей'}
-        });
-
-        expect(() => {
-            i18n.i18n('app', 'users', {
-                count: 11,
-            })
-        }).toThrow(new Error(`Missing required plural form 'other' for key 'users'`));
-    });
-
     it('should use `other` form when no other forms are specified', () => {
         i18n.setLang('ru');
         i18n.registerKeyset('ru', 'app', {
@@ -583,7 +569,7 @@ describe('registerKeyset', () => {
             lang: 'en',
             data: {en: {notification: {hey: 'Hello!'}}},
         });
-        
+
         expect(() => {
             i18n.registerKeyset('en', 'notification', {
                 title: 'Hello!'

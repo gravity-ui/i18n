@@ -1,11 +1,7 @@
 import type { DeprecatedPluralValue, PluralValue, Pluralizer } from "../types";
 import {PluralForm} from '../types';
 
-export function getPluralViaIntl(key: string, value: PluralValue, count: number, lang: string) {
-    if (typeof value.other === 'undefined') {
-        throw new Error(`Missing required plural form 'other' for key '${key}'`);
-    }
-
+export function getPluralViaIntl(value: PluralValue, count: number, lang: string) {
     if (value.zero && count === 0) {
         return value.zero;
     }
@@ -37,7 +33,7 @@ type FormatPluralArgs = {
 
 export function getPluralValue({value, count, lang, pluralizers, log, key}: FormatPluralArgs) {
     if (!Array.isArray(value)) {
-        return getPluralViaIntl(key, value, count, lang) || key;
+        return getPluralViaIntl(value, count, lang) || key;
     }
 
     if (!pluralizers) {
