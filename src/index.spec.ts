@@ -577,3 +577,65 @@ describe('registerKeyset', () => {
         }).toThrow(Error);
     });
 });
+
+describe('translations inheritance', () => {
+    it('should return correct translation with inherited translations from same keyset', () => {
+        i18n = new I18N({
+            lang: 'en',
+            data: {
+                en: {
+                    inheritance: {
+                        service: "Service",
+                        welcome1: "Welcome to $t{service}",
+                        welcome2: "Welcome to $t{inheritance.service}",
+
+                        nesting1: "1 $t{nesting2}",
+                        nesting2: "2",
+                    }
+                }
+            },
+        });
+        i18n.setLang('en');
+
+        expect(i18n.i18n('inheritance', 'welcome1')).toBe('Welcome to Service');
+        expect(i18n.i18n('inheritance', 'welcome2')).toBe('Welcome to Service');
+        expect(i18n.i18n('inheritance', 'nesting1')).toBe('1 2');
+    });
+
+    it('should return correct translation with inherited translations from other keyset', () => {
+        i18n = new I18N({
+            lang: 'en',
+            data: {
+                en: {
+                    global: {
+                        "app-name": "I18N"
+                    },
+                    inheritance: {
+                        welcome: "Welcome to $t{global.app-name}",
+                    }
+                }
+            },
+        });
+        i18n.setLang('en');
+
+        expect(i18n.i18n('inheritance', 'welcome')).toBe('Welcome to I18N');
+    });
+
+    it('should return translation key if translations nesting depth exceed 1', () => {
+        i18n = new I18N({
+            lang: 'en',
+            data: {
+                en: {
+                    inheritance: {
+                        nesting1: "1 $t{nesting2}",
+                        nesting2: "2 $t{nesting3}",
+                        nesting3: "3",
+                    }
+                }
+            },
+        });
+        i18n.setLang('en');
+
+        expect(i18n.i18n('inheritance', 'nesting1')).toBe('nesting1');
+    });
+});

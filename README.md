@@ -199,6 +199,42 @@ Language key: `ru`.
 
 The English ruleset is used by default, for any language without a configured pluralization function.
 
+### Nesting
+
+<span style="color:red">Max nesting depth limited - only 1 level (for glossary)</span>
+
+Nesting allows you to reference other keys in a translation. Could be useful to build glossary terms.
+
+#### Basic
+
+keys
+
+```json
+{
+  "nesting1": "1 $t{nesting2}",
+  "nesting2": "2",
+}
+```
+
+sample
+
+```ts
+i18n('nesting1'); // -> "1 2"
+```
+
+You can reference keys from other keyset by prepending the keysetName: 
+```json
+// global/en.json
+{
+  "app": "App"
+}
+
+// service/en.json
+{
+  "app-service": "$t{global.app} service"
+}
+```
+
 ### Typing
 
 To type the `i18nInstance.i18n` function, follow the steps:

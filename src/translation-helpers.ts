@@ -1,13 +1,15 @@
-export const ErrorCode = {
-    EmptyKeyset: 'EMPTY_KEYSET',
-    EmptyLanguageData: 'EMPTY_LANGUAGE_DATA',
-    KeysetNotFound: 'KEYSET_NOT_FOUND',
-    MissingKey: 'MISSING_KEY',
-    MissingKeyFor0: 'MISSING_KEY_FOR_0',
-    MissingKeyParamsCount: 'MISSING_KEY_PARAMS_COUNT',
-    MissingKeyPlurals: 'MISSING_KEY_PLURALS',
-    NoLanguageData: 'NO_LANGUAGE_DATA',
-} as const;
+export enum ErrorCode {
+    EmptyKeyset = 'EMPTY_KEYSET',
+    EmptyLanguageData = 'EMPTY_LANGUAGE_DATA',
+    KeysetNotFound = 'KEYSET_NOT_FOUND',
+    MissingKey = 'MISSING_KEY',
+    MissingKeyFor0 = 'MISSING_KEY_FOR_0',
+    MissingKeyParamsCount = 'MISSING_KEY_PARAMS_COUNT',
+    MissingKeyPlurals = 'MISSING_KEY_PLURALS',
+    MissingInheritedKey = 'MISSING_INHERITED_KEY',
+    ExceedTranslationNestingDepth = 'EXCEED_TRANSLATION_NESTING_DEPTH',
+    NoLanguageData = 'NO_LANGUAGE_DATA',
+}
 
 const codeValues = Object.values(ErrorCode);
 export type ErrorCodeType = (typeof codeValues)[number];

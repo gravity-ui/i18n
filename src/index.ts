@@ -10,6 +10,8 @@ import {getPluralValue} from './plural/general';
 
 export * from './types';
 
+const MAX_NESTING_DEPTH = 1
+
 type I18NOptions = {
     /**
      * Keysets mapped data.
@@ -73,14 +75,21 @@ type I18NOptions = {
     logger?: Logger;
 };
 
-type TranslationData = {
-    text?: string;
+type ErrorDetails = {
     details?: {
         code: ErrorCodeType;
         keysetName?: string;
         key?: string;
     };
-};
+}
+
+type SearchTranslationData = {
+    text?: string;
+} & ErrorDetails;
+
+type SearchKeysetData = {
+    data?: KeysData;
+} & ErrorDetails;
 
 export class I18N {
     data: Record<string, KeysetData> = {};
@@ -151,38 +160,15 @@ export class I18N {
         }
 
         let text: string | undefined;
-        let details: TranslationData['details'];
 
         if (this.lang) {
-            ({text, details} = this.getTranslationData({keysetName, key, params, lang: this.lang}));
-
-            if (details) {
-                const message = mapErrorCodeToMessage({
-                    code: details.code,
-                    lang: this.lang,
-                    fallbackLang: this.fallbackLang === this.lang ? undefined : this.fallbackLang,
-                });
-                this.warn(message, details.keysetName, details.key);
-            }
+            text = this._i18n(keysetName, key, this.lang, params);
         } else {
             this.warn('Target language is not specified.');
         }
 
         if (text === undefined && this.fallbackLang && this.fallbackLang !== this.lang) {
-            ({text, details} = this.getTranslationData({
-                keysetName,
-                key,
-                params,
-                lang: this.fallbackLang,
-            }));
-
-            if (details) {
-                const message = mapErrorCodeToMessage({
-                    code: details.code,
-                    lang: this.fallbackLang,
-                });
-                this.warn(message, details.keysetName, details.key);
-            }
+            text = this._i18n(keysetName, key, this.fallbackLang, params);
         }
 
         return text ?? key;
@@ -216,68 +202,183 @@ export class I18N {
         });
     }
 
-    protected getLanguageData(lang?: string): KeysetData | undefined {
+    getLanguageData(lang?: string): KeysetData | undefined {
         const langCode = lang || this.lang;
         return langCode ? this.data[langCode] : undefined;
     }
 
-    private getTranslationData(args: {
-        keysetName: string;
-        key: string;
-        lang: string;
-        params?: Params;
-    }): TranslationData {
-        const {lang, key, keysetName, params} = args;
-        const languageData = this.getLanguageData(lang);
+    private _i18n(keysetName: string, key: string, lang: string, params?: Params) {
+        const {text, details} = (new I18NTranslation(this, lang, key, keysetName, params)).getTranslationData()
 
-        if (typeof languageData === 'undefined') {
-            return {details: {code: ErrorCode.NoLanguageData}};
+        if (details) {
+            const message = mapErrorCodeToMessage({
+                code: details.code,
+                lang,
+                fallbackLang: this.fallbackLang === lang ? undefined : this.fallbackLang,
+            });
+            this.warn(message, details.keysetName, details.key);
         }
 
-        if (Object.keys(languageData).length === 0) {
-            return {details: {code: ErrorCode.EmptyLanguageData}};
+        return text
+    }
+}
+
+class I18NTranslation {
+    private i18n: I18N
+    private lang: string
+    private key: string
+    private keysetName: string
+    private params?: Params
+    private nestingDepth: number
+
+    constructor(
+        i18n: I18N, 
+        lang: string,
+        key: string, 
+        keysetName: string, 
+        params?: Params,
+        nestingDepth?: number
+    ) {
+        this.i18n = i18n
+        this.lang = lang
+        this.key = key
+        this.keysetName = keysetName
+        this.params = params
+        this.nestingDepth = nestingDepth ?? 0
+    }
+
+    getTranslationData(): SearchTranslationData {
+        const {data: keyset, details} = this.getKeyset();
+
+        if (details) {
+            return {details}
         }
 
-        const keyset = languageData[keysetName];
-
-        if (!keyset) {
-            return {details: {code: ErrorCode.KeysetNotFound, keysetName}};
-        }
-
-        if (Object.keys(keyset).length === 0) {
-            return {details: {code: ErrorCode.EmptyKeyset, keysetName}};
-        }
-
-        const keyValue = keyset && keyset[key];
-        const result: TranslationData = {};
+        const keyValue = keyset && keyset[this.key];
+        const result: SearchTranslationData = {};
 
         if (keyValue === undefined) {
-            return {details: {code: ErrorCode.MissingKey, keysetName, key}};
+            return this.getTranslationDataError(ErrorCode.MissingKey)
         }
 
         if (isPluralValue(keyValue)) {
-            const count = Number(params?.count);
+            const count = Number(this.params?.count);
 
             if (Number.isNaN(count)) {
-                return {details: {code: ErrorCode.MissingKeyParamsCount, keysetName, key}};
+                return this.getTranslationDataError(ErrorCode.MissingKeyParamsCount)
             }
 
             result.text = getPluralValue({
-                key,
+                key: this.key,
                 value: keyValue,
                 count,
                 lang: this.lang || 'en',
-                pluralizers: this.pluralizers,
-                log: (message) => this.warn(message, keysetName, key),
+                pluralizers: this.i18n.pluralizers,
+                log: (message) => this.i18n.warn(message, this.keysetName, this.key),
             });
         } else {
-            result.text = keyValue;
+            result.text = String(keyValue);
         }
 
-        if (params) {
-            result.text = replaceParams(result.text, params);
+        if (this.params) {
+            result.text = replaceParams(String(result.text), this.params);
         }
+
+        const replaceTranslationsInheritanceResult = this.replaceTranslationsInheritance({
+            keyValue: String(result.text),
+        })
+        if (!replaceTranslationsInheritanceResult.text) {
+            return replaceTranslationsInheritanceResult
+        }
+        result.text = replaceTranslationsInheritanceResult.text
 
         return result;
+
+    }
+
+    private getTranslationDataError(errorCode: ErrorCode): SearchTranslationData {
+        return {details: {code: errorCode, keysetName: this.keysetName, key: this.key}}
+    }
+
+    private getKeyset(): SearchKeysetData {
+        const languageData = this.i18n.getLanguageData(this.lang);
+
+        if (typeof languageData === 'undefined') {
+            return this.getTranslationDataError(ErrorCode.NoLanguageData)
+        }
+
+        if (Object.keys(languageData).length === 0) {
+            return this.getTranslationDataError(ErrorCode.EmptyLanguageData)
+        }
+
+        const keyset = languageData[this.keysetName];
+
+        if (!keyset) {
+            return this.getTranslationDataError(ErrorCode.KeysetNotFound)
+        }
+
+        if (Object.keys(keyset).length === 0) {
+            return this.getTranslationDataError(ErrorCode.EmptyKeyset)
+        }
+
+        return {data: keyset}
+    }
+
+    private replaceTranslationsInheritance(args: {
+        keyValue: string;
+    }): SearchTranslationData {
+        const {keyValue} = args
+
+        const PREGEXP = /\$t{([^}]+)}/g;
+        let result = '';
+
+        let lastIndex = (PREGEXP.lastIndex = 0);
+        let match;
+        while ((match = PREGEXP.exec(keyValue))) {
+            if (lastIndex !== match.index) {
+                result += keyValue.slice(lastIndex, match.index);
+            }
+            lastIndex = PREGEXP.lastIndex;
+
+            const [all, key] = match;
+            if (key) {
+                if (this.nestingDepth + 1 > MAX_NESTING_DEPTH) {
+                    return this.getTranslationDataError(ErrorCode.ExceedTranslationNestingDepth)
+                }
+
+                let [inheritedKey, inheritedKeysetName]: [string, string | undefined] = [key, undefined]
+
+                const parts = key.split('.')
+                if (parts.length > 1) {
+                    [inheritedKeysetName, inheritedKey] = [parts[0], parts[1]!]
+                }
+                
+                if (!inheritedKey) {
+                    return this.getTranslationDataError(ErrorCode.MissingInheritedKey)
+                }
+
+                // Not support nested params
+                const data = (new I18NTranslation(
+                    this.i18n,
+                    this.lang, 
+                    inheritedKey, 
+                    inheritedKeysetName ?? this.keysetName, 
+                    undefined,
+                    this.nestingDepth + 1
+                )).getTranslationData()
+
+                if (data.details) {
+                    return this.getTranslationDataError(ErrorCode.MissingInheritedKey)
+                }
+                result += data.text;
+            } else {
+                result += all;
+            }
+        }
+        if (lastIndex < keyValue.length) {
+            result += keyValue.slice(lastIndex);
+        }
+
+        return {text: result};
     }
 }
