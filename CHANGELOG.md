@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.6.0](https://github.com/gravity-ui/i18n/compare/v1.5.1...v1.6.0) (2024-07-12)
+
+
+### Features
+
+* add translations nesting ([#52](https://github.com/gravity-ui/i18n/issues/52)) ([2ecbaa4](https://github.com/gravity-ui/i18n/commit/2ecbaa4e3783efff36e84e2e3de28ee08eddb3ac))
+
 ## [1.5.1](https://github.com/gravity-ui/i18n/compare/v1.5.0...v1.5.1) (2024-05-20)
 
 
