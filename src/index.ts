@@ -1,5 +1,5 @@
 import {replaceParams} from './replace-params';
-import {ErrorCode, mapErrorCodeToMessage} from './translation-helpers';
+import {ErrorCode, getPluralValues, hasNestingTranslations, mapErrorCodeToMessage} from './translation-helpers';
 import type {ErrorCodeType} from './translation-helpers';
 import {isPluralValue} from './types';
 import type {KeysData, KeysetData, Logger, Params, Pluralizer} from './types';
@@ -7,10 +7,9 @@ import type {KeysData, KeysetData, Logger, Params, Pluralizer} from './types';
 import pluralizerEn from './plural/en';
 import pluralizerRu from './plural/ru';
 import {getPluralValue} from './plural/general';
+import { KEYSET_SEPARATOR, MAX_NESTING_DEPTH, getNestingTranslationsRegExp } from './consts';
 
 export * from './types';
-
-const MAX_NESTING_DEPTH = 1
 
 type I18NOptions = {
     /**
@@ -262,6 +261,13 @@ class I18NTranslation {
         }
 
         if (isPluralValue(keyValue)) {
+            // Limit nesting plural due to the difficulties of translations inlining
+            const isNested = this.nestingDepth > 0
+            const isPluralValueHasNestingTranslations = getPluralValues(keyValue).some(kv => hasNestingTranslations(kv))
+            if (isNested || isPluralValueHasNestingTranslations) {
+                return this.getTranslationDataError(ErrorCode.NestedPlural)
+            }
+
             const count = Number(this.params?.count);
 
             if (Number.isNaN(count)) {
@@ -328,17 +334,16 @@ class I18NTranslation {
         keyValue: string;
     }): SearchTranslationData {
         const {keyValue} = args
-
-        const PREGEXP = /\$t{([^}]+)}/g;
+        const NESTING_PREGEXP = getNestingTranslationsRegExp();
         let result = '';
 
-        let lastIndex = (PREGEXP.lastIndex = 0);
+        let lastIndex = (NESTING_PREGEXP.lastIndex = 0);
         let match;
-        while ((match = PREGEXP.exec(keyValue))) {
+        while ((match = NESTING_PREGEXP.exec(keyValue))) {
             if (lastIndex !== match.index) {
                 result += keyValue.slice(lastIndex, match.index);
             }
-            lastIndex = PREGEXP.lastIndex;
+            lastIndex = NESTING_PREGEXP.lastIndex;
 
             const [all, key] = match;
             if (key) {
@@ -348,7 +353,7 @@ class I18NTranslation {
 
                 let [inheritedKey, inheritedKeysetName]: [string, string | undefined] = [key, undefined]
 
-                const parts = key.split('.')
+                const parts = key.split(KEYSET_SEPARATOR)
                 if (parts.length > 1) {
                     [inheritedKeysetName, inheritedKey] = [parts[0], parts[1]!]
                 }

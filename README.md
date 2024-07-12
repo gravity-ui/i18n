@@ -231,7 +231,7 @@ You can reference keys from other keyset by prepending the keysetName:
 
 // service/en.json
 {
-  "app-service": "$t{global.app} service"
+  "app-service": "$t{global::app} service"
 }
 ```
 

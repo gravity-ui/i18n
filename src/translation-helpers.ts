@@ -1,3 +1,6 @@
+import { getNestingTranslationsRegExp } from "./consts";
+import { KeyData } from "./types";
+
 export enum ErrorCode {
     EmptyKeyset = 'EMPTY_KEYSET',
     EmptyLanguageData = 'EMPTY_LANGUAGE_DATA',
@@ -7,6 +10,7 @@ export enum ErrorCode {
     MissingKeyParamsCount = 'MISSING_KEY_PARAMS_COUNT',
     MissingKeyPlurals = 'MISSING_KEY_PLURALS',
     MissingInheritedKey = 'MISSING_INHERITED_KEY',
+    NestedPlural = 'NESTED_PLURAL',
     ExceedTranslationNestingDepth = 'EXCEED_TRANSLATION_NESTING_DEPTH',
     NoLanguageData = 'NO_LANGUAGE_DATA',
 }
@@ -57,4 +61,20 @@ export function mapErrorCodeToMessage(args: {code: ErrorCodeType; lang: string; 
     }
 
     return message;
+}
+
+export const hasNestingTranslations = (keyValue: string): boolean => {
+    const NESTING_PREGEXP = getNestingTranslationsRegExp();
+    const match = NESTING_PREGEXP.exec(keyValue)
+    return (match?.length ?? 0) > 0
+}
+
+export const getPluralValues = (keyValue: KeyData): string[] => {
+    if (keyValue instanceof Array) {
+        return keyValue
+    } else if (keyValue instanceof Object) {
+        return Object.values(keyValue)
+    }
+
+    return []
 }
