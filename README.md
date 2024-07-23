@@ -201,7 +201,16 @@ The English ruleset is used by default, for any language without a configured pl
 
 ### Nesting
 
-<span style="color:red">Max nesting depth limited - only 1 level (for glossary)</span>
+<!--GITHUB_BLOCK-->
+<span style="color:red">
+<!--/GITHUB_BLOCK-->
+
+<!--LANDING_BLOCK
+<span style={{color: 'red'}}>
+LANDING_BLOCK-->
+
+Max nesting depth limited - only 1 level (for glossary)
+</span>
 
 Nesting allows you to reference other keys in a translation. Could be useful to build glossary terms.
 
