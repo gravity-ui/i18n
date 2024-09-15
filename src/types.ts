@@ -51,29 +51,32 @@ export type I18NFn<T = any> = {
     ): () => S extends G ? T[K][G] : string;
 };
 
+export type Params = {[key: string]: any};
+
 // Recursive helper for finding path parameters
 type KeyParam<Path extends string> =
     Path extends `${infer L}{{${infer K}}}${infer R}`
         ? K | KeyParam<L> | KeyParam<R>
         : never;
 
+// eslint-disable-next-line @typescript-eslint/naming-convention
 export type unstable_I18NFn<T = any> = {
-    <K extends keyof T, G extends keyof T[K], S extends string>(keysetName: K, key: G | NoEnumLikeStringLiteral<S>, params?: Params<T[K][G]>): string;
-    keyset<K extends keyof T>(keysetName: K): <G extends keyof T[K], S extends string>(key: G | NoEnumLikeStringLiteral<S>, params?: Params<T[K][G]>) => string;
+    <K extends keyof T, G extends keyof T[K], S extends string>(keysetName: K, key: G | NoEnumLikeStringLiteral<S>, params?: KeyParams<T[K][G]>): string;
+    keyset<K extends keyof T>(keysetName: K): <G extends keyof T[K], S extends string>(key: G | NoEnumLikeStringLiteral<S>, params?: KeyParams<T[K][G]>) => string;
     i18n<K extends keyof T, G extends keyof T[K], S extends string>(keysetName: K, key: G | NoEnumLikeStringLiteral<S>): () => string;
     has<K extends keyof T>(keysetName: K, key: string): () => boolean;
-    bind(thisArg: any): <K extends keyof T, G extends keyof T[K], S extends string>(keysetName: K, key: G | NoEnumLikeStringLiteral<S>, params?: Params<T[K][G]>) => string;
-    bind<K extends keyof T>(thisArg: any, keysetName: K): <G extends keyof T[K], S extends string>(key: G | NoEnumLikeStringLiteral<S>, params?: Params<T[K][G]>) => string;
-    bind<K extends keyof T, G extends keyof T[K], S extends string>(thisArg: any, keysetName: K, key: G | NoEnumLikeStringLiteral<S>): (params?: Params<T[K][G]>) => string;
-    bind<K extends keyof T, G extends keyof T[K], S extends string>(thisArg: any, keysetName: K, key: G | NoEnumLikeStringLiteral<S>, params?: Params<T[K][G]>): () => string;
+    bind(thisArg: any): <K extends keyof T, G extends keyof T[K], S extends string>(keysetName: K, key: G | NoEnumLikeStringLiteral<S>, params?: KeyParams<T[K][G]>) => string;
+    bind<K extends keyof T>(thisArg: any, keysetName: K): <G extends keyof T[K], S extends string>(key: G | NoEnumLikeStringLiteral<S>, params?: KeyParams<T[K][G]>) => string;
+    bind<K extends keyof T, G extends keyof T[K], S extends string>(thisArg: any, keysetName: K, key: G | NoEnumLikeStringLiteral<S>): (params?: KeyParams<T[K][G]>) => string;
+    bind<K extends keyof T, G extends keyof T[K], S extends string>(thisArg: any, keysetName: K, key: G | NoEnumLikeStringLiteral<S>, params?: KeyParams<T[K][G]>): () => string;
 };
 
-type StringKey = string;
+type StringValue = string;
 
-export type Params<K extends (StringKey | PluralValue)> = Record<
-    K extends string
-        ? KeyParam<K>
-        : KeyParam<K['zero']> | KeyParam<K['one']> | KeyParam<K['two']> | KeyParam<K['few']> | KeyParam<K['many']> | KeyParam<K['other']>
+export type KeyParams<K extends any> = Record<
+    K extends PluralValue
+        ? KeyParam<NonNullable<K['zero']>> | KeyParam<NonNullable<K['one']>> | KeyParam<NonNullable<K['two']>> | KeyParam<NonNullable<K['few']>> | KeyParam<NonNullable<K['many']>> | KeyParam<NonNullable<K['other']>>
+        : (K extends StringValue ? KeyParam<K> : never)
     , any
 >;
 
