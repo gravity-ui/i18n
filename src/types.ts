@@ -63,7 +63,7 @@ type RequiredPluralValue = {
     count: number | string; // "string" parsed via Number constructor
 }
 
-export type StrictTypedParams<K = (StringKey | PluralValue), V = string | number> = (
+export type TypedParams<K = (StringKey | PluralValue), V = string | number> = (
     K extends StringKey
         ? Record<KeyParam<K>, V>
         : (
@@ -73,17 +73,17 @@ export type StrictTypedParams<K = (StringKey | PluralValue), V = string | number
             )
     );
 
-export type StrictTypedParamsI18NFn<T = any> = {
+export type TypedParamsI18NFn<T = any> = {
     <K extends keyof T, G extends keyof T[K], S extends string>(
         keysetName: K,
         key: G | NoEnumLikeStringLiteral<S>,
-        params?: StrictTypedParams<T[K][G]>,
+        params?: TypedParams<T[K][G]>,
     ): string;
     keyset<K extends keyof T>(
         keysetName: K,
     ): <G extends keyof T[K], S extends string>(
         key: G | NoEnumLikeStringLiteral<S>,
-        params?: StrictTypedParams<T[K][G]>,
+        params?: TypedParams<T[K][G]>,
     ) => string;
     i18n<K extends keyof T, G extends keyof T[K], S extends string>(
         keysetName: K,
@@ -98,25 +98,25 @@ export type StrictTypedParamsI18NFn<T = any> = {
     ): <K extends keyof T, G extends keyof T[K], S extends string>(
         keysetName: K,
         key: G | NoEnumLikeStringLiteral<S>,
-        params?: StrictTypedParams<T[K][G]>,
+        params?: TypedParams<T[K][G]>,
     ) => string;
     bind<K extends keyof T>(
         thisArg: any,
         keysetName: K,
     ): <G extends keyof T[K], S extends string>(
         key: G | NoEnumLikeStringLiteral<S>,
-        params?: StrictTypedParams<T[K][G]>,
+        params?: TypedParams<T[K][G]>,
     ) => string;
     bind<K extends keyof T, G extends keyof T[K], S extends string>(
         thisArg: any,
         keysetName: K,
         key: G | NoEnumLikeStringLiteral<S>,
-    ): (params?: StrictTypedParams<T[K][G]>) => string;
+    ): (params?: TypedParams<T[K][G]>) => string;
     bind<K extends keyof T, G extends keyof T[K], S extends string>(
         thisArg: any,
         keysetName: K,
         key: G | NoEnumLikeStringLiteral<S>,
-        params?: StrictTypedParams<T[K][G]>,
+        params?: TypedParams<T[K][G]>,
     ): () => string;
 };
 
