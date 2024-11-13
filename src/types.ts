@@ -63,10 +63,14 @@ type RequiredPluralValue = {
     count: number | string; // "string" parsed via Number constructor
 }
 
-export type StrictTypedParams<K extends (StringKey | PluralValue), V = string | number> = (
-    K extends string
+export type StrictTypedParams<K = (StringKey | PluralValue), V = string | number> = (
+    K extends StringKey
         ? Record<KeyParam<K>, V>
-        : Record<KeyParam<K["zero"]> | KeyParam<K['one']> | KeyParam<K['two']> | KeyParam<K['few']> | KeyParam<K['many']> | KeyParam<K['other']>, V> & RequiredPluralValue
+        : (
+            K extends PluralValue
+                ? Record<KeyParam<NonNullable<K["zero"]>> | KeyParam<NonNullable<K['one']>> | KeyParam<NonNullable<K['two']>> | KeyParam<NonNullable<K['few']>> | KeyParam<NonNullable<K['many']>> | KeyParam<NonNullable<K['other']>>, V> & RequiredPluralValue
+                : unknown
+        )
 );
 
 export type StrictTypedParamsI18NFn<T = any> = {
