@@ -78,17 +78,17 @@ export type StrictTypedParamsI18NFn<T = any> = {
         keysetName: K,
         key: G | NoEnumLikeStringLiteral<S>,
         params?: StrictTypedParams<T[K][G]>,
-    ): S extends G ? T[K][G] : string;
+    ): string;
     keyset<K extends keyof T>(
         keysetName: K,
     ): <G extends keyof T[K], S extends string>(
         key: G | NoEnumLikeStringLiteral<S>,
         params?: StrictTypedParams<T[K][G]>,
-    ) => S extends G ? T[K][G] : string;
+    ) => string;
     i18n<K extends keyof T, G extends keyof T[K], S extends string>(
         keysetName: K,
         key: G | NoEnumLikeStringLiteral<S>,
-    ): () => S extends G ? T[K][G] : string;
+    ): () => string;
     has<K extends keyof T>(
         keysetName: K,
         key: string
@@ -99,25 +99,25 @@ export type StrictTypedParamsI18NFn<T = any> = {
         keysetName: K,
         key: G | NoEnumLikeStringLiteral<S>,
         params?: StrictTypedParams<T[K][G]>,
-    ) => S extends G ? T[K][G] : string;
+    ) => string;
     bind<K extends keyof T>(
         thisArg: any,
         keysetName: K,
     ): <G extends keyof T[K], S extends string>(
         key: G | NoEnumLikeStringLiteral<S>,
         params?: StrictTypedParams<T[K][G]>,
-    ) => S extends G ? T[K][G] : string;
+    ) => string;
     bind<K extends keyof T, G extends keyof T[K], S extends string>(
         thisArg: any,
         keysetName: K,
         key: G | NoEnumLikeStringLiteral<S>,
-    ): (params?: StrictTypedParams<T[K][G]>) => S extends G ? T[K][G] : string;
+    ): (params?: StrictTypedParams<T[K][G]>) => string;
     bind<K extends keyof T, G extends keyof T[K], S extends string>(
         thisArg: any,
         keysetName: K,
         key: G | NoEnumLikeStringLiteral<S>,
         params?: StrictTypedParams<T[K][G]>,
-    ): () => S extends G ? T[K][G] : string;
+    ): () => string;
 };
 
 export type Params = {[key: string]: any};
