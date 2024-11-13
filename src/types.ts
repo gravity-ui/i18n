@@ -51,6 +51,71 @@ export type I18NFn<T = any> = {
     ): () => S extends G ? T[K][G] : string;
 };
 
+// Recursive helper for finding path parameters
+type KeyParam<Path extends string> =
+    Path extends `${infer L}{{${infer K}}}${infer R}`
+        ? K | KeyParam<L> | KeyParam<R>
+        : never;
+
+type StringKey = string;
+
+type RequiredPluralValue = {
+    count: number | string; // "string" parsed via Number constructor
+}
+
+export type StrictTypedParams<K extends (StringKey | PluralValue), V = string | number> = (
+    K extends string
+        ? Record<KeyParam<K>, V>
+        : Record<KeyParam<K["zero"]> | KeyParam<K['one']> | KeyParam<K['two']> | KeyParam<K['few']> | KeyParam<K['many']> | KeyParam<K['other']>, V> & RequiredPluralValue
+);
+
+export type StrictTypedParamsI18NFn<T = any> = {
+    <K extends keyof T, G extends keyof T[K], S extends string>(
+        keysetName: K,
+        key: G | NoEnumLikeStringLiteral<S>,
+        params?: StrictTypedParams<T[K][G]>,
+    ): S extends G ? T[K][G] : string;
+    keyset<K extends keyof T>(
+        keysetName: K,
+    ): <G extends keyof T[K], S extends string>(
+        key: G | NoEnumLikeStringLiteral<S>,
+        params?: StrictTypedParams<T[K][G]>,
+    ) => S extends G ? T[K][G] : string;
+    i18n<K extends keyof T, G extends keyof T[K], S extends string>(
+        keysetName: K,
+        key: G | NoEnumLikeStringLiteral<S>,
+    ): () => S extends G ? T[K][G] : string;
+    has<K extends keyof T>(
+        keysetName: K,
+        key: string
+    ): () => boolean;
+    bind(
+        thisArg: any,
+    ): <K extends keyof T, G extends keyof T[K], S extends string>(
+        keysetName: K,
+        key: G | NoEnumLikeStringLiteral<S>,
+        params?: StrictTypedParams<T[K][G]>,
+    ) => S extends G ? T[K][G] : string;
+    bind<K extends keyof T>(
+        thisArg: any,
+        keysetName: K,
+    ): <G extends keyof T[K], S extends string>(
+        key: G | NoEnumLikeStringLiteral<S>,
+        params?: StrictTypedParams<T[K][G]>,
+    ) => S extends G ? T[K][G] : string;
+    bind<K extends keyof T, G extends keyof T[K], S extends string>(
+        thisArg: any,
+        keysetName: K,
+        key: G | NoEnumLikeStringLiteral<S>,
+    ): (params?: StrictTypedParams<T[K][G]>) => S extends G ? T[K][G] : string;
+    bind<K extends keyof T, G extends keyof T[K], S extends string>(
+        thisArg: any,
+        keysetName: K,
+        key: G | NoEnumLikeStringLiteral<S>,
+        params?: StrictTypedParams<T[K][G]>,
+    ): () => S extends G ? T[K][G] : string;
+};
+
 export type Params = {[key: string]: any};
 
 export type Pluralizer = (count: number, pluralForms: typeof PluralForm) => PluralForm;
