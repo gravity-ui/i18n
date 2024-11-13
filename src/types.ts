@@ -60,7 +60,7 @@ type KeyParam<Path extends string> =
 type StringKey = string;
 
 type RequiredPluralValue = {
-    count: number | string; // "string" parsed via Number constructor
+    count: number;
 }
 
 export type TypedParams<K = (StringKey | PluralValue), V = string | number> = (
