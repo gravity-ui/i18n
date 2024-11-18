@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.7.0](https://github.com/gravity-ui/i18n/compare/v1.6.0...v1.7.0) (2024-11-18)
+
+
+### Features
+
+* I18n strict params ([#57](https://github.com/gravity-ui/i18n/issues/57)) ([60608b3](https://github.com/gravity-ui/i18n/commit/60608b3dbc6cf4bb071a88d0fd78e81e136f0751))
+
 ## [1.6.0](https://github.com/gravity-ui/i18n/compare/v1.5.1...v1.6.0) (2024-07-12)
 
 
