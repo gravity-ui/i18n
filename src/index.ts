@@ -133,9 +133,9 @@ export class I18N {
             && Object.prototype.hasOwnProperty.call(this.data[lang], keysetName);
 
         if (isAlreadyRegistered && process.env.NODE_ENV === 'production') {
-            throw new Error(`Keyset '${keysetName}' is already registered, aborting!`);
-        } else if (isAlreadyRegistered) {
             this.warn(`Keyset '${keysetName}' is already registered.`);
+        } else if (isAlreadyRegistered) {
+            throw new Error(`Keyset '${keysetName}' is already registered, aborting!`);
         }
 
         this.data[lang] = Object.assign({}, this.data[lang], {[keysetName]: data});
@@ -231,10 +231,10 @@ class I18NTranslation {
     private nestingDepth: number
 
     constructor(
-        i18n: I18N, 
+        i18n: I18N,
         lang: string,
-        key: string, 
-        keysetName: string, 
+        key: string,
+        keysetName: string,
         params?: Params,
         nestingDepth?: number
     ) {
@@ -357,7 +357,7 @@ class I18NTranslation {
                 if (parts.length > 1) {
                     [inheritedKeysetName, inheritedKey] = [parts[0], parts[1]!]
                 }
-                
+
                 if (!inheritedKey) {
                     return this.getTranslationDataError(ErrorCode.MissingInheritedKey)
                 }
@@ -365,9 +365,9 @@ class I18NTranslation {
                 // Not support nested params
                 const data = (new I18NTranslation(
                     this.i18n,
-                    this.lang, 
-                    inheritedKey, 
-                    inheritedKeysetName ?? this.keysetName, 
+                    this.lang,
+                    inheritedKey,
+                    inheritedKeysetName ?? this.keysetName,
                     undefined,
                     this.nestingDepth + 1
                 )).getTranslationData()
