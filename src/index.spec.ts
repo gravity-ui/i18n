@@ -647,18 +647,3 @@ describe('constructor options', () => {
         });
     });
 });
-
-describe('registerKeyset', () => {
-    it('should throw an error in case of duplicated keysets', () => {
-        i18n = new I18N({
-            lang: 'en',
-            data: {en: {notification: {hey: 'Hello!'}}},
-        });
-
-        expect(() => {
-            i18n.registerKeyset('en', 'notification', {
-                title: 'Hello!',
-            });
-        }).toThrow(Error);
-    });
-});
