@@ -117,7 +117,7 @@ export class I18N {
 
     registerKeyset(lang: string, keysetName: string, data: KeysData = {}) {
         if (this.data[lang] && Object.prototype.hasOwnProperty.call(this.data[lang], keysetName)) {
-            throw new Error(`Keyset '${keysetName}' is already registered, aborting!`);
+            this.warn(`Keyset '${keysetName}' is already registered.`);
         }
         this.data[lang] = Object.assign({}, this.data[lang], {[keysetName]: data});
     }
