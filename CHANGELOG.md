@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.8.0](https://github.com/gravity-ui/i18n/compare/v1.7.0...v1.8.0) (2025-04-08)
+
+
+### Features
+
+* do not throw an error in case of duplicated keys ([#62](https://github.com/gravity-ui/i18n/issues/62)) ([03d47d0](https://github.com/gravity-ui/i18n/commit/03d47d08022ce27baf0f078e793482d6d83f5e83))
+
 ## [1.7.0](https://github.com/gravity-ui/i18n/compare/v1.6.0...v1.7.0) (2024-11-18)
 
 
