@@ -14,7 +14,7 @@ describe('has', () => {
     it('should return false when keyset is missing', () => {
         i18n.setLang('ru');
         i18n.registerKeyset('ru', 'notification', {
-            title: 'New version'
+            title: 'New version',
         });
 
         expect(i18n.has('button', 'label')).toBe(false);
@@ -23,7 +23,7 @@ describe('has', () => {
     it('should return false when key is missing', () => {
         i18n.setLang('ru');
         i18n.registerKeyset('ru', 'notification', {
-            title: 'New version'
+            title: 'New version',
         });
 
         expect(i18n.has('notification', 'label')).toBe(false);
@@ -32,7 +32,7 @@ describe('has', () => {
     it('should return true when key exist', () => {
         i18n.setLang('ru');
         i18n.registerKeyset('ru', 'notification', {
-            title: 'New version'
+            title: 'New version',
         });
 
         expect(i18n.has('notification', 'title')).toBe(true);
@@ -49,7 +49,7 @@ describe('i18n', () => {
     it('should return key when keyset missing', () => {
         i18n.setLang('ru');
         i18n.registerKeyset('ru', 'notification', {
-            title: 'New version'
+            title: 'New version',
         });
         expect(i18n.i18n('button', 'title')).toBe('title');
     });
@@ -63,7 +63,7 @@ describe('i18n', () => {
     it('should return key when key missing', () => {
         i18n.setLang('ru');
         i18n.registerKeyset('ru', 'notification', {
-            title: 'New version'
+            title: 'New version',
         });
         expect(i18n.i18n('notification', 'label')).toBe('label');
     });
@@ -71,7 +71,7 @@ describe('i18n', () => {
     it('should return translation', () => {
         i18n.setLang('ru');
         i18n.registerKeyset('ru', 'notification', {
-            title: 'New version'
+            title: 'New version',
         });
         expect(i18n.i18n('notification', 'title')).toBe('New version');
     });
@@ -79,7 +79,7 @@ describe('i18n', () => {
     it('should return key when plural translation missing "count" param', () => {
         i18n.setLang('ru');
         i18n.registerKeyset('ru', 'notification', {
-            title: ['New version', 'New versions', 'New versions']
+            title: ['New version', 'New versions', 'New versions'],
         });
         expect(i18n.i18n('notification', 'title', {})).toBe('title');
     });
@@ -87,59 +87,78 @@ describe('i18n', () => {
     it('should return correct pluralization', () => {
         i18n.setLang('ru');
         i18n.registerKeyset('ru', 'notification', {
-            title: ['New version of {{project}}', 'New versions of {{project}}', 'New versions of {{project}}', 'Is up to date']
+            title: [
+                'New version of {{project}}',
+                'New versions of {{project}}',
+                'New versions of {{project}}',
+                'Is up to date',
+            ],
         });
         const project = 'Cloud';
 
-        expect(i18n.i18n('notification', 'title', {
-            count: 1,
-            project
-        })).toBe('New version of Cloud');
-        expect(i18n.i18n('notification', 'title', {
-            count: 2,
-            project
-        })).toBe('New versions of Cloud');
-        expect(i18n.i18n('notification', 'title', {
-            count: 10,
-            project
-        })).toBe('New versions of Cloud');
-        expect(i18n.i18n('notification', 'title', {
-            count: 0,
-            project
-        })).toBe('Is up to date');
+        expect(
+            i18n.i18n('notification', 'title', {
+                count: 1,
+                project,
+            }),
+        ).toBe('New version of Cloud');
+        expect(
+            i18n.i18n('notification', 'title', {
+                count: 2,
+                project,
+            }),
+        ).toBe('New versions of Cloud');
+        expect(
+            i18n.i18n('notification', 'title', {
+                count: 10,
+                project,
+            }),
+        ).toBe('New versions of Cloud');
+        expect(
+            i18n.i18n('notification', 'title', {
+                count: 0,
+                project,
+            }),
+        ).toBe('Is up to date');
     });
 
     it('should interpolate params', () => {
         i18n.setLang('ru');
         i18n.registerKeyset('ru', 'notification', {
-            title: 'Hello, {{username}}!'
+            title: 'Hello, {{username}}!',
         });
 
-        expect(i18n.i18n('notification', 'title', {
-            username: 'Joe'
-        })).toBe('Hello, Joe!');
+        expect(
+            i18n.i18n('notification', 'title', {
+                username: 'Joe',
+            }),
+        ).toBe('Hello, Joe!');
     });
 
     it('should accept dollar-sign in params', () => {
         i18n.setLang('ru');
         i18n.registerKeyset('ru', 'notification', {
-            title: 'Give me {{money}}!'
+            title: 'Give me {{money}}!',
         });
 
-        expect(i18n.i18n('notification', 'title', {
-            money: 'money $ honey'
-        })).toBe('Give me money $ honey!');
+        expect(
+            i18n.i18n('notification', 'title', {
+                money: 'money $ honey',
+            }),
+        ).toBe('Give me money $ honey!');
     });
 
     it('should return second plural form with count 0 and missing translation', () => {
         i18n.setLang('ru');
         i18n.registerKeyset('ru', 'app', {
-            users: ['{{count}} пользователь', '{{count}} пользователя', '{{count}} пользователей']
+            users: ['{{count}} пользователь', '{{count}} пользователя', '{{count}} пользователей'],
         });
 
-        expect(i18n.i18n('app', 'users', {
-            count: 0
-        })).toBe('0 пользователей');
+        expect(
+            i18n.i18n('app', 'users', {
+                count: 0,
+            }),
+        ).toBe('0 пользователей');
     });
 
     it('should use pluralization ruleset for the current language', () => {
@@ -243,7 +262,7 @@ describe('i18n', () => {
     it('should use the same pluralization rules for both positive and negative numbers in russian', () => {
         i18n.setLang('ru');
         i18n.registerKeyset('ru', 'scoreboard', {
-            points: ['одно очко', 'два очка', 'пять очков', 'ноль очков']
+            points: ['одно очко', 'два очка', 'пять очков', 'ноль очков'],
         });
 
         const positive = [
@@ -275,7 +294,7 @@ describe('i18n', () => {
     it('should use the same pluralization rules for both positive and negative numbers in english', () => {
         i18n.setLang('en');
         i18n.registerKeyset('en', 'scoreboard', {
-            points: ['one point', '', 'some points', 'no points']
+            points: ['one point', '', 'some points', 'no points'],
         });
 
         const positive = [
@@ -312,112 +331,154 @@ describe('i18n', () => {
         i18n.setLang('ru');
         i18n.registerKeyset('ru', 'app', {
             users: {
-                'zero': 'нет пользователей',
-                'one': '{{count}} пользователь',
-                'few': '{{count}} пользователя',
-                'many': '{{count}} пользователей',
-                'other': '',
+                zero: 'нет пользователей',
+                one: '{{count}} пользователь',
+                few: '{{count}} пользователя',
+                many: '{{count}} пользователей',
+                other: '',
             },
         });
 
-        expect(i18n.i18n('app', 'users', {
-            count: 0
-        })).toBe('нет пользователей');
+        expect(
+            i18n.i18n('app', 'users', {
+                count: 0,
+            }),
+        ).toBe('нет пользователей');
 
-        expect(i18n.i18n('app', 'users', {
-            count: 1
-        })).toBe('1 пользователь');
+        expect(
+            i18n.i18n('app', 'users', {
+                count: 1,
+            }),
+        ).toBe('1 пользователь');
 
-        expect(i18n.i18n('app', 'users', {
-            count: 2
-        })).toBe('2 пользователя');
+        expect(
+            i18n.i18n('app', 'users', {
+                count: 2,
+            }),
+        ).toBe('2 пользователя');
 
-        expect(i18n.i18n('app', 'users', {
-            count: 3
-        })).toBe('3 пользователя');
+        expect(
+            i18n.i18n('app', 'users', {
+                count: 3,
+            }),
+        ).toBe('3 пользователя');
 
-        expect(i18n.i18n('app', 'users', {
-            count: 5
-        })).toBe('5 пользователей');
+        expect(
+            i18n.i18n('app', 'users', {
+                count: 5,
+            }),
+        ).toBe('5 пользователей');
 
-        expect(i18n.i18n('app', 'users', {
-            count: 11
-        })).toBe('11 пользователей');
+        expect(
+            i18n.i18n('app', 'users', {
+                count: 11,
+            }),
+        ).toBe('11 пользователей');
     });
 
     it('should use `other` form when no other forms are specified', () => {
         i18n.setLang('ru');
         i18n.registerKeyset('ru', 'app', {
-            users: {'other': '{{count}} пользователей'}
+            users: {other: '{{count}} пользователей'},
         });
 
-        expect(i18n.i18n('app', 'users', {
-            count: 21,
-        })).toBe('21 пользователей');
+        expect(
+            i18n.i18n('app', 'users', {
+                count: 21,
+            }),
+        ).toBe('21 пользователей');
 
-        expect(i18n.i18n('app', 'users', {
-            count: 0,
-        })).toBe('0 пользователей');
+        expect(
+            i18n.i18n('app', 'users', {
+                count: 0,
+            }),
+        ).toBe('0 пользователей');
 
-        expect(i18n.i18n('app', 'users', {
-            count: 10,
-        })).toBe('10 пользователей');
+        expect(
+            i18n.i18n('app', 'users', {
+                count: 10,
+            }),
+        ).toBe('10 пользователей');
 
-        expect(i18n.i18n('app', 'users', {
-            count: 2,
-        })).toBe('2 пользователей');
+        expect(
+            i18n.i18n('app', 'users', {
+                count: 2,
+            }),
+        ).toBe('2 пользователей');
 
-        expect(i18n.i18n('app', 'users', {
-            count: 1,
-        })).toBe('1 пользователей');
+        expect(
+            i18n.i18n('app', 'users', {
+                count: 1,
+            }),
+        ).toBe('1 пользователей');
     });
 
     it('should use `other` form when no other forms are specified', () => {
         i18n.setLang('ru');
         i18n.registerKeyset('ru', 'app', {
-            users: {'other': '{{count}} пользователей'},
-            articles: {'one': '{{count}} статья', 'other': '{{count}} статей'},
+            users: {other: '{{count}} пользователей'},
+            articles: {one: '{{count}} статья', other: '{{count}} статей'},
         });
 
-        expect(i18n.i18n('app', 'users', {
-            count: 21,
-        })).toBe('21 пользователей');
+        expect(
+            i18n.i18n('app', 'users', {
+                count: 21,
+            }),
+        ).toBe('21 пользователей');
 
-        expect(i18n.i18n('app', 'users', {
-            count: 0,
-        })).toBe('0 пользователей');
+        expect(
+            i18n.i18n('app', 'users', {
+                count: 0,
+            }),
+        ).toBe('0 пользователей');
 
-        expect(i18n.i18n('app', 'users', {
-            count: 10,
-        })).toBe('10 пользователей');
+        expect(
+            i18n.i18n('app', 'users', {
+                count: 10,
+            }),
+        ).toBe('10 пользователей');
 
-        expect(i18n.i18n('app', 'users', {
-            count: 2,
-        })).toBe('2 пользователей');
+        expect(
+            i18n.i18n('app', 'users', {
+                count: 2,
+            }),
+        ).toBe('2 пользователей');
 
-        expect(i18n.i18n('app', 'users', {
-            count: 1,
-        })).toBe('1 пользователей');
+        expect(
+            i18n.i18n('app', 'users', {
+                count: 1,
+            }),
+        ).toBe('1 пользователей');
 
-        expect(i18n.i18n('app', 'articles', {
-            count: 1,
-        })).toBe('1 статья');
+        expect(
+            i18n.i18n('app', 'articles', {
+                count: 1,
+            }),
+        ).toBe('1 статья');
 
-        expect(i18n.i18n('app', 'articles', {
-            count: 21,
-        })).toBe('21 статья');
+        expect(
+            i18n.i18n('app', 'articles', {
+                count: 21,
+            }),
+        ).toBe('21 статья');
 
-        expect(i18n.i18n('app', 'articles', {
-            count: 0,
-        })).toBe('0 статей');
+        expect(
+            i18n.i18n('app', 'articles', {
+                count: 0,
+            }),
+        ).toBe('0 статей');
 
-        expect(i18n.i18n('app', 'articles', {
-            count: 5,
-        })).toBe('5 статей');
+        expect(
+            i18n.i18n('app', 'articles', {
+                count: 5,
+            }),
+        ).toBe('5 статей');
 
-        expect(i18n.i18n('app', 'articles', {
-            count: 3,
-        })).toBe('3 статей');
+        expect(
+            i18n.i18n('app', 'articles', {
+                count: 3,
+            }),
+        ).toBe('3 статей');
     });
 
     it('compare results between old and new plural formats', () => {
@@ -430,49 +491,73 @@ describe('i18n', () => {
                 'нет пользователей',
             ],
             users: {
-                'zero': 'нет пользователей',
-                'one': '{{count}} пользователь',
-                'few': '{{count}} пользователя',
-                'many': '{{count}} пользователей',
-                'other': '',
+                zero: 'нет пользователей',
+                one: '{{count}} пользователь',
+                few: '{{count}} пользователя',
+                many: '{{count}} пользователей',
+                other: '',
             },
         });
 
-        expect(i18n.i18n('app', 'users', {
-            count: 0
-        })).toBe(i18n.i18n('app', 'usersOldPlural', {
-            count: 0
-        }));
+        expect(
+            i18n.i18n('app', 'users', {
+                count: 0,
+            }),
+        ).toBe(
+            i18n.i18n('app', 'usersOldPlural', {
+                count: 0,
+            }),
+        );
 
-        expect(i18n.i18n('app', 'users', {
-            count: 1
-        })).toBe(i18n.i18n('app', 'usersOldPlural', {
-            count: 1
-        }));
+        expect(
+            i18n.i18n('app', 'users', {
+                count: 1,
+            }),
+        ).toBe(
+            i18n.i18n('app', 'usersOldPlural', {
+                count: 1,
+            }),
+        );
 
-        expect(i18n.i18n('app', 'users', {
-            count: 2
-        })).toBe(i18n.i18n('app', 'usersOldPlural', {
-            count: 2
-        }));
+        expect(
+            i18n.i18n('app', 'users', {
+                count: 2,
+            }),
+        ).toBe(
+            i18n.i18n('app', 'usersOldPlural', {
+                count: 2,
+            }),
+        );
 
-        expect(i18n.i18n('app', 'users', {
-            count: 3
-        })).toBe(i18n.i18n('app', 'usersOldPlural', {
-            count: 3
-        }));
+        expect(
+            i18n.i18n('app', 'users', {
+                count: 3,
+            }),
+        ).toBe(
+            i18n.i18n('app', 'usersOldPlural', {
+                count: 3,
+            }),
+        );
 
-        expect(i18n.i18n('app', 'users', {
-            count: 5
-        })).toBe(i18n.i18n('app', 'usersOldPlural', {
-            count: 5
-        }));
+        expect(
+            i18n.i18n('app', 'users', {
+                count: 5,
+            }),
+        ).toBe(
+            i18n.i18n('app', 'usersOldPlural', {
+                count: 5,
+            }),
+        );
 
-        expect(i18n.i18n('app', 'users', {
-            count: 11
-        })).toBe(i18n.i18n('app', 'usersOldPlural', {
-            count: 11
-        }));
+        expect(
+            i18n.i18n('app', 'users', {
+                count: 11,
+            }),
+        ).toBe(
+            i18n.i18n('app', 'usersOldPlural', {
+                count: 11,
+            }),
+        );
     });
 });
 
@@ -481,7 +566,7 @@ describe('constructor options', () => {
         it('should return translation [set lang via options.lang]', () => {
             i18n = new I18N({lang: 'en'});
             i18n.registerKeyset('en', 'notification', {
-                title: 'New version'
+                title: 'New version',
             });
             expect(i18n.i18n('notification', 'title')).toBe('New version');
         });
@@ -489,7 +574,7 @@ describe('constructor options', () => {
         it('should return translation [set lang via i18n.setLang]', () => {
             i18n.setLang('en');
             i18n.registerKeyset('en', 'notification', {
-                title: 'New version'
+                title: 'New version',
             });
             expect(i18n.i18n('notification', 'title')).toBe('New version');
         });
@@ -504,7 +589,7 @@ describe('constructor options', () => {
         it('should return translation [set data via i18n.registerKeyset]', () => {
             i18n = new I18N({lang: 'en'});
             i18n.registerKeyset('en', 'notification', {
-                title: 'New version'
+                title: 'New version',
             });
             expect(i18n.i18n('notification', 'title')).toBe('New version');
         });
@@ -560,20 +645,5 @@ describe('constructor options', () => {
             });
             expect(i18n.i18n('notification', 'title')).toBe('title');
         });
-    });
-});
-
-describe('registerKeyset', () => {
-    it('should throw an error in case of duplicated keysets', () => {
-        i18n = new I18N({
-            lang: 'en',
-            data: {en: {notification: {hey: 'Hello!'}}},
-        });
-
-        expect(() => {
-            i18n.registerKeyset('en', 'notification', {
-                title: 'Hello!'
-            })
-        }).toThrow(Error);
     });
 });

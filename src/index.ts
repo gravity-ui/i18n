@@ -1,5 +1,10 @@
 import {replaceParams} from './replace-params';
-import {ErrorCode, getPluralValues, hasNestingTranslations, mapErrorCodeToMessage} from './translation-helpers';
+import {
+    ErrorCode,
+    getPluralValues,
+    hasNestingTranslations,
+    mapErrorCodeToMessage,
+} from './translation-helpers';
 import type {ErrorCodeType} from './translation-helpers';
 import {isPluralValue} from './types';
 import type {KeysData, KeysetData, Logger, Params, Pluralizer} from './types';
@@ -7,7 +12,7 @@ import type {KeysData, KeysetData, Logger, Params, Pluralizer} from './types';
 import pluralizerEn from './plural/en';
 import pluralizerRu from './plural/ru';
 import {getPluralValue} from './plural/general';
-import { KEYSET_SEPARATOR, MAX_NESTING_DEPTH, getNestingTranslationsRegExp } from './consts';
+import {KEYSET_SEPARATOR, MAX_NESTING_DEPTH, getNestingTranslationsRegExp} from './consts';
 
 export * from './types';
 
@@ -80,7 +85,7 @@ type ErrorDetails = {
         keysetName?: string;
         key?: string;
     };
-}
+};
 
 type SearchTranslationData = {
     text?: string;
@@ -108,7 +113,7 @@ export class I18N {
 
         if (data) {
             Object.entries(data).forEach(([keysetLang, keysetData]) => {
-                this.registerKeysets(keysetLang, keysetData)
+                this.registerKeysets(keysetLang, keysetData);
             });
         }
     }
@@ -129,12 +134,10 @@ export class I18N {
     }
 
     registerKeyset(lang: string, keysetName: string, data: KeysData = {}) {
-        const isAlreadyRegistered = this.data[lang]
-            && Object.prototype.hasOwnProperty.call(this.data[lang], keysetName);
+        const isAlreadyRegistered =
+            this.data[lang] && Object.prototype.hasOwnProperty.call(this.data[lang], keysetName);
 
-        if (isAlreadyRegistered && process.env.NODE_ENV === 'production') {
-            throw new Error(`Keyset '${keysetName}' is already registered, aborting!`);
-        } else if (isAlreadyRegistered) {
+        if (isAlreadyRegistered && process.env.NODE_ENV !== 'production') {
             this.warn(`Keyset '${keysetName}' is already registered.`);
         }
 
@@ -155,7 +158,9 @@ export class I18N {
 
     i18n(keysetName: string, key: string, params?: Params): string {
         if (!this.lang && !this.fallbackLang) {
-            throw new Error('Language is not specified. You should set at least one of these: "lang", "fallbackLang"');
+            throw new Error(
+                'Language is not specified. You should set at least one of these: "lang", "fallbackLang"',
+            );
         }
 
         let text: string | undefined;
@@ -196,8 +201,8 @@ export class I18N {
             level: 'info',
             logger: cacheKey,
             extra: {
-                type: 'i18n'
-            }
+                type: 'i18n',
+            },
         });
     }
 
@@ -207,7 +212,13 @@ export class I18N {
     }
 
     private _i18n(keysetName: string, key: string, lang: string, params?: Params) {
-        const {text, details} = (new I18NTranslation(this, lang, key, keysetName, params)).getTranslationData()
+        const {text, details} = new I18NTranslation(
+            this,
+            lang,
+            key,
+            keysetName,
+            params,
+        ).getTranslationData();
 
         if (details) {
             const message = mapErrorCodeToMessage({
@@ -218,60 +229,62 @@ export class I18N {
             this.warn(message, details.keysetName, details.key);
         }
 
-        return text
+        return text;
     }
 }
 
 class I18NTranslation {
-    private i18n: I18N
-    private lang: string
-    private key: string
-    private keysetName: string
-    private params?: Params
-    private nestingDepth: number
+    private i18n: I18N;
+    private lang: string;
+    private key: string;
+    private keysetName: string;
+    private params?: Params;
+    private nestingDepth: number;
 
     constructor(
-        i18n: I18N, 
+        i18n: I18N,
         lang: string,
-        key: string, 
-        keysetName: string, 
+        key: string,
+        keysetName: string,
         params?: Params,
-        nestingDepth?: number
+        nestingDepth?: number,
     ) {
-        this.i18n = i18n
-        this.lang = lang
-        this.key = key
-        this.keysetName = keysetName
-        this.params = params
-        this.nestingDepth = nestingDepth ?? 0
+        this.i18n = i18n;
+        this.lang = lang;
+        this.key = key;
+        this.keysetName = keysetName;
+        this.params = params;
+        this.nestingDepth = nestingDepth ?? 0;
     }
 
     getTranslationData(): SearchTranslationData {
         const {data: keyset, details} = this.getKeyset();
 
         if (details) {
-            return {details}
+            return {details};
         }
 
         const keyValue = keyset && keyset[this.key];
         const result: SearchTranslationData = {};
 
         if (keyValue === undefined) {
-            return this.getTranslationDataError(ErrorCode.MissingKey)
+            return this.getTranslationDataError(ErrorCode.MissingKey);
         }
 
         if (isPluralValue(keyValue)) {
             // Limit nesting plural due to the difficulties of translations inlining
-            const isNested = this.nestingDepth > 0
-            const isPluralValueHasNestingTranslations = getPluralValues(keyValue).some(kv => hasNestingTranslations(kv))
+            const isNested = this.nestingDepth > 0;
+            const isPluralValueHasNestingTranslations = getPluralValues(keyValue).some((kv) =>
+                hasNestingTranslations(kv),
+            );
             if (isNested || isPluralValueHasNestingTranslations) {
-                return this.getTranslationDataError(ErrorCode.NestedPlural)
+                return this.getTranslationDataError(ErrorCode.NestedPlural);
             }
 
             const count = Number(this.params?.count);
 
             if (Number.isNaN(count)) {
-                return this.getTranslationDataError(ErrorCode.MissingKeyParamsCount)
+                return this.getTranslationDataError(ErrorCode.MissingKeyParamsCount);
             }
 
             result.text = getPluralValue({
@@ -292,48 +305,45 @@ class I18NTranslation {
 
         const replaceTranslationsInheritanceResult = this.replaceTranslationsInheritance({
             keyValue: String(result.text),
-        })
+        });
         if (!replaceTranslationsInheritanceResult.text) {
-            return replaceTranslationsInheritanceResult
+            return replaceTranslationsInheritanceResult;
         }
-        result.text = replaceTranslationsInheritanceResult.text
+        result.text = replaceTranslationsInheritanceResult.text;
 
         return result;
-
     }
 
     private getTranslationDataError(errorCode: ErrorCode): SearchTranslationData {
-        return {details: {code: errorCode, keysetName: this.keysetName, key: this.key}}
+        return {details: {code: errorCode, keysetName: this.keysetName, key: this.key}};
     }
 
     private getKeyset(): SearchKeysetData {
         const languageData = this.i18n.getLanguageData(this.lang);
 
         if (typeof languageData === 'undefined') {
-            return this.getTranslationDataError(ErrorCode.NoLanguageData)
+            return this.getTranslationDataError(ErrorCode.NoLanguageData);
         }
 
         if (Object.keys(languageData).length === 0) {
-            return this.getTranslationDataError(ErrorCode.EmptyLanguageData)
+            return this.getTranslationDataError(ErrorCode.EmptyLanguageData);
         }
 
         const keyset = languageData[this.keysetName];
 
         if (!keyset) {
-            return this.getTranslationDataError(ErrorCode.KeysetNotFound)
+            return this.getTranslationDataError(ErrorCode.KeysetNotFound);
         }
 
         if (Object.keys(keyset).length === 0) {
-            return this.getTranslationDataError(ErrorCode.EmptyKeyset)
+            return this.getTranslationDataError(ErrorCode.EmptyKeyset);
         }
 
-        return {data: keyset}
+        return {data: keyset};
     }
 
-    private replaceTranslationsInheritance(args: {
-        keyValue: string;
-    }): SearchTranslationData {
-        const {keyValue} = args
+    private replaceTranslationsInheritance(args: {keyValue: string}): SearchTranslationData {
+        const {keyValue} = args;
         const NESTING_PREGEXP = getNestingTranslationsRegExp();
         let result = '';
 
@@ -348,32 +358,35 @@ class I18NTranslation {
             const [all, key] = match;
             if (key) {
                 if (this.nestingDepth + 1 > MAX_NESTING_DEPTH) {
-                    return this.getTranslationDataError(ErrorCode.ExceedTranslationNestingDepth)
+                    return this.getTranslationDataError(ErrorCode.ExceedTranslationNestingDepth);
                 }
 
-                let [inheritedKey, inheritedKeysetName]: [string, string | undefined] = [key, undefined]
+                let [inheritedKey, inheritedKeysetName]: [string, string | undefined] = [
+                    key,
+                    undefined,
+                ];
 
-                const parts = key.split(KEYSET_SEPARATOR)
+                const parts = key.split(KEYSET_SEPARATOR);
                 if (parts.length > 1) {
-                    [inheritedKeysetName, inheritedKey] = [parts[0], parts[1]!]
+                    [inheritedKeysetName, inheritedKey] = [parts[0], parts[1]!];
                 }
-                
+
                 if (!inheritedKey) {
-                    return this.getTranslationDataError(ErrorCode.MissingInheritedKey)
+                    return this.getTranslationDataError(ErrorCode.MissingInheritedKey);
                 }
 
                 // Not support nested params
-                const data = (new I18NTranslation(
+                const data = new I18NTranslation(
                     this.i18n,
-                    this.lang, 
-                    inheritedKey, 
-                    inheritedKeysetName ?? this.keysetName, 
+                    this.lang,
+                    inheritedKey,
+                    inheritedKeysetName ?? this.keysetName,
                     undefined,
-                    this.nestingDepth + 1
-                )).getTranslationData()
+                    this.nestingDepth + 1,
+                ).getTranslationData();
 
                 if (data.details) {
-                    return this.getTranslationDataError(ErrorCode.MissingInheritedKey)
+                    return this.getTranslationDataError(ErrorCode.MissingInheritedKey);
                 }
                 result += data.text;
             } else {
