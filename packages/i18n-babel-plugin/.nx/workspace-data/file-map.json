@@ -1,0 +1,274 @@
+{
+  "version": "6.0",
+  "nxVersion": "21.6.3",
+  "pathMappings": {},
+  "nxJsonPlugins": [],
+  "fileMap": {
+    "nonProjectFiles": [],
+    "projectFileMap": {
+      "@gravity-ui/i18n-babel-plugin": [
+        {
+          "file": ".nx/cache/run.json",
+          "hash": "8065132480579701620"
+        },
+        {
+          "file": ".nx/cache/terminalOutputs/100194240432250096",
+          "hash": "8337747076814538647"
+        },
+        {
+          "file": ".nx/cache/terminalOutputs/10129669783240303841",
+          "hash": "3139059469789406491"
+        },
+        {
+          "file": ".nx/cache/terminalOutputs/11185209838398485861",
+          "hash": "10051670738638699295"
+        },
+        {
+          "file": ".nx/cache/terminalOutputs/12112576775256781831",
+          "hash": "13787111297046215978"
+        },
+        {
+          "file": ".nx/cache/terminalOutputs/12931804375927770250",
+          "hash": "2399947653346478432"
+        },
+        {
+          "file": ".nx/cache/terminalOutputs/13235356947338070249",
+          "hash": "6700450866996363582"
+        },
+        {
+          "file": ".nx/cache/terminalOutputs/13429283158305350002",
+          "hash": "676572237986137021"
+        },
+        {
+          "file": ".nx/cache/terminalOutputs/13495114556053750147",
+          "hash": "10762080512231954796"
+        },
+        {
+          "file": ".nx/cache/terminalOutputs/14628925349407156634",
+          "hash": "7611347478214262699"
+        },
+        {
+          "file": ".nx/cache/terminalOutputs/15102837908981246062",
+          "hash": "15764407970500641083"
+        },
+        {
+          "file": ".nx/cache/terminalOutputs/16164099695210222723",
+          "hash": "2852278371649410326"
+        },
+        {
+          "file": ".nx/cache/terminalOutputs/1708606998924210326",
+          "hash": "10106359245679315180"
+        },
+        {
+          "file": ".nx/cache/terminalOutputs/18229990979149053234",
+          "hash": "2142176732148483797"
+        },
+        {
+          "file": ".nx/cache/terminalOutputs/2679746450159681432",
+          "hash": "5433889465659569564"
+        },
+        {
+          "file": ".nx/cache/terminalOutputs/2996848322415639150",
+          "hash": "14939822827392635760"
+        },
+        {
+          "file": ".nx/cache/terminalOutputs/4123450752446570707",
+          "hash": "11061194510399986798"
+        },
+        {
+          "file": ".nx/cache/terminalOutputs/6031513183350194135",
+          "hash": "9190398990769509707"
+        },
+        {
+          "file": ".nx/cache/terminalOutputs/6053109492340766934",
+          "hash": "10633760250954489161"
+        },
+        {
+          "file": ".nx/cache/terminalOutputs/6426977575615481283",
+          "hash": "14612874679214624982"
+        },
+        {
+          "file": ".nx/cache/terminalOutputs/711616764568854625",
+          "hash": "11578671732152694618"
+        },
+        {
+          "file": ".nx/cache/terminalOutputs/7318562731745806483",
+          "hash": "351837981001635955"
+        },
+        {
+          "file": ".nx/cache/terminalOutputs/7429692433103005785",
+          "hash": "2239941623474085349"
+        },
+        {
+          "file": ".nx/cache/terminalOutputs/7528144151446443105",
+          "hash": "12204362874087045294"
+        },
+        {
+          "file": ".nx/cache/terminalOutputs/7710145109443592604",
+          "hash": "16698393811272581363"
+        },
+        {
+          "file": ".nx/cache/terminalOutputs/7788233661223643280",
+          "hash": "16507837518042992390"
+        },
+        {
+          "file": ".nx/cache/terminalOutputs/7848112797854823776",
+          "hash": "16522300003010166234"
+        },
+        {
+          "file": ".nx/cache/terminalOutputs/9125907488522954951",
+          "hash": "253093279819546449"
+        },
+        {
+          "file": ".nx/cache/terminalOutputs/9797120667647147246",
+          "hash": "1050588674857784904"
+        },
+        {
+          "file": ".nx/workspace-data/8A6F90D1-B1DA-5A88-97F0-3C4342E7DF86.db-shm",
+          "hash": "9101504514931602051"
+        },
+        {
+          "file": ".nx/workspace-data/8A6F90D1-B1DA-5A88-97F0-3C4342E7DF86.db-wal",
+          "hash": "8961825930792745597"
+        },
+        {
+          "file": ".nx/workspace-data/d/server-process.json",
+          "hash": "676158370166348596"
+        },
+        {
+          "file": ".nx/workspace-data/file-map.json",
+          "hash": "14568535861763978264"
+        },
+        {
+          "file": ".nx/workspace-data/nx_files.nxt",
+          "hash": "9773939939072216068"
+        },
+        {
+          "file": ".nx/workspace-data/project-graph.json",
+          "hash": "15097164371687117114"
+        },
+        {
+          "file": ".nx/workspace-data/source-maps.json",
+          "hash": "5039561238988918831"
+        },
+        {
+          "file": "CHANGELOG.md",
+          "hash": "4494384667894689306"
+        },
+        {
+          "file": "README.md",
+          "hash": "9886268783345874347"
+        },
+        {
+          "file": "eslint.config.mjs",
+          "hash": "5043660525169681194"
+        },
+        {
+          "file": "jest.config.cjs",
+          "hash": "733360479847212072"
+        },
+        {
+          "file": "jest.setup.js",
+          "hash": "18385073934820172434"
+        },
+        {
+          "file": "nx.json",
+          "hash": "18336426213955174907"
+        },
+        {
+          "file": "package.json",
+          "hash": "11526031674041071615"
+        },
+        {
+          "file": "src/__tests__/__fixtures__/.babelrc-compile-to-ast",
+          "hash": "6758904985760123456"
+        },
+        {
+          "file": "src/__tests__/__fixtures__/.babelrc-normal",
+          "hash": "957243905725670516"
+        },
+        {
+          "file": "src/__tests__/__fixtures__/.babelrc-only-translations",
+          "hash": "15923527510476891341"
+        },
+        {
+          "file": "src/__tests__/__fixtures__/.babelrc-only-translations-with-fallbacks",
+          "hash": "15109750496767968187"
+        },
+        {
+          "file": "src/__tests__/__fixtures__/.babelrc-target-locale-tech",
+          "hash": "4595693744329234492"
+        },
+        {
+          "file": "src/__tests__/__fixtures__/.babelrc-without-typograf",
+          "hash": "10146246653166452484"
+        },
+        {
+          "file": "src/__tests__/__fixtures__/disabled-typograf-i18n.ts",
+          "hash": "7687072885549065343"
+        },
+        {
+          "file": "src/__tests__/__fixtures__/i18n.ts",
+          "hash": "11455939943540877034"
+        },
+        {
+          "file": "src/__tests__/__fixtures__/intl.ts",
+          "hash": "16606633145564873225"
+        },
+        {
+          "file": "src/__tests__/__fixtures__/markdown-i18n.ts",
+          "hash": "15121306894109381811"
+        },
+        {
+          "file": "src/__tests__/__snapshots__/index.spec.ts.snap",
+          "hash": "16262412616231449508"
+        },
+        {
+          "file": "src/__tests__/index.spec.ts",
+          "hash": "14492451910224106628"
+        },
+        {
+          "file": "src/__tests__/markdown.spec.ts",
+          "hash": "13186204530778721931"
+        },
+        {
+          "file": "src/__tests__/typograf.spec.ts",
+          "hash": "12385650976675967510"
+        },
+        {
+          "file": "src/index.ts",
+          "hash": "1511032105630910669"
+        },
+        {
+          "file": "src/markdown.ts",
+          "hash": "9304679506971709629"
+        },
+        {
+          "file": "src/plugin.ts",
+          "hash": "7132433569175259519"
+        },
+        {
+          "file": "src/shared.ts",
+          "hash": "12954250039514220955"
+        },
+        {
+          "file": "src/translations-file.ts",
+          "hash": "3444449283360337909"
+        },
+        {
+          "file": "src/types.ts",
+          "hash": "6038640587831675617"
+        },
+        {
+          "file": "src/typograf.ts",
+          "hash": "6563044958606772354"
+        },
+        {
+          "file": "tsconfig.json",
+          "hash": "12115933866761807871"
+        }
+      ]
+    }
+  },
+  "externalNodesHash": "3244421341483603138"
+}

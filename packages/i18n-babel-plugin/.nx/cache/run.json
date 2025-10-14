@@ -1,0 +1,21 @@
+{
+  "run": {
+    "command": "nx run @gravity-ui/i18n-babel-plugin:test",
+    "startTime": "2025-10-14T11:12:49.943Z",
+    "endTime": "2025-10-14T11:12:52.434Z",
+    "inner": false
+  },
+  "tasks": [
+    {
+      "taskId": "@gravity-ui/i18n-babel-plugin:test",
+      "target": "test",
+      "projectName": "@gravity-ui/i18n-babel-plugin",
+      "hash": "2996848322415639150",
+      "startTime": "2025-10-14T11:12:49.966Z",
+      "endTime": "2025-10-14T11:12:52.433Z",
+      "params": "",
+      "cacheStatus": "cache-miss",
+      "status": 0
+    }
+  ]
+}

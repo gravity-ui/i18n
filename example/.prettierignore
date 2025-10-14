@@ -1,0 +1,13 @@
+# System
+.idea
+.vscode
+.history
+
+# Build
+dist
+
+# External
+node_modules
+
+# Misc
+*.md

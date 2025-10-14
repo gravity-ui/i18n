@@ -1,0 +1,84 @@
+{
+  "context": "Login page",
+  "allowedStatuses": [
+    "APPROVED",
+    "EXPIRED",
+    "GENERATED",
+    "REQUIRES_TRANSLATION",
+    "TRANSLATED"
+  ],
+  "status": {
+    "button_delete-history-entry": {
+      "en": "APPROVED",
+      "ru": "APPROVED"
+    },
+    "button_dialog-confirm": {
+      "en": "APPROVED",
+      "ru": "APPROVED"
+    },
+    "button_enter-github": {
+      "en": "APPROVED",
+      "ru": "APPROVED"
+    },
+    "button_enter-google": {
+      "en": "APPROVED",
+      "ru": "APPROVED"
+    },
+    "button_enter-sso": {
+      "en": "APPROVED",
+      "ru": "APPROVED"
+    },
+    "button_enter-yandex": {
+      "en": "APPROVED",
+      "ru": "APPROVED"
+    },
+    "button_enter-yandex_kz": {
+      "en": "APPROVED",
+      "ru": "APPROVED"
+    },
+    "label_auth-options": {
+      "en": "APPROVED",
+      "ru": "APPROVED"
+    },
+    "label_auth-options_kz": {
+      "en": "APPROVED",
+      "ru": "APPROVED"
+    },
+    "label_auth-options_ru": {
+      "en": "APPROVED",
+      "ru": "APPROVED"
+    },
+    "label_dialog-federation-id": {
+      "en": "APPROVED",
+      "ru": "APPROVED"
+    },
+    "label_error-invalid": {
+      "en": "APPROVED",
+      "ru": "APPROVED"
+    },
+    "label_error-required": {
+      "en": "APPROVED",
+      "ru": "APPROVED"
+    },
+    "label_override-service-title": {
+      "en": "APPROVED",
+      "ru": "APPROVED"
+    },
+    "label_separator": {
+      "en": "APPROVED",
+      "ru": "APPROVED"
+    },
+    "md_label_auth-newdomain-alert": {
+      "en": "APPROVED",
+      "ru": "APPROVED"
+    },
+    "title_dialog-enter-sso": {
+      "en": "APPROVED",
+      "ru": "APPROVED"
+    },
+    "title_login-history": {
+      "en": "APPROVED",
+      "ru": "APPROVED"
+    }
+  }
+}

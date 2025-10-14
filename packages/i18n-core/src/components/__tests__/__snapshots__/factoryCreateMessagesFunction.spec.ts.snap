@@ -1,0 +1,8 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`factoryCreateMessagesFunction 5: 5 1`] = `
+[Error: [@formatjs/intl Error MISSING_TRANSLATION] Missing message: "create" for locale "unknown", using id as fallback.
+]
+`;
+
+exports[`factoryCreateMessagesFunction 6: 6 1`] = `"Error: Not found message for key unknown"`;

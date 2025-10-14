@@ -1,0 +1,1 @@
+export {PluralMessageObject} from './PluralMessageObject';

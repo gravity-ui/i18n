@@ -1,0 +1,221 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`generateTranslationsFileContent generate TemplateLiteral for multiline ICU messages 1`] = `
+"import {intl} from "@shared/i18n";
+
+export const {t, Message} = intl.createMessages({
+  "countOffices": {
+    "ru": \`
+{ count, plural,
+     =0 {У нас нет офисов}
+     =1 {У нас всего один офис}
+  other {У нас # офисов}
+}\`,
+    "en": \`
+this is { count, plural,
+    one {# dog}
+  other {# dogs}
+}\`
+  }
+});
+"
+`;
+
+exports[`generateTranslationsFileContent generate content for server path 1`] = `
+"import {intl} from "../../utils/i18n";
+
+export const {messages} = intl.createMessages({
+  "countOffices": {
+    "ru": \`
+{ count, plural,
+     =0 {У нас нет офисов}
+     =1 {У нас всего один офис}
+  other {У нас # офисов}
+}\`,
+    "en": \`
+this is { count, plural,
+    one {# dog}
+  other {# dogs}
+}\`
+  }
+});
+"
+`;
+
+exports[`generateTranslationsFileContent generate content with custom server path matchers 1`] = `
+"import {intl} from "../../shared/intl";
+
+export const {messages} = intl.createMessages({
+  "countOffices": {
+    "ru": \`
+{ count, plural,
+     =0 {У нас нет офисов}
+     =1 {У нас всего один офис}
+  other {У нас # офисов}
+}\`,
+    "en": \`
+this is { count, plural,
+    one {# dog}
+  other {# dogs}
+}\`
+  }
+});
+"
+`;
+
+exports[`generateTranslationsFileContent generate language file in the same directory as the intl 1`] = `
+"import {intl} from "./i18n";
+
+export const {t, Message} = intl.createMessages({
+  "countOffices": {
+    "ru": \`
+{ count, plural,
+     =0 {У нас нет офисов}
+     =1 {У нас всего один офис}
+  other {У нас # офисов}
+}\`,
+    "en": \`
+this is { count, plural,
+    one {# dog}
+  other {# dogs}
+}\`
+  }
+});
+"
+`;
+
+exports[`generateTranslationsFileContent generate meta as last element property in object expression 1`] = `
+"import {intl} from "./i18n";
+
+export const {t, Message} = intl.createMessages({
+  "countOffices": {
+    "ru": \`
+{ count, plural,
+     =0 {У нас нет офисов}
+     =1 {У нас всего один офис}
+  other {У нас # офисов}
+}\`,
+    "en": \`
+this is { count, plural,
+    one {# dog}
+  other {# dogs}
+}\`,
+    "meta": {
+      id: "test-id",
+      description: "proverka",
+      markdown: true
+    }
+  }
+});
+"
+`;
+
+exports[`generateTranslationsFileContent generate old plural format messages 1`] = `
+"import {intl} from "@shared/i18n";
+
+export const {t, Message} = intl.createMessages({
+  "countOffices": {
+    "ru": null,
+    "en": {
+      few: undefined,
+      many: undefined,
+      one: "one",
+      other: "other",
+      two: undefined,
+      zero: "zero"
+    }
+  }
+});
+"
+`;
+
+exports[`generateTranslationsFileContent generate translations for all locales 1`] = `
+"import {intl} from "./i18n";
+
+export const {t, Message} = intl.createMessages({
+  "countOffices": {
+    "ru": null,
+    "en": "proverka",
+    "ru-kz": null,
+    "meta": {
+      id: "test-id",
+      description: "proverka",
+      markdown: true
+    }
+  }
+});
+"
+`;
+
+exports[`generateTranslationsFileContent generate with aliases in destructuring 1`] = `
+"import {intl} from "@shared/i18n";
+
+export const {t: commonT, Message: CommonMessage} = intl.createMessages({
+  "pageTitle": {
+    "ru": "О нас",
+    "en": "About us"
+  }
+});
+"
+`;
+
+exports[`generateTranslationsFileContent null in translations 1`] = `
+"import {intl} from "@shared/i18n";
+
+export const {t, Message} = intl.createMessages({
+  "pageTitle": {
+    "ru": "О нас",
+    "en": "About us"
+  }
+});
+"
+`;
+
+exports[`generateTranslationsFileContent simple string translations 1`] = `
+"import {intl} from "@shared/i18n";
+
+export const {t, Message} = intl.createMessages({
+  "name": {
+    "ru": "Имя",
+    "en": "Name"
+  },
+  "pageTitle": {
+    "ru": "О нас",
+    "en": "About us"
+  }
+});
+"
+`;
+
+exports[`generateTranslationsFileContent sort translation keys alphabetically 1`] = `
+"import {intl} from "./i18n";
+
+export const {t, Message} = intl.createMessages({
+  "apple": {
+    "ru": null,
+    "en": "apple",
+    "ru-kz": null
+  },
+  "banana": {
+    "ru": null,
+    "en": "banana",
+    "ru-kz": null
+  },
+  "cherry": {
+    "ru": null,
+    "en": "cherry",
+    "ru-kz": null
+  },
+  "абвгд": {
+    "ru": null,
+    "en": "cherry",
+    "ru-kz": null
+  },
+  "русский ключ": {
+    "ru": null,
+    "en": "cherry",
+    "ru-kz": null
+  }
+});
+"
+`;

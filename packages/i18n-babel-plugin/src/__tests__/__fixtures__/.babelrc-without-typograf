@@ -1,0 +1,9 @@
+{
+  "presets": ["@babel/preset-typescript"],
+  "plugins": [
+    ["../../../dist/index.js", {
+        "root": "src/__tests__/__fixtures__",
+        "typograf": false
+    }]
+  ]
+}

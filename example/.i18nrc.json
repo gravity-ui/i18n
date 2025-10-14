@@ -1,0 +1,16 @@
+{
+    "tanker": {
+      "project": "test-project-formatjs",
+      "pushTicket": {
+        "queue": "TRANSTEST",
+        "components": []
+      }
+    },
+    "data": {
+      "dir": "i18n-state",
+      "ignoreFileName": ".arcignore"
+    },
+    "projectLoaders": [{
+        "type": "formatjs"
+    }]
+  }

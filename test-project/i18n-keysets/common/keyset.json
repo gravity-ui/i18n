@@ -1,0 +1,32 @@
+{
+  "context": "",
+  "allowedStatuses": [
+    "APPROVED",
+    "EXPIRED",
+    "GENERATED",
+    "REQUIRES_TRANSLATION",
+    "TRANSLATED"
+  ],
+  "status": {
+    "button-enter": {
+      "en": "APPROVED",
+      "ru": "APPROVED"
+    },
+    "cancel": {
+      "en": "APPROVED",
+      "ru": "APPROVED"
+    },
+    "label-yc": {
+      "en": "REQUIRES_TRANSLATION",
+      "ru": "REQUIRES_TRANSLATION"
+    },
+    "label-yc_ru": {
+      "en": "REQUIRES_TRANSLATION",
+      "ru": "APPROVED"
+    },
+    "one_new_key": {
+      "en": "REQUIRES_TRANSLATION",
+      "ru": "REQUIRES_TRANSLATION"
+    }
+  }
+}

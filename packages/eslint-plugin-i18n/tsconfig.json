@@ -1,0 +1,11 @@
+{
+  "extends": "../../tsconfig.base.json",
+  "compilerOptions": {
+    "target": "es2021",
+    "outDir": "./dist",
+    "resolveJsonModule": true,
+    "esModuleInterop": true
+  },
+  "include": ["rules/*.ts", "rules/**/*.ts", "index.ts"],
+  "exclude": ["**/__tests__/**"]
+}

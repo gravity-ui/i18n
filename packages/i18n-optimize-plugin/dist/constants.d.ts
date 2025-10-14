@@ -1,0 +1,2 @@
+export { TECH_LOCALE } from '@gravity-ui/i18n-babel-plugin';
+export declare const DEFAULT_ASSETS_MANIFEST_FILE_NAME = "assets-manifest.{locale}.json";

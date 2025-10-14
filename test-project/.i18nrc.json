@@ -1,0 +1,13 @@
+{
+    "tanker": {
+      "project": "test-empty-branch",
+      "pushTicket": {
+        "queue": "TRANSTEST",
+        "components": []
+      }
+    },
+    "data": {
+      "dir": "i18n-keysets",
+      "ignoreFileName": ".arcignore"
+    }
+  }

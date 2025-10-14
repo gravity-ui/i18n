@@ -1,0 +1,13 @@
+{
+  "label-notify": "Я подтверждаю свое согласие на получение рекламных и иных информационных сообщений от платформы.",
+  "label-notify_kz": "Я даю согласие на получение рекламных сообщений от ТОО &laquo;Облачные Сервисы Казахстан&raquo; (Казахстан, Алматы, пр-т Аль-Фараби, 11/1).",
+  "label-notify_ru": "Я подтверждаю свое согласие на получение рекламных и иных информационных сообщений от ООО &laquo;Яндекс.Облако&raquo; (ОГРН 1187746678580).",
+  "label_override-service-hint": "",
+  "label_override-service-hint_kz": "Для получения доступа к тестированию платформы, пожалуйста, подтвердите пункты ниже:",
+  "label_override-service-title": "",
+  "label_override-service-title_kz": "Добро пожаловать в Yandex Cloud Казахстан",
+  "md_label-agreement": "Нажимая кнопку &laquo;Войти&raquo;, я&nbsp;подтверждаю, что ознакомился с&nbsp; [Условиями использования](https://yandex.ru/legal/cloud_termsofuse/?lang=ru){target=_blank rel=\"noreferrer noopener\"} и&nbsp;принимаю&nbsp;их.",
+  "md_label-agreement_kz": "Нажимая кнопку &laquo;Войти&raquo;, я&nbsp;подтверждаю, что ознакомился с&nbsp; [Условиями использования](https://yandex.ru/legal/cloud_termsofuse/?lang=ru){target=_blank rel=\"noreferrer noopener\"} и&nbsp;принимаю&nbsp;их.",
+  "md_label-agreement_ru": "Нажимая кнопку &laquo;Войти&raquo;, я&nbsp;подтверждаю, что ознакомился с&nbsp; [Условиями использования](https://yandex.ru/legal/cloud_termsofuse/?lang=ru){target=_blank rel=\"noreferrer noopener\"} и&nbsp;принимаю&nbsp;их.",
+  "test": "test1"
+}

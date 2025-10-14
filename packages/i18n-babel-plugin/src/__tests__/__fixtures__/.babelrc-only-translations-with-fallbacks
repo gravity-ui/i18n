@@ -1,0 +1,11 @@
+{
+  "plugins": [
+    ["../../../dist/index.js", {
+      "mode": "only-translations",
+      "allowedLocales": ["ru", "en", "en-kz", "ru-kz", "ru-yateam", "en-yateam"],
+      "fallbackLocales": {
+        "en-kz": ["en"]
+      }
+    }]
+  ]
+}

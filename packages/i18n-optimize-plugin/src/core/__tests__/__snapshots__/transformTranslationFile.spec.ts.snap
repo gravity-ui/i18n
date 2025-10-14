@@ -1,0 +1,79 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`includeDynamicImportToTranslationsFile should include dynamic import to translations file 1`] = `
+"
+import {intl} from './intl';
+
+const langs = require.context("./.compiled-locales/", false, /\\/.*\\.ts$/);
+const messages = langs("./" + process.env.I18N_LANGUAGE + ".ts").default;
+export const {t} = intl.createMessages(messages);
+"
+`;
+
+exports[`includeDynamicImportToTranslationsFile should include dynamic import to translations file with aliases 1`] = `
+"
+import {intl} from './intl';
+
+const langs = require.context("./.compiled-locales/", false, /\\/.*\\.ts$/);
+const messages = langs("./" + process.env.I18N_LANGUAGE + ".ts").default;
+export const {t: commonT, Message: CommonMessage} = intl.createMessages(messages);
+"
+`;
+
+exports[`transformFileWithBabel remove meta from messages 1`] = `
+"import { intl } from './intl';
+export const {
+  t
+} = intl.createMessages({
+  normalMessage: {
+    "ru": "\\u0440\\u0443\\u0441\\u0441\\u043A\\u0438\\u0439",
+    "en": "english"
+  }
+});"
+`;
+
+exports[`transformFileWithBabel transform markdown to html 1`] = `
+"import { intl } from './intl';
+export const {
+  t
+} = intl.createMessages({
+  messageWithMarkdown: {
+    "ru": "<p>\\u0421\\u043E\\u0434\\u0435\\u0440\\u0436\\u0430\\u0442 \\u043F\\u0440\\u0430\\u0432\\u0438\\u043B\\u0430 \\u0434\\u043B\\u044F \\u043F\\u043E\\u043B\\u0443\\u0447\\u0435\\u043D\\u0438\\u044F \\u0438\\xA0\\u043E\\u0442\\u043F\\u0440\\u0430\\u0432\\u043A\\u0438 \\u0442\\u0440\\u0430\\u0444\\u0438\\u043A\\u0430. \\u0423\\u043F\\u0440\\u0430\\u0432\\u043B\\u044F\\u0442\\u044C \\u0433\\u0440\\u0443\\u043F\\u043F\\u0430\\u043C\\u0438 \\u0431\\u0435\\u0437\\u043E\\u043F\\u0430\\u0441\\u043D\\u043E\\u0441\\u0442\\u0438 \\u043C\\u043E\\u0436\\u043D\\u043E \\u0432\\xA0\\u0441\\u0435\\u0440\\u0432\\u0438\\u0441\\u0435 <a href=\\"https://console.yandex.cloud/link/vpc/security-groups\\" target=\\"_blank\\" rel=\\"noopener\\">Virtual Private Cloud</a>.</p>\\n<p>\\u0413\\u0440\\u0443\\u043F\\u043F\\u044B \\u0431\\u0435\\u0437\\u043E\\u043F\\u0430\\u0441\\u043D\\u043E\\u0441\\u0442\\u0438 \\u043D\\u0435\\xA0\\u043E\\u0433\\u0440\\u0430\\u043D\\u0438\\u0447\\u0438\\u0432\\u0430\\u044E\\u0442 \\u0442\\u0440\\u0430\\u0444\\u0438\\u043A \\u043A\\xA0\\u0432\\u0435\\u0431-\\u0438\\u043D\\u0442\\u0435\\u0440\\u0444\\u0435\\u0439\\u0441\\u0443 Apache Airflow\\u2122.</p>\\n",
+    "en": "<p>Contain rules for receiving and sending traffic. You can manage security groups in\\xA0the <a href=\\"https://kz.console.yandex.cloud/link/vpc/security-groups\\" target=\\"_blank\\" rel=\\"noopener\\">Virtual Private Cloud service</a>.</p>\\n<p>Security groups do\\xA0not restrict traffic to\\xA0the Apache Airflow\\u2122 web interface.</p>\\n"
+  }
+});"
+`;
+
+exports[`transformFileWithBabel transform to TECH_LOCALE 1`] = `
+"export default {
+  normalMessage: {
+    "ru": "\\u0440\\u0443\\u0441\\u0441\\u043A\\u0438\\u0439",
+    "en": "english",
+    "te-ch": "123456"
+  }
+};"
+`;
+
+exports[`transformFileWithBabel with typograf 1`] = `
+"import { intl } from './intl';
+export const {
+  t
+} = intl.createMessages({
+  normalMessage: {
+    "ru": "\\u0440\\u0443\\u0441\\u0441\\u043A\\u0438\\u0439 \\u044F\\u0437\\u044B\\u043A \\u0434\\u043B\\u0438\\u043D\\u043D\\u043E\\u0435 \\u043F\\u0440\\u0435\\u0434\\u043B\\u043E\\u0436\\u0435\\u043D\\u0438\\u0435 pnpm \\u0441\\u043E\\u043C\\u043D\\u0438\\u0442\\u0435\\u043B\\u044C\\u043D\\u043E, \\u043D\\u043E\\xA0\\u043E\\u043A\\u0435\\u0439",
+    "en": "pnpm is\\xA0good package manager"
+  }
+});"
+`;
+
+exports[`transformFileWithBabel without typograf 1`] = `
+"import { intl } from './intl';
+export const {
+  t
+} = intl.createMessages({
+  normalMessage: {
+    "ru": "\\u0440\\u0443\\u0441\\u0441\\u043A\\u0438\\u0439 \\u044F\\u0437\\u044B\\u043A \\u0434\\u043B\\u0438\\u043D\\u043D\\u043E\\u0435 \\u043F\\u0440\\u0435\\u0434\\u043B\\u043E\\u0436\\u0435\\u043D\\u0438\\u0435 pnpm \\u0441\\u043E\\u043C\\u043D\\u0438\\u0442\\u0435\\u043B\\u044C\\u043D\\u043E \\u043D\\u043E \\u043E\\u043A\\u0435\\u0439",
+    "en": "pnpm is good package manager"
+  }
+});"
+`;

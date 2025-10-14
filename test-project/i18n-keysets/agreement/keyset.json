@@ -1,0 +1,56 @@
+{
+  "context": "Agreement page",
+  "allowedStatuses": [
+    "APPROVED",
+    "EXPIRED",
+    "GENERATED",
+    "REQUIRES_TRANSLATION",
+    "TRANSLATED"
+  ],
+  "status": {
+    "label-notify": {
+      "en": "APPROVED",
+      "ru": "APPROVED"
+    },
+    "label-notify_kz": {
+      "en": "APPROVED",
+      "ru": "APPROVED"
+    },
+    "label-notify_ru": {
+      "en": "APPROVED",
+      "ru": "APPROVED"
+    },
+    "label_override-service-hint": {
+      "en": "APPROVED",
+      "ru": "APPROVED"
+    },
+    "label_override-service-hint_kz": {
+      "en": "APPROVED",
+      "ru": "APPROVED"
+    },
+    "label_override-service-title": {
+      "en": "APPROVED",
+      "ru": "APPROVED"
+    },
+    "label_override-service-title_kz": {
+      "en": "APPROVED",
+      "ru": "APPROVED"
+    },
+    "md_label-agreement": {
+      "en": "APPROVED",
+      "ru": "APPROVED"
+    },
+    "md_label-agreement_kz": {
+      "en": "APPROVED",
+      "ru": "APPROVED"
+    },
+    "md_label-agreement_ru": {
+      "en": "APPROVED",
+      "ru": "APPROVED"
+    },
+    "test": {
+      "en": "REQUIRES_TRANSLATION",
+      "ru": "REQUIRES_TRANSLATION"
+    }
+  }
+}

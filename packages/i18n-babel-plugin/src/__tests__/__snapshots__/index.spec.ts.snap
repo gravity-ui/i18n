@@ -1,0 +1,564 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`transformations TECH target locale with ids 1`] = `
+"export default {
+  normalMessage: {
+    "ru": "\\u0440\\u0443\\u0441\\u0441\\u043A\\u0438\\u0439",
+    "en": "english",
+    "en-kz": "",
+    "xxx": null
+  },
+  countOffices: {
+    "en": "{count, plural, =0 {We don''t have offices} =1 {We have only one office} other {We have # offices}}",
+    "en-kz": "",
+    "en-tr": "",
+    "en-yateam": "",
+    "ru": "{count, plural, =0 {\\u0423 \\u043D\\u0430\\u0441 \\u043D\\u0435\\u0442 \\u043E\\u0444\\u0438\\u0441\\u043E\\u0432} =1 {\\u0423 \\u043D\\u0430\\u0441 \\u0432\\u0441\\u0435\\u0433\\u043E \\u043E\\u0434\\u0438\\u043D \\u043E\\u0444\\u0438\\u0441} other {\\u0423 \\u043D\\u0430\\u0441 # \\u043E\\u0444\\u0438\\u0441\\u043E\\u0432}}",
+    "ru-kz": "",
+    "ru-yateam": "",
+    "xxx": null
+  },
+  messageWithMarkdown: {
+    "ru": "<p>\\u0421\\u043E\\u0434\\u0435\\u0440\\u0436\\u0430\\u0442 \\u043F\\u0440\\u0430\\u0432\\u0438\\u043B\\u0430 \\u0434\\u043B\\u044F\\xA0\\u043F\\u043E\\u043B\\u0443\\u0447\\u0435\\u043D\\u0438\\u044F \\u0438\\xA0\\u043E\\u0442\\u043F\\u0440\\u0430\\u0432\\u043A\\u0438 \\u0442\\u0440\\u0430\\u0444\\u0438\\u043A\\u0430. \\u0423\\u043F\\u0440\\u0430\\u0432\\u043B\\u044F\\u0442\\u044C \\u0433\\u0440\\u0443\\u043F\\u043F\\u0430\\u043C\\u0438 \\u0431\\u0435\\u0437\\u043E\\u043F\\u0430\\u0441\\u043D\\u043E\\u0441\\u0442\\u0438 \\u043C\\u043E\\u0436\\u043D\\u043E \\u0432\\xA0\\u0441\\u0435\\u0440\\u0432\\u0438\\u0441\\u0435 <a href=\\"https://console.yandex.cloud/link/vpc/security-groups\\" target=\\"_blank\\" rel=\\"noopener\\">Virtual Private Cloud</a>.</p>\\n<p>\\u0413\\u0440\\u0443\\u043F\\u043F\\u044B \\u0431\\u0435\\u0437\\u043E\\u043F\\u0430\\u0441\\u043D\\u043E\\u0441\\u0442\\u0438 \\u043D\\u0435\\xA0\\u043E\\u0433\\u0440\\u0430\\u043D\\u0438\\u0447\\u0438\\u0432\\u0430\\u044E\\u0442 \\u0442\\u0440\\u0430\\u0444\\u0438\\u043A \\u043A\\xA0\\u0432\\u0435\\u0431-\\u0438\\u043D\\u0442\\u0435\\u0440\\u0444\\u0435\\u0439\\u0441\\u0443 Apache Airflow\\u2122.</p>\\n",
+    "en": "<p>Contain rules for\\xA0receiving and\\xA0sending traffic. You can manage security groups in\\xA0the\\xA0<a href=\\"https://kz.console.yandex.cloud/link/vpc/security-groups\\" target=\\"_blank\\" rel=\\"noopener\\">Virtual Private Cloud service</a>.</p>\\n<p>Security groups do\\xA0not\\xA0restrict traffic to\\xA0the\\xA0Apache Airflow\\u2122 web interface.</p>\\n",
+    "en-kz": null,
+    "xxx": null
+  },
+  oldPlural: {
+    "ru": "{count, plural, one {# \\u043F\\u0440\\u043E\\u0435\\u043A\\u0442} few {# \\u043F\\u0440\\u043E\\u0435\\u043A\\u0442\\u0430} many {# \\u043F\\u0440\\u043E\\u0435\\u043A\\u0442\\u043E\\u0432} =0 {\\u043D\\u043E\\u043B\\u044C \\u043F\\u0440\\u043E\\u0435\\u043A\\u0442\\u043E\\u0432} two {} other {# \\u043F\\u0440\\u043E\\u0435\\u043A\\u0442\\u043E\\u0432}}",
+    "ru-yateam": "{count, plural, one {one} few {} many {} =0 {zero} two {} other {}}",
+    "ru-kz": "{count, plural, one {one} few {} many {} =0 {zero} two {} other {}}",
+    "en": "{count, plural, one {one} few {few} many {} =0 {zero} two {} other {few}}",
+    "en-yateam": "{count, plural, one {one \\u0436\\u0436\\u0443\\u0439\\u0439\\u043A\\u0439\\u0446\\u043A} few {} many {} =0 {zero} two {} other {}}",
+    "en-kz": "{count, plural, one {one} few {} many {} =0 {\\u0432\\u043D\\u0435\\u0441 \\u0438\\u0437\\u043C\\u0435\\u043D\\u0435\\u043D\\u0438\\u044F zero} two {} other {}}",
+    "en-tr": "{count, plural, one {one} few {} many {} =0 {zero} two {} other {}}",
+    "xxx": null
+  }
+};"
+`;
+
+exports[`transformations compile messages to AST 1`] = `
+"import { intl } from './intl';
+export const {
+  t
+} = intl.createMessages({
+  normalMessage: {
+    "ru": [{
+      type: 0,
+      value: "\\u0440\\u0443\\u0441\\u0441\\u043A\\u0438\\u0439"
+    }],
+    "en": [{
+      type: 0,
+      value: "english"
+    }],
+    "en-kz": []
+  },
+  countOffices: {
+    "en": [{
+      type: 6,
+      value: "count",
+      options: {
+        "=0": {
+          value: [{
+            type: 0,
+            value: "We don't have offices"
+          }]
+        },
+        "=1": {
+          value: [{
+            type: 0,
+            value: "We have only one office"
+          }]
+        },
+        other: {
+          value: [{
+            type: 0,
+            value: "We have "
+          }, {
+            type: 7
+          }, {
+            type: 0,
+            value: " offices"
+          }]
+        }
+      },
+      offset: 0,
+      pluralType: "cardinal"
+    }],
+    "en-kz": [],
+    "en-tr": [],
+    "en-yateam": [],
+    "ru": [{
+      type: 6,
+      value: "count",
+      options: {
+        "=0": {
+          value: [{
+            type: 0,
+            value: "\\u0423 \\u043D\\u0430\\u0441 \\u043D\\u0435\\u0442 \\u043E\\u0444\\u0438\\u0441\\u043E\\u0432"
+          }]
+        },
+        "=1": {
+          value: [{
+            type: 0,
+            value: "\\u0423 \\u043D\\u0430\\u0441 \\u0432\\u0441\\u0435\\u0433\\u043E \\u043E\\u0434\\u0438\\u043D \\u043E\\u0444\\u0438\\u0441"
+          }]
+        },
+        other: {
+          value: [{
+            type: 0,
+            value: "\\u0423 \\u043D\\u0430\\u0441 "
+          }, {
+            type: 7
+          }, {
+            type: 0,
+            value: " \\u043E\\u0444\\u0438\\u0441\\u043E\\u0432"
+          }]
+        }
+      },
+      offset: 0,
+      pluralType: "cardinal"
+    }],
+    "ru-kz": [],
+    "ru-yateam": []
+  },
+  messageWithMarkdown: {
+    "ru": [{
+      type: 0,
+      value: "<p>\\u0421\\u043E\\u0434\\u0435\\u0440\\u0436\\u0430\\u0442 \\u043F\\u0440\\u0430\\u0432\\u0438\\u043B\\u0430 \\u0434\\u043B\\u044F\\xA0\\u043F\\u043E\\u043B\\u0443\\u0447\\u0435\\u043D\\u0438\\u044F \\u0438\\xA0\\u043E\\u0442\\u043F\\u0440\\u0430\\u0432\\u043A\\u0438 \\u0442\\u0440\\u0430\\u0444\\u0438\\u043A\\u0430. \\u0423\\u043F\\u0440\\u0430\\u0432\\u043B\\u044F\\u0442\\u044C \\u0433\\u0440\\u0443\\u043F\\u043F\\u0430\\u043C\\u0438 \\u0431\\u0435\\u0437\\u043E\\u043F\\u0430\\u0441\\u043D\\u043E\\u0441\\u0442\\u0438 \\u043C\\u043E\\u0436\\u043D\\u043E \\u0432\\xA0\\u0441\\u0435\\u0440\\u0432\\u0438\\u0441\\u0435 <a href=\\"https://console.yandex.cloud/link/vpc/security-groups\\" target=\\"_blank\\" rel=\\"noopener\\">Virtual Private Cloud</a>.</p>\\n<p>\\u0413\\u0440\\u0443\\u043F\\u043F\\u044B \\u0431\\u0435\\u0437\\u043E\\u043F\\u0430\\u0441\\u043D\\u043E\\u0441\\u0442\\u0438 \\u043D\\u0435\\xA0\\u043E\\u0433\\u0440\\u0430\\u043D\\u0438\\u0447\\u0438\\u0432\\u0430\\u044E\\u0442 \\u0442\\u0440\\u0430\\u0444\\u0438\\u043A \\u043A\\xA0\\u0432\\u0435\\u0431-\\u0438\\u043D\\u0442\\u0435\\u0440\\u0444\\u0435\\u0439\\u0441\\u0443 Apache Airflow\\u2122.</p>\\n"
+    }],
+    "en": [{
+      type: 0,
+      value: "<p>Contain rules for\\xA0receiving and\\xA0sending traffic. You can manage security groups in\\xA0the\\xA0<a href=\\"https://kz.console.yandex.cloud/link/vpc/security-groups\\" target=\\"_blank\\" rel=\\"noopener\\">Virtual Private Cloud service</a>.</p>\\n<p>Security groups do\\xA0not\\xA0restrict traffic to\\xA0the\\xA0Apache Airflow\\u2122 web interface.</p>\\n"
+    }],
+    "en-kz": null
+  },
+  oldPlural: {
+    "ru": [{
+      type: 6,
+      value: "count",
+      options: {
+        one: {
+          value: [{
+            type: 7
+          }, {
+            type: 0,
+            value: " \\u043F\\u0440\\u043E\\u0435\\u043A\\u0442"
+          }]
+        },
+        few: {
+          value: [{
+            type: 7
+          }, {
+            type: 0,
+            value: " \\u043F\\u0440\\u043E\\u0435\\u043A\\u0442\\u0430"
+          }]
+        },
+        many: {
+          value: [{
+            type: 7
+          }, {
+            type: 0,
+            value: " \\u043F\\u0440\\u043E\\u0435\\u043A\\u0442\\u043E\\u0432"
+          }]
+        },
+        "=0": {
+          value: [{
+            type: 0,
+            value: "\\u043D\\u043E\\u043B\\u044C \\u043F\\u0440\\u043E\\u0435\\u043A\\u0442\\u043E\\u0432"
+          }]
+        },
+        two: {
+          value: []
+        },
+        other: {
+          value: [{
+            type: 7
+          }, {
+            type: 0,
+            value: " \\u043F\\u0440\\u043E\\u0435\\u043A\\u0442\\u043E\\u0432"
+          }]
+        }
+      },
+      offset: 0,
+      pluralType: "cardinal"
+    }],
+    "ru-yateam": [{
+      type: 6,
+      value: "count",
+      options: {
+        one: {
+          value: [{
+            type: 0,
+            value: "one"
+          }]
+        },
+        few: {
+          value: []
+        },
+        many: {
+          value: []
+        },
+        "=0": {
+          value: [{
+            type: 0,
+            value: "zero"
+          }]
+        },
+        two: {
+          value: []
+        },
+        other: {
+          value: []
+        }
+      },
+      offset: 0,
+      pluralType: "cardinal"
+    }],
+    "ru-kz": [{
+      type: 6,
+      value: "count",
+      options: {
+        one: {
+          value: [{
+            type: 0,
+            value: "one"
+          }]
+        },
+        few: {
+          value: []
+        },
+        many: {
+          value: []
+        },
+        "=0": {
+          value: [{
+            type: 0,
+            value: "zero"
+          }]
+        },
+        two: {
+          value: []
+        },
+        other: {
+          value: []
+        }
+      },
+      offset: 0,
+      pluralType: "cardinal"
+    }],
+    "en": [{
+      type: 6,
+      value: "count",
+      options: {
+        one: {
+          value: [{
+            type: 0,
+            value: "one"
+          }]
+        },
+        few: {
+          value: [{
+            type: 0,
+            value: "few"
+          }]
+        },
+        many: {
+          value: []
+        },
+        "=0": {
+          value: [{
+            type: 0,
+            value: "zero"
+          }]
+        },
+        two: {
+          value: []
+        },
+        other: {
+          value: [{
+            type: 0,
+            value: "few"
+          }]
+        }
+      },
+      offset: 0,
+      pluralType: "cardinal"
+    }],
+    "en-yateam": [{
+      type: 6,
+      value: "count",
+      options: {
+        one: {
+          value: [{
+            type: 0,
+            value: "one \\u0436\\u0436\\u0443\\u0439\\u0439\\u043A\\u0439\\u0446\\u043A"
+          }]
+        },
+        few: {
+          value: []
+        },
+        many: {
+          value: []
+        },
+        "=0": {
+          value: [{
+            type: 0,
+            value: "zero"
+          }]
+        },
+        two: {
+          value: []
+        },
+        other: {
+          value: []
+        }
+      },
+      offset: 0,
+      pluralType: "cardinal"
+    }],
+    "en-kz": [{
+      type: 6,
+      value: "count",
+      options: {
+        one: {
+          value: [{
+            type: 0,
+            value: "one"
+          }]
+        },
+        few: {
+          value: []
+        },
+        many: {
+          value: []
+        },
+        "=0": {
+          value: [{
+            type: 0,
+            value: "\\u0432\\u043D\\u0435\\u0441 \\u0438\\u0437\\u043C\\u0435\\u043D\\u0435\\u043D\\u0438\\u044F zero"
+          }]
+        },
+        two: {
+          value: []
+        },
+        other: {
+          value: []
+        }
+      },
+      offset: 0,
+      pluralType: "cardinal"
+    }],
+    "en-tr": [{
+      type: 6,
+      value: "count",
+      options: {
+        one: {
+          value: [{
+            type: 0,
+            value: "one"
+          }]
+        },
+        few: {
+          value: []
+        },
+        many: {
+          value: []
+        },
+        "=0": {
+          value: [{
+            type: 0,
+            value: "zero"
+          }]
+        },
+        two: {
+          value: []
+        },
+        other: {
+          value: []
+        }
+      },
+      offset: 0,
+      pluralType: "cardinal"
+    }]
+  }
+});"
+`;
+
+exports[`transformations disable typograf for one key 1`] = `
+"import { intl } from './intl';
+export const {
+  t
+} = intl.createMessages({
+  messageWithTypograf: {
+    "ru": "\\u0410\\xA0\\u043A\\u0430\\u043A\\xA0\\u0436\\u0435 \\u044D\\u0442\\u043E \\u043C\\u043E\\u0433\\u043B\\u043E \\u043F\\u0440\\u043E\\u0438\\u0437\\u043E\\u0439\\u0442\\u0438?",
+    "en": "But\\xA0how could this happen? Oh\\xA0my\\xA0god!"
+  },
+  messageWithoutTypograf: {
+    "ru": "\\u0410 \\u043A\\u0430\\u043A \\u0436\\u0435 \\u044D\\u0442\\u043E \\u043C\\u043E\\u0433\\u043B\\u043E \\u043F\\u0440\\u043E\\u0438\\u0437\\u043E\\u0439\\u0442\\u0438?",
+    "en": "But how could this happen? Oh my god!"
+  }
+});"
+`;
+
+exports[`transformations global disable typograf 1`] = `
+"import { intl } from './intl';
+export const {
+  t
+} = intl.createMessages({
+  normalMessage: {
+    "ru": "\\u0440\\u0443\\u0441\\u0441\\u043A\\u0438\\u0439",
+    "en": "english",
+    "en-kz": ""
+  },
+  countOffices: {
+    "en": "{count, plural, =0 {We don''t have offices} =1 {We have only one office} other {We have # offices}}",
+    "en-kz": "",
+    "en-tr": "",
+    "en-yateam": "",
+    "ru": "{count, plural, =0 {\\u0423 \\u043D\\u0430\\u0441 \\u043D\\u0435\\u0442 \\u043E\\u0444\\u0438\\u0441\\u043E\\u0432} =1 {\\u0423 \\u043D\\u0430\\u0441 \\u0432\\u0441\\u0435\\u0433\\u043E \\u043E\\u0434\\u0438\\u043D \\u043E\\u0444\\u0438\\u0441} other {\\u0423 \\u043D\\u0430\\u0441 # \\u043E\\u0444\\u0438\\u0441\\u043E\\u0432}}",
+    "ru-kz": "",
+    "ru-yateam": ""
+  },
+  messageWithMarkdown: {
+    "ru": "<p>\\u0421\\u043E\\u0434\\u0435\\u0440\\u0436\\u0430\\u0442 \\u043F\\u0440\\u0430\\u0432\\u0438\\u043B\\u0430 \\u0434\\u043B\\u044F \\u043F\\u043E\\u043B\\u0443\\u0447\\u0435\\u043D\\u0438\\u044F \\u0438 \\u043E\\u0442\\u043F\\u0440\\u0430\\u0432\\u043A\\u0438 \\u0442\\u0440\\u0430\\u0444\\u0438\\u043A\\u0430. \\u0423\\u043F\\u0440\\u0430\\u0432\\u043B\\u044F\\u0442\\u044C \\u0433\\u0440\\u0443\\u043F\\u043F\\u0430\\u043C\\u0438 \\u0431\\u0435\\u0437\\u043E\\u043F\\u0430\\u0441\\u043D\\u043E\\u0441\\u0442\\u0438 \\u043C\\u043E\\u0436\\u043D\\u043E \\u0432 \\u0441\\u0435\\u0440\\u0432\\u0438\\u0441\\u0435 <a href=\\"https://console.yandex.cloud/link/vpc/security-groups\\" target=\\"_blank\\" rel=\\"noopener\\">Virtual Private Cloud</a>.</p>\\n<p>\\u0413\\u0440\\u0443\\u043F\\u043F\\u044B \\u0431\\u0435\\u0437\\u043E\\u043F\\u0430\\u0441\\u043D\\u043E\\u0441\\u0442\\u0438 \\u043D\\u0435 \\u043E\\u0433\\u0440\\u0430\\u043D\\u0438\\u0447\\u0438\\u0432\\u0430\\u044E\\u0442 \\u0442\\u0440\\u0430\\u0444\\u0438\\u043A \\u043A \\u0432\\u0435\\u0431-\\u0438\\u043D\\u0442\\u0435\\u0440\\u0444\\u0435\\u0439\\u0441\\u0443 Apache Airflow\\u2122.</p>\\n",
+    "en": "<p>Contain rules for receiving and sending traffic. You can manage security groups in the <a href=\\"https://kz.console.yandex.cloud/link/vpc/security-groups\\" target=\\"_blank\\" rel=\\"noopener\\">Virtual Private Cloud service</a>.</p>\\n<p>Security groups do not restrict traffic to the Apache Airflow\\u2122 web interface.</p>\\n",
+    "en-kz": null
+  },
+  oldPlural: {
+    "ru": "{count, plural, one {# \\u043F\\u0440\\u043E\\u0435\\u043A\\u0442} few {# \\u043F\\u0440\\u043E\\u0435\\u043A\\u0442\\u0430} many {# \\u043F\\u0440\\u043E\\u0435\\u043A\\u0442\\u043E\\u0432} =0 {\\u043D\\u043E\\u043B\\u044C \\u043F\\u0440\\u043E\\u0435\\u043A\\u0442\\u043E\\u0432} two {} other {# \\u043F\\u0440\\u043E\\u0435\\u043A\\u0442\\u043E\\u0432}}",
+    "ru-yateam": "{count, plural, one {one} few {} many {} =0 {zero} two {} other {}}",
+    "ru-kz": "{count, plural, one {one} few {} many {} =0 {zero} two {} other {}}",
+    "en": "{count, plural, one {one} few {few} many {} =0 {zero} two {} other {few}}",
+    "en-yateam": "{count, plural, one {one \\u0436\\u0436\\u0443\\u0439\\u0439\\u043A\\u0439\\u0446\\u043A} few {} many {} =0 {zero} two {} other {}}",
+    "en-kz": "{count, plural, one {one} few {} many {} =0 {\\u0432\\u043D\\u0435\\u0441 \\u0438\\u0437\\u043C\\u0435\\u043D\\u0435\\u043D\\u0438\\u044F zero} two {} other {}}",
+    "en-tr": "{count, plural, one {one} few {} many {} =0 {zero} two {} other {}}"
+  }
+});"
+`;
+
+exports[`transformations markdown message 1`] = `
+"import { intl } from './intl';
+export const {
+  t
+} = intl.createMessages({
+  markdownMessage: {
+    "ru": "<h2>\\u0423\\u043F\\u0440\\u0430\\u0432\\u043B\\u044F\\u0439\\u0442\\u0435 \\u0444\\u0435\\u0434\\u0435\\u0440\\u0430\\u0446\\u0438\\u044F\\u043C\\u0438 \\u0443\\u0434\\u043E\\u0441\\u0442\\u043E\\u0432\\u0435\\u0440\\u0435\\u043D\\u0438\\u0439 \\u0432\\xA0Cloud Organization</h2>\\n<p>\\u0412\\xA0\\u0441\\u0435\\u0440\\u0432\\u0438\\u0441\\u0435 Cloud Organization \\u0432\\u044B\\xA0\\u043C\\u043E\\u0436\\u0435\\u0442\\u0435 \\u043D\\u0430\\u0437\\u043D\\u0430\\u0447\\u0430\\u0442\\u044C \\u043F\\u0440\\u0430\\u0432\\u0430 \\u043F\\u043E\\u043B\\u044C\\u0437\\u043E\\u0432\\u0430\\u0442\\u0435\\u043B\\u044F\\u043C \\u0438\\xA0\\u0443\\u043F\\u0440\\u0430\\u0432\\u043B\\u044F\\u0442\\u044C \\u043F\\u0430\\u0440\\u0430\\u043C\\u0435\\u0442\\u0440\\u0430\\u043C\\u0438 \\u0430\\u0432\\u0442\\u043E\\u0440\\u0438\\u0437\\u0430\\u0446\\u0438\\u0438. \\u041D\\u0430\\u0441\\u0442\\u0440\\u043E\\u0439\\u0442\\u0435 \\u0444\\u0435\\u0434\\u0435\\u0440\\u0430\\u0446\\u0438\\u044E \\u0443\\u0434\\u043E\\u0441\\u0442\\u043E\\u0432\\u0435\\u0440\\u0435\\u043D\\u0438\\u0439, \\u0447\\u0442\\u043E\\u0431\\u044B \\u0441\\u043E\\u0442\\u0440\\u0443\\u0434\\u043D\\u0438\\u043A\\u0438 \\u043E\\u0440\\u0433\\u0430\\u043D\\u0438\\u0437\\u0430\\u0446\\u0438\\u0438 \\u0438\\u0441\\u043F\\u043E\\u043B\\u044C\\u0437\\u043E\\u0432\\u0430\\u043B\\u0438 \\u0441\\u0432\\u043E\\u0438 \\u0440\\u0430\\u0431\\u043E\\u0447\\u0438\\u0435 \\u0430\\u043A\\u043A\\u0430\\u0443\\u043D\\u0442\\u044B \\u0434\\u043B\\u044F\\xA0\\u0434\\u043E\\u0441\\u0442\\u0443\\u043F\\u0430 \\u043A\\xA0\\u0441\\u0435\\u0440\\u0432\\u0438\\u0441\\u0430\\u043C Yandex Cloud.</p>\\n<ul>\\n<li><a href=\\"https://yandex.cloud/ru/docs/organization/operations/setup-federation?from=int-console-empty-state\\" target=\\"_blank\\">\\u041D\\u0430\\u0441\\u0442\\u0440\\u043E\\u0438\\u0442\\u044C \\u0444\\u0435\\u0434\\u0435\\u0440\\u0430\\u0446\\u0438\\u044E \\u0443\\u0434\\u043E\\u0441\\u0442\\u043E\\u0432\\u0435\\u0440\\u0435\\u043D\\u0438\\u0439</a></li>\\n<li><a href=\\"https://yandex.cloud/ru/docs/organization/concepts/add-federation#saml-authentication?from=int-console-empty-state\\" target=\\"_blank\\">\\u0410\\u0443\\u0442\\u0435\\u043D\\u0442\\u0438\\u0444\\u0438\\u043A\\u0430\\u0446\\u0438\\u044F \\u0432\\xA0\\u0444\\u0435\\u0434\\u0435\\u0440\\u0430\\u0446\\u0438\\u0438</a></li>\\n</ul>\\n",
+    "en": "<h2>Manage identity federations with Cloud Organization</h2>\\n<p>In\\xA0the\\xA0Cloud Organization service, you can assign users rights and\\xA0manage authorization parameters. Set up\\xA0identity federation so\\xA0that an\\xA0organization\\u2019s employees can use their work accounts to\\xA0access Yandex Cloud services.</p>\\n<ul>\\n<li><a href=\\"https://yandex.cloud/en-ru/docs/organization/operations/setup-federation?from=int-console-empty-state\\" target=\\"_blank\\">Configuring an\\xA0identity federation</a></li>\\n<li><a href=\\"https://yandex.cloud/en-ru/docs/organization/concepts/add-federation#saml-authentication?from=int-console-empty-state\\" target=\\"_blank\\">SAML-compatible identity federations</a></li>\\n</ul>\\n"
+  }
+});"
+`;
+
+exports[`transformations only translations mode 1`] = `
+"export default {
+  normalMessage: {
+    "ru": "\\u0440\\u0443\\u0441\\u0441\\u043A\\u0438\\u0439",
+    "en": "english",
+    "en-kz": "",
+    "ru-kz": null,
+    "ru-yateam": null,
+    "en-yateam": null
+  },
+  countOffices: {
+    "en": "{count, plural, =0 {We don''t have offices} =1 {We have only one office} other {We have # offices}}",
+    "en-kz": "",
+    "en-tr": "",
+    "en-yateam": "",
+    "ru": "{count, plural, =0 {\\u0423 \\u043D\\u0430\\u0441 \\u043D\\u0435\\u0442 \\u043E\\u0444\\u0438\\u0441\\u043E\\u0432} =1 {\\u0423 \\u043D\\u0430\\u0441 \\u0432\\u0441\\u0435\\u0433\\u043E \\u043E\\u0434\\u0438\\u043D \\u043E\\u0444\\u0438\\u0441} other {\\u0423 \\u043D\\u0430\\u0441 # \\u043E\\u0444\\u0438\\u0441\\u043E\\u0432}}",
+    "ru-kz": "",
+    "ru-yateam": ""
+  },
+  messageWithMarkdown: {
+    "ru": "<p>\\u0421\\u043E\\u0434\\u0435\\u0440\\u0436\\u0430\\u0442 \\u043F\\u0440\\u0430\\u0432\\u0438\\u043B\\u0430 \\u0434\\u043B\\u044F\\xA0\\u043F\\u043E\\u043B\\u0443\\u0447\\u0435\\u043D\\u0438\\u044F \\u0438\\xA0\\u043E\\u0442\\u043F\\u0440\\u0430\\u0432\\u043A\\u0438 \\u0442\\u0440\\u0430\\u0444\\u0438\\u043A\\u0430. \\u0423\\u043F\\u0440\\u0430\\u0432\\u043B\\u044F\\u0442\\u044C \\u0433\\u0440\\u0443\\u043F\\u043F\\u0430\\u043C\\u0438 \\u0431\\u0435\\u0437\\u043E\\u043F\\u0430\\u0441\\u043D\\u043E\\u0441\\u0442\\u0438 \\u043C\\u043E\\u0436\\u043D\\u043E \\u0432\\xA0\\u0441\\u0435\\u0440\\u0432\\u0438\\u0441\\u0435 <a href=\\"https://console.yandex.cloud/link/vpc/security-groups\\" target=\\"_blank\\" rel=\\"noopener\\">Virtual Private Cloud</a>.</p>\\n<p>\\u0413\\u0440\\u0443\\u043F\\u043F\\u044B \\u0431\\u0435\\u0437\\u043E\\u043F\\u0430\\u0441\\u043D\\u043E\\u0441\\u0442\\u0438 \\u043D\\u0435\\xA0\\u043E\\u0433\\u0440\\u0430\\u043D\\u0438\\u0447\\u0438\\u0432\\u0430\\u044E\\u0442 \\u0442\\u0440\\u0430\\u0444\\u0438\\u043A \\u043A\\xA0\\u0432\\u0435\\u0431-\\u0438\\u043D\\u0442\\u0435\\u0440\\u0444\\u0435\\u0439\\u0441\\u0443 Apache Airflow\\u2122.</p>\\n",
+    "en": "<p>Contain rules for\\xA0receiving and\\xA0sending traffic. You can manage security groups in\\xA0the\\xA0<a href=\\"https://kz.console.yandex.cloud/link/vpc/security-groups\\" target=\\"_blank\\" rel=\\"noopener\\">Virtual Private Cloud service</a>.</p>\\n<p>Security groups do\\xA0not\\xA0restrict traffic to\\xA0the\\xA0Apache Airflow\\u2122 web interface.</p>\\n",
+    "en-kz": null,
+    "ru-kz": null,
+    "ru-yateam": null,
+    "en-yateam": null
+  },
+  oldPlural: {
+    "ru": "{count, plural, one {# \\u043F\\u0440\\u043E\\u0435\\u043A\\u0442} few {# \\u043F\\u0440\\u043E\\u0435\\u043A\\u0442\\u0430} many {# \\u043F\\u0440\\u043E\\u0435\\u043A\\u0442\\u043E\\u0432} =0 {\\u043D\\u043E\\u043B\\u044C \\u043F\\u0440\\u043E\\u0435\\u043A\\u0442\\u043E\\u0432} two {} other {# \\u043F\\u0440\\u043E\\u0435\\u043A\\u0442\\u043E\\u0432}}",
+    "ru-yateam": "{count, plural, one {one} few {} many {} =0 {zero} two {} other {}}",
+    "ru-kz": "{count, plural, one {one} few {} many {} =0 {zero} two {} other {}}",
+    "en": "{count, plural, one {one} few {few} many {} =0 {zero} two {} other {few}}",
+    "en-yateam": "{count, plural, one {one \\u0436\\u0436\\u0443\\u0439\\u0439\\u043A\\u0439\\u0446\\u043A} few {} many {} =0 {zero} two {} other {}}",
+    "en-kz": "{count, plural, one {one} few {} many {} =0 {\\u0432\\u043D\\u0435\\u0441 \\u0438\\u0437\\u043C\\u0435\\u043D\\u0435\\u043D\\u0438\\u044F zero} two {} other {}}",
+    "en-tr": "{count, plural, one {one} few {} many {} =0 {zero} two {} other {}}"
+  }
+};"
+`;
+
+exports[`transformations only translations mode with fallbacks 1`] = `
+"export default {
+  normalMessage: {
+    "ru": "\\u0440\\u0443\\u0441\\u0441\\u043A\\u0438\\u0439",
+    "en": "english",
+    "en-kz": "",
+    "ru-kz": null,
+    "ru-yateam": null,
+    "en-yateam": null
+  },
+  countOffices: {
+    "en": "{count, plural, =0 {We don''t have offices} =1 {We have only one office} other {We have # offices}}",
+    "en-kz": "",
+    "en-tr": "",
+    "en-yateam": "",
+    "ru": "{count, plural, =0 {\\u0423 \\u043D\\u0430\\u0441 \\u043D\\u0435\\u0442 \\u043E\\u0444\\u0438\\u0441\\u043E\\u0432} =1 {\\u0423 \\u043D\\u0430\\u0441 \\u0432\\u0441\\u0435\\u0433\\u043E \\u043E\\u0434\\u0438\\u043D \\u043E\\u0444\\u0438\\u0441} other {\\u0423 \\u043D\\u0430\\u0441 # \\u043E\\u0444\\u0438\\u0441\\u043E\\u0432}}",
+    "ru-kz": "",
+    "ru-yateam": ""
+  },
+  messageWithMarkdown: {
+    "ru": "<p>\\u0421\\u043E\\u0434\\u0435\\u0440\\u0436\\u0430\\u0442 \\u043F\\u0440\\u0430\\u0432\\u0438\\u043B\\u0430 \\u0434\\u043B\\u044F\\xA0\\u043F\\u043E\\u043B\\u0443\\u0447\\u0435\\u043D\\u0438\\u044F \\u0438\\xA0\\u043E\\u0442\\u043F\\u0440\\u0430\\u0432\\u043A\\u0438 \\u0442\\u0440\\u0430\\u0444\\u0438\\u043A\\u0430. \\u0423\\u043F\\u0440\\u0430\\u0432\\u043B\\u044F\\u0442\\u044C \\u0433\\u0440\\u0443\\u043F\\u043F\\u0430\\u043C\\u0438 \\u0431\\u0435\\u0437\\u043E\\u043F\\u0430\\u0441\\u043D\\u043E\\u0441\\u0442\\u0438 \\u043C\\u043E\\u0436\\u043D\\u043E \\u0432\\xA0\\u0441\\u0435\\u0440\\u0432\\u0438\\u0441\\u0435 <a href=\\"https://console.yandex.cloud/link/vpc/security-groups\\" target=\\"_blank\\" rel=\\"noopener\\">Virtual Private Cloud</a>.</p>\\n<p>\\u0413\\u0440\\u0443\\u043F\\u043F\\u044B \\u0431\\u0435\\u0437\\u043E\\u043F\\u0430\\u0441\\u043D\\u043E\\u0441\\u0442\\u0438 \\u043D\\u0435\\xA0\\u043E\\u0433\\u0440\\u0430\\u043D\\u0438\\u0447\\u0438\\u0432\\u0430\\u044E\\u0442 \\u0442\\u0440\\u0430\\u0444\\u0438\\u043A \\u043A\\xA0\\u0432\\u0435\\u0431-\\u0438\\u043D\\u0442\\u0435\\u0440\\u0444\\u0435\\u0439\\u0441\\u0443 Apache Airflow\\u2122.</p>\\n",
+    "en": "<p>Contain rules for\\xA0receiving and\\xA0sending traffic. You can manage security groups in\\xA0the\\xA0<a href=\\"https://kz.console.yandex.cloud/link/vpc/security-groups\\" target=\\"_blank\\" rel=\\"noopener\\">Virtual Private Cloud service</a>.</p>\\n<p>Security groups do\\xA0not\\xA0restrict traffic to\\xA0the\\xA0Apache Airflow\\u2122 web interface.</p>\\n",
+    "en-kz": "<p>Contain rules for\\xA0receiving and\\xA0sending traffic. You can manage security groups in\\xA0the\\xA0<a href=\\"https://kz.console.yandex.cloud/link/vpc/security-groups\\" target=\\"_blank\\" rel=\\"noopener\\">Virtual Private Cloud service</a>.</p>\\n<p>Security groups do\\xA0not\\xA0restrict traffic to\\xA0the\\xA0Apache Airflow\\u2122 web interface.</p>\\n",
+    "ru-kz": null,
+    "ru-yateam": null,
+    "en-yateam": null
+  },
+  oldPlural: {
+    "ru": "{count, plural, one {# \\u043F\\u0440\\u043E\\u0435\\u043A\\u0442} few {# \\u043F\\u0440\\u043E\\u0435\\u043A\\u0442\\u0430} many {# \\u043F\\u0440\\u043E\\u0435\\u043A\\u0442\\u043E\\u0432} =0 {\\u043D\\u043E\\u043B\\u044C \\u043F\\u0440\\u043E\\u0435\\u043A\\u0442\\u043E\\u0432} two {} other {# \\u043F\\u0440\\u043E\\u0435\\u043A\\u0442\\u043E\\u0432}}",
+    "ru-yateam": "{count, plural, one {one} few {} many {} =0 {zero} two {} other {}}",
+    "ru-kz": "{count, plural, one {one} few {} many {} =0 {zero} two {} other {}}",
+    "en": "{count, plural, one {one} few {few} many {} =0 {zero} two {} other {few}}",
+    "en-yateam": "{count, plural, one {one \\u0436\\u0436\\u0443\\u0439\\u0439\\u043A\\u0439\\u0446\\u043A} few {} many {} =0 {zero} two {} other {}}",
+    "en-kz": "{count, plural, one {one} few {} many {} =0 {\\u0432\\u043D\\u0435\\u0441 \\u0438\\u0437\\u043C\\u0435\\u043D\\u0435\\u043D\\u0438\\u044F zero} two {} other {}}",
+    "en-tr": "{count, plural, one {one} few {} many {} =0 {zero} two {} other {}}"
+  }
+};"
+`;
+
+exports[`transformations remove meta from messages 1`] = `
+"import { intl } from './intl';
+export const {
+  t
+} = intl.createMessages({
+  normalMessage: {
+    "ru": "\\u0440\\u0443\\u0441\\u0441\\u043A\\u0438\\u0439",
+    "en": "english",
+    "en-kz": ""
+  },
+  countOffices: {
+    "en": "{count, plural, =0 {We don''t have offices} =1 {We have only one office} other {We have # offices}}",
+    "en-kz": "",
+    "en-tr": "",
+    "en-yateam": "",
+    "ru": "{count, plural, =0 {\\u0423 \\u043D\\u0430\\u0441 \\u043D\\u0435\\u0442 \\u043E\\u0444\\u0438\\u0441\\u043E\\u0432} =1 {\\u0423 \\u043D\\u0430\\u0441 \\u0432\\u0441\\u0435\\u0433\\u043E \\u043E\\u0434\\u0438\\u043D \\u043E\\u0444\\u0438\\u0441} other {\\u0423 \\u043D\\u0430\\u0441 # \\u043E\\u0444\\u0438\\u0441\\u043E\\u0432}}",
+    "ru-kz": "",
+    "ru-yateam": ""
+  },
+  messageWithMarkdown: {
+    "ru": "<p>\\u0421\\u043E\\u0434\\u0435\\u0440\\u0436\\u0430\\u0442 \\u043F\\u0440\\u0430\\u0432\\u0438\\u043B\\u0430 \\u0434\\u043B\\u044F\\xA0\\u043F\\u043E\\u043B\\u0443\\u0447\\u0435\\u043D\\u0438\\u044F \\u0438\\xA0\\u043E\\u0442\\u043F\\u0440\\u0430\\u0432\\u043A\\u0438 \\u0442\\u0440\\u0430\\u0444\\u0438\\u043A\\u0430. \\u0423\\u043F\\u0440\\u0430\\u0432\\u043B\\u044F\\u0442\\u044C \\u0433\\u0440\\u0443\\u043F\\u043F\\u0430\\u043C\\u0438 \\u0431\\u0435\\u0437\\u043E\\u043F\\u0430\\u0441\\u043D\\u043E\\u0441\\u0442\\u0438 \\u043C\\u043E\\u0436\\u043D\\u043E \\u0432\\xA0\\u0441\\u0435\\u0440\\u0432\\u0438\\u0441\\u0435 <a href=\\"https://console.yandex.cloud/link/vpc/security-groups\\" target=\\"_blank\\" rel=\\"noopener\\">Virtual Private Cloud</a>.</p>\\n<p>\\u0413\\u0440\\u0443\\u043F\\u043F\\u044B \\u0431\\u0435\\u0437\\u043E\\u043F\\u0430\\u0441\\u043D\\u043E\\u0441\\u0442\\u0438 \\u043D\\u0435\\xA0\\u043E\\u0433\\u0440\\u0430\\u043D\\u0438\\u0447\\u0438\\u0432\\u0430\\u044E\\u0442 \\u0442\\u0440\\u0430\\u0444\\u0438\\u043A \\u043A\\xA0\\u0432\\u0435\\u0431-\\u0438\\u043D\\u0442\\u0435\\u0440\\u0444\\u0435\\u0439\\u0441\\u0443 Apache Airflow\\u2122.</p>\\n",
+    "en": "<p>Contain rules for\\xA0receiving and\\xA0sending traffic. You can manage security groups in\\xA0the\\xA0<a href=\\"https://kz.console.yandex.cloud/link/vpc/security-groups\\" target=\\"_blank\\" rel=\\"noopener\\">Virtual Private Cloud service</a>.</p>\\n<p>Security groups do\\xA0not\\xA0restrict traffic to\\xA0the\\xA0Apache Airflow\\u2122 web interface.</p>\\n",
+    "en-kz": null
+  },
+  oldPlural: {
+    "ru": "{count, plural, one {# \\u043F\\u0440\\u043E\\u0435\\u043A\\u0442} few {# \\u043F\\u0440\\u043E\\u0435\\u043A\\u0442\\u0430} many {# \\u043F\\u0440\\u043E\\u0435\\u043A\\u0442\\u043E\\u0432} =0 {\\u043D\\u043E\\u043B\\u044C \\u043F\\u0440\\u043E\\u0435\\u043A\\u0442\\u043E\\u0432} two {} other {# \\u043F\\u0440\\u043E\\u0435\\u043A\\u0442\\u043E\\u0432}}",
+    "ru-yateam": "{count, plural, one {one} few {} many {} =0 {zero} two {} other {}}",
+    "ru-kz": "{count, plural, one {one} few {} many {} =0 {zero} two {} other {}}",
+    "en": "{count, plural, one {one} few {few} many {} =0 {zero} two {} other {few}}",
+    "en-yateam": "{count, plural, one {one \\u0436\\u0436\\u0443\\u0439\\u0439\\u043A\\u0439\\u0446\\u043A} few {} many {} =0 {zero} two {} other {}}",
+    "en-kz": "{count, plural, one {one} few {} many {} =0 {\\u0432\\u043D\\u0435\\u0441 \\u0438\\u0437\\u043C\\u0435\\u043D\\u0435\\u043D\\u0438\\u044F zero} two {} other {}}",
+    "en-tr": "{count, plural, one {one} few {} many {} =0 {zero} two {} other {}}"
+  }
+});"
+`;
