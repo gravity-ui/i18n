@@ -16,7 +16,7 @@ Simplifies creating `i18n.ts` localization files. Adds new keys to existing loca
 
     ![vscode-plugin-run-example](./resources/vscode-plugin-run-example.jpg)
 
-4. Or click on the icon ![vscode-plugin-run-example-icon](./resources/i18n-icon.png) in the top right corner above the code editor.
+4. Or click on the icon <img src="./resources/i18n-icon.png" width="24"> in the top right corner above the code editor.
 
 ## Build
 
