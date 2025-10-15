@@ -26,12 +26,13 @@
   "devDependencies": {
     "@commitlint/cli": "18.2.0",
     "@commitlint/config-conventional": "18.1.0",
-    "eslint-config": "workspace:*",
     "@gravity-ui/prettier-config": "^1.1.0",
     "@gravity-ui/tsconfig": "^1.0.0",
     "@types/jest": "29.5.8",
     "eslint": "9.14.0",
+    "eslint-config": "workspace:*",
     "jest": "29.7.0",
+    "@types/node": "^20.0.0",
     "prettier": "^3.4.2",
     "ts-jest": "29.1.1",
     "typescript": "5.2.2"

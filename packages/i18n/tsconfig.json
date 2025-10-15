@@ -6,8 +6,9 @@
     "baseUrl": ".",
     "importHelpers": true,
     "declaration": true,
-    "noUncheckedIndexedAccess": true
+    "noUncheckedIndexedAccess": true,
+    "types": ["node", "jest"]
   },
-  "include": ["src/*.ts"],
+  "include": ["src/*.ts", "test-utils/*.ts"],
   "exclude": ["**/*.spec.ts"]
 }

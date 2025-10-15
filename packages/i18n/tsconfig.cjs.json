@@ -2,8 +2,9 @@
   "extends": "@gravity-ui/tsconfig/tsconfig",
   "compilerOptions": {
     "outDir": "build/cjs",
-    "declaration": true
+    "declaration": true,
+    "types": ["node", "jest"]
   },
-  "include": ["src/*.ts"],
+  "include": ["src/*.ts", "test-utils/*.ts"],
   "exclude": ["**/*.spec.ts"]
 }
