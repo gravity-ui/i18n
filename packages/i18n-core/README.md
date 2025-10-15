@@ -1,50 +1,50 @@
 # i18n-core
 
-Библиотека **i18n-core** - это основа для библиотек интернационализации (i18n). Разработан на базе **[@formatjs/intl](https://formatjs.github.io/)**..
+The **i18n-core** library is the foundation for internationalization (i18n) libraries. Built on top of **[@formatjs/intl](https://formatjs.github.io/)**.
 
-## Ключевые особенности:
+## Key Features:
 1. **Framework Agnostic**:
-   Разработанный для работы с любым проектом на JavaScript или TypeScript, независимо от того, основан он на React или нет.
+   Designed to work with any JavaScript or TypeScript project, React-based or not.
 
-1. **Разработан поверх @formatjs/intl**:
-   Использует мощные возможности форматирования и кастомизации @formatjs/intl, обеспечивая стандартную для отрасли функциональность локализации.
+1. **Built on top of @formatjs/intl**:
+   Leverages the powerful formatting and customization capabilities of @formatjs/intl, providing industry-standard localization functionality.
 
-1. **Модульный и расширяемый**:
-   Архитектура позволяет расширять или настраивать функциональность в соответствии с требованиями вашего проекта.
+1. **Modular and Extensible**:
+   The architecture allows for extending or customizing functionality according to your project's requirements.
 
-## Примеры использования:
-- **React приложения**: легко интегрируется с React проектами, используя [i18n-react](../i18n-react/README.md) библиотеку.
-- **Серверные решения**: легко интегрируется с серверными решениями, используя [i18n-node](../i18n-node/README.md) библиотеку.
+## Usage Examples:
+- **React applications**: easily integrates with React projects using the [i18n-react](../i18n-react/README.md) library.
+- **Server-side solutions**: easily integrates with server-side solutions using the [i18n-node](../i18n-node/README.md) library.
 
-## Использование
+## Usage
 
-### Фолбек локалей
+### Locale Fallbacks
 
-#### Конфигурация:
+#### Configuration:
 
-- `fallbackLocales` - фолбеки для заданных локалей.
-- `defaultFallback` - стандартный фолбек. Он будет использован, если не будет найден фолбек с более высоким приоритетом. Доступные опции:
-    - `empty-string` - фолбек на пустую строку.
-    - `key` - фолбек на ключ объекта перевода.
-    - Одна из используемых в проекте локалей `allowedLocales`, или их список.
-- `disableUseLocaleLangAsFallback` - запретить использование языка локали как его фолбек. Подробнее можно посомтреть в алгоритме поиска фолбеков.
+- `fallbackLocales` - fallbacks for defined locales.
+- `defaultFallback` - default fallback. It will be used if no higher priority fallback is found. Available options:
+    - `empty-string` - fallback to empty string.
+    - `key` - fallback to translation key.
+    - One of the locales used in the project `allowedLocales`, or their list.
+- `disableUseLocaleLangAsFallback` - disable using locale language as its fallback. More details can be found in the fallback search section.
 
-#### Алгоритм поиска фолбеков:
+#### Fallback Search:
 
-Фолбеки для `locale='ru-kz'`:
-1. Используем `fallbackLocales['ru-kz']`, если задана
-1. Если `disableUseLocaleLangAsFallback === false`:
-    - Определяем язык локали, используя [Intl.Locale](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Intl/Locale). В нашем случае `Intl.Locale('ru-kz').language === 'ru'`
-    - Используем `allowedLocales[Intl.Locale('ru-kz').language]`, если задана
-    - Используем фолбек для `Intl.Locale('ru-kz').language`. Для поиска используем этот же алгоритм с самого начала.
-1. Используем `defaultFallback`
+Fallbacks for `locale='ru-kz'`:
+1. Use `fallbackLocales['ru-kz']`, if present
+1. If `disableUseLocaleLangAsFallback === false`:
+    - Detect locale using [Intl.Locale](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Intl/Locale). In our case `Intl.Locale('ru-kz').language === 'ru'`
+    - Use `allowedLocales[Intl.Locale('ru-kz').language]`, if present
+    - Use fallback for `Intl.Locale('ru-kz').language`. For search, use this same algorithm from the beginning.
+1. Use `defaultFallback`
 
-#### Пример использования:
+#### Example:
 
 {% list tabs %}
-- Использование `fallbackLocales` и `defaultFallback`
+- Using `fallbackLocales` and `defaultFallback`
 
-   Конфигурация инстанса интернационализации:
+   i18n instance config:
    ```typescript
    {
       allowedLocales: ['en', 'ru', 'ru-kz'],
@@ -56,14 +56,14 @@
    }
    ```
 
-   Фолбеки по языкам:
-   - `en` - пустая строка
-   - `ru` - `en`, пустая строка
-   - `ru-kz` - `ru`, `en`, пустая строка
+   Fallbacks by languages:
+   - `en` - empty string
+   - `ru` - `en`, empty string
+   - `ru-kz` - `ru`, `en`, empty string
 
-- Использование языка локали как фолбек
+- Using locale language as fallback
 
-   Конфигурация инстанса интернационализации:
+   Internationalization instance configuration:
    ```typescript
    {
       allowedLocales: ['en', 'ru', 'ru-kz'],
@@ -73,9 +73,9 @@
    }
    ```
 
-   Фолбеки по языкам:
-   - `en`, `ru` - пустая строка
-   - `ru-kz` - `ru`, пустая строка
+   Fallbacks by languages:
+   - `en`, `ru` - empty string
+   - `ru-kz` - `ru`, empty string
 
 {% endlist %}
 

@@ -1,35 +1,35 @@
-# Демонстрационный проект i18n
+# i18n Demo Project
 
-Что можно увидеть в проекте:
+This project includes:
 
-- Покомпонентную структуру хранения текстов
+- Component-based translations
 
-- Примеры синтаксиса ICU Message Format
+- ICU Message format examples
 
-- Подключение библиотеки [i18n-react](./src/shared/i18n/intl.tsx)
+- [i18n-react](./src/shared/i18n/intl.tsx) installation example
 
-- Конфигурацию для [i18n-cli](./i18n.config.ts)
+- [i18n-cli](./i18n.config.ts) config
 
-- Подключение правил для линтера [eslint-plugin-i18n](./eslint.config.js)
+- Linting rules for [eslint-plugin-i18n](./eslint.config.js)
 
-- Подключение плагина [i18n-optimize-plugin](../packages/i18n-optimize-plugin/README.md) для оптимизации текстов и поддержки markdown
+- [i18n-optimize-plugin](../packages/i18n-optimize-plugin/README.md) plugin for text optimization and markdown support
 
 
-## Запуск проекта
+## Running the project
 
-1. Установите pnpm
+1. Install pnpm
 
     ```bash
     npm i -g pnpm@9.12.3
     ```
 
-1. Установите зависимости
+1. Install dependencies
 
     ```bash
     pnpm i
     ```
 
-1. Запустите проект
+1. Start the project
 
     ```bash
     pnpm run dev

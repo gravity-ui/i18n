@@ -1,1 +1,1 @@
-# Общие типы i18n
+# Common i18n Types

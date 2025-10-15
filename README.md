@@ -1,47 +1,47 @@
-# 🌍 Репозиторий i18n инструментов Gravity-UI
+# 🌍 Gravity-UI i18n Tools
 
-В данном репозитории хранятся общие утилиты, библиотеки и плагины, используемые для i18n в Gravity-UI.
+This repository contains common utilities, libraries, and plugins used for i18n in Gravity-UI.
 
-## Полезные ссылки
+## Useful Links
 
-- [Демонстрационный проект](./example/README.md)
+- [Demo Project](./example/README.md)
 
-## Библиотеки
+## Libraries
 
-| Название                                                    | Описание                                                         | Последняя версия                                                |
+| Name                                                    | Description                                                         | Latest Version                                                |
 |-------------------------------------------------------------|------------------------------------------------------------------|----------------------------------------------------------------|
-| [i18n-core](./packages/i18n-core/README.md)                 | Корневая библиотека i18n. Обвязка над FormatJS.                  |  |
-| [i18n-react](./packages/i18n-react/README.md)               | Библиотека i18n для клиентских приложений на React.              |  |
-| [i18n-node](./packages/i18n-node/README.md)                 | Библиотека i18n для серверных приложений.                        |  |
-| [eslint-plugin-i18n](./packages/eslint-plugin-i18n/README.md) | Правила линтинга eslint.                                       |  |
-| [i18n-cli](./packages/i18n-cli/README.md)                   | Инструмент для операций над языковыми файлами.                   |  |
-| [i18n-babel-plugin](./packages/i18n-babel-plugin/README.md) | Babel-плагин для оптимизации поставки языковых файлов.           |  |
-| [i18n-optimize-plugin](./packages/i18n-optimize-plugin/README.md) | Webpack/Rspack плагин для оптимизации поставки языковых файлов. |  |
-| [vscode-extension](./packages/vscode-extension/README.md) | VS Code расширение для создания файлов локализации | |
+| [i18n-core](./packages/i18n-core/README.md)                 | Core i18n library. Wrapper around FormatJS.                  |  |
+| [i18n-react](./packages/i18n-react/README.md)               | i18n library for React client applications.              |  |
+| [i18n-node](./packages/i18n-node/README.md)                 | i18n library for server applications.                        |  |
+| [eslint-plugin-i18n](./packages/eslint-plugin-i18n/README.md) | ESLint linting rules.                                       |  |
+| [i18n-cli](./packages/i18n-cli/README.md)                   | Tool for operations with language files.                   |  |
+| [i18n-babel-plugin](./packages/i18n-babel-plugin/README.md) | Babel plugin for optimizing language file delivery.           |  |
+| [i18n-optimize-plugin](./packages/i18n-optimize-plugin/README.md) | Webpack/Rspack plugin for optimizing language file delivery. |  |
+| [vscode-extension](./packages/vscode-extension/README.md) | VS Code extension for creating localization files | |
 
-## Разработка
+## Development
 
-1. Установите pnpm
+1. Install pnpm
 
     ```bash
     npm i -g pnpm@9.12.3
     ```
 
-1. Установите зависимости
+1. Install dependencies
 
     ```bash
     pnpm i
     ```
 
-1. Запускайте команды через утилиту `nx`
+1. Run commands with `nx` 
 
     ```bash
-    # Запуск сборки пакета i18n-cli
+    # Build the i18n-cli package
     pnpm nx build @gravity-ui/i18n-cli
 
-    # Запуск typecheck пакета i18n-cli
+    # Run typecheck for the i18n-cli package
     pnpm nx typecheck @gravity-ui/i18n-cli
 
-    # Запуск команды lint для всех пакетов
+    # Run lint for all packages
     pnpm nx run-many --target=lint --parallel
     ```

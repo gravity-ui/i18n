@@ -1,19 +1,19 @@
 # @gravity-ui/i18n-cli
 
-- Предоставляет конфигурацию i18n для проекта
+- Provides i18n configuration for the project
 
-- Предоставляет команду `i18n-cli` для управления языковыми файлами в проекте.
+- Provides the `i18n-cli` command for managing language files in the project.
 
 
-## Настройка в проекте
+## Project Setup
 
-1. **Установите пакет:**
+1. **Install the package:**
 
     ```bash
     npm i -D @gravity-ui/i18n-cli
     ```
 
-2. **Определите конфигурационный файл `i18n.config.ts` в корне проекта:**
+2. **Createthe config file `i18n.config.ts` in the project root:**
 
     ```ts
     import {defineConfig} from '@gravity-ui/i18n-cli/config';
@@ -31,7 +31,7 @@
         },
     });
     ```
-3. **Используйте конфигурацию в инстансе i18n-библиотеки (i18n-react и i18n-node)**
+3. **Import the config in the i18n library instance (i18n-react and i18n-node)**
 
     ```ts
     import {createIntl} from '@gravity-ui/i18n-react';
@@ -46,19 +46,19 @@
     });
     ```
 
-## Команды
+## Commands
 
 ### `create-keys`
 
-Проверяет переданный файл/директорию на вызовы отсутствующих ключей и добавляет их в файл `i18n.ts`.
+Checks the provided file/directory for calls to missing keys and adds them to the `i18n.ts` file.
 
-#### Запуск для отдельного файла
+#### Run for a single file
 
 ```bash
 npx i18n-cli create-keys src/ui/SomeComponent/SomeComponent.tsx
 ```
 
-#### Запуск для всех файлов в директории
+#### Run for all files in a directory
 
 ```bash
 npx i18n-cli create-keys src/ui/ComponentDirectory
@@ -66,27 +66,27 @@ npx i18n-cli create-keys src/ui/ComponentDirectory
 
 ### `find-unused`
 
-Рекурсивно ищет неиспользуемые ключи начиная с указанной директории.
+Recursively search for unused keys starting from the specified directory.
 
-#### Отчёт по неиспользуемым ключам
+#### Report on unused keys
 
 ```bash
 npx i18n-cli find-unused src/ui/SomeComponent
 ```
 
-#### Удаление неиспользуемых ключей
+#### Delete unused keys
 
 ```bash
 npx i18n-cli find-unused -d src/ui/SomeComponent
 ```
 
-## Параметры конфигурации
+## Configuration options
 
 ### allowedLocales
 
-Тип: `string[]`
+Type: `string[]`
 
-Поддерживаемые проектом локали.
+Allowed locales in the project.
 
 ```ts
 {
@@ -96,23 +96,23 @@ npx i18n-cli find-unused -d src/ui/SomeComponent
 
 ### fallbackLocales
 
-Фоллбэки для заданных локалей. Подробнее можно прочитать в [i18n-core](../i18n-core/README.md).
+Fallbacks for given locales. More details can be found in [i18n-core](../i18n-core/README.md).
 
 ### defaultFallback
 
-Стандартный фоллбэк. Используется, если не будет найден фолбек с более высоким приоритетом. Подробнее можно прочитать в [i18n-core](../i18n-core/README.md).
+Default fallback. Used if no higher priority fallback is found. More in [i18n-core](../i18n-core/README.md).
 
 ### clientIntlModule
 
-Расположение инстанса библиотеки для клиентской части [i18n-react](../i18n-react/README.md) в проекте.
+Location of the library instance for the client-side [i18n-react](../i18n-react/README.md) in the project.
 
 ```ts
 {
     clientIntlModule: {
-        // Путь до модуля, в котором находится инстанс библиотеки intl
+        // Path to the module with intl library instance
         path: 'src/ui/shared/i18n.ts',
 
-        // Typescript-алиас модуля, в котором находится инстанс библиотеки intl
+        // TypeScript alias of the module with intl library instance
         alias: '@shared/i18n';
     }
 }
@@ -120,18 +120,18 @@ npx i18n-cli find-unused -d src/ui/SomeComponent
 
 ### serverIntlModule
 
-Расположение инстанса библиотеки для серверной части [i18n-node](../i18n-node/README.md) в проекте.
+Server-side library instance location [i18n-node](../i18n-node/README.md) in the project.
 
 ```ts
 {
     serverIntlModule: {
-        // Путь до модуля, в котором находится инстанс библиотеки intl
+        // Path to the module containing the intl library instance
         path: 'src/server/utils/i18n.ts',
 
-        // Typescript-алиас модуля, в котором находится инстанс библиотеки intl
+        // TypeScript alias of the module containing the intl library instance
         alias: undefined,
 
-        // Регулярные выражения, по которым определяется, что модуль относится к серверной части
+        // Regular expressions that determine if a module belongs to the server-side
         pathMatchers: [/src\/server\/.+$/]
     }
 }

@@ -1,18 +1,18 @@
 # @gravity-ui/eslint-plugin-i18n
 
-Правила для линтинга i18n.
+Rules for i18n linting.
 
-## Как подключить к проекту
+## How to connect to a project
 
-1. Устанавливаем пакет:
+1. Install the package:
 
     ```sh
     npm i --save-dev @gravity-ui/eslint-plugin-i18n
     ```
 
-2. Подключаем плагин и правила к eslint-конфигу Webpack.
+2. Connect the plugin and rules to the eslint config.
 
-    Добавляем в конфиг клиента (`src/ui/.eslintrc`):
+    Add to the client config (`src/ui/.eslintrc`):
 
     ```js
     {
@@ -24,9 +24,9 @@
     }
     ```
 
-## Правила
+## Rules
 
-| Name                                                                                                                 | Description                                                                        |
+| Name                                                                                                                 | Description                                                                        |
 | :--------------------------------------------------------------------------------------------------------------------| :----------------------------------------------------------------------------------|
-| [restrict-i18n-imports](docs/rules/restrict-i18n-imports.md)                                                         | Запрещает импорт файлов с текстами (`i18n.ts`) из директорий других уровней. |
-| [auto-generate-translation-message-id](docs/rules/auto-generate-translation-message-id.md)                           | Проверяет наличие идентификатора в объекте перевода и добавляет его при отсутствии |
+| [restrict-i18n-imports](docs/rules/restrict-i18n-imports.md)                                                         | Prohibits importing text files (`i18n.ts`) from directories of other levels. |
+| [auto-generate-translation-message-id](docs/rules/auto-generate-translation-message-id.md)                           | Checks for the presence of an identifier in the translation object and adds it if missing |

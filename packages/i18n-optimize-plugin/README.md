@@ -1,32 +1,32 @@
 # @gravity-ui/i18n-optimize-plugin
 
 
-Плагин для оптимизации поставки файлов с переводами. Можно использовать с webpack, rspack и vite.
+Plugin for optimizing translation file delivery. Can be used with webpack, rspack, and vite.
 
-Под капотом использует [`i18n-babel-plugin`](../i18n-babel-plugin/README.md).
+Under the hood, uses [`i18n-babel-plugin`](../i18n-babel-plugin/README.md).
 
-*Трансформирует файлы `i18n.ts`:*
+*Transforms `i18n.ts` files:*
 
-- Удаляет meta из сообщений (id, description, etc.)
-- Преобразует markdown в html (при `meta.markdown === true`)
-- Применяет типограф к содержимому ключей
-- Создаёт по-локальные чанки и оптимизирует их загрузку в runtime
+- Removes meta from messages (id, description, etc.)
+- Converts markdown to html (when `meta.markdown === true`)
+- Applies typography rules to key content
+- Creates per-locale chunks and optimizes their runtime loading
 
 *TODO:*
 
-- Проверяет синтаксис согласно ICU MessageFormat
-- Компилирует ICU MessageFormat в AST
-- Заменяет исходные ключи на хэши (позволяет сократить длину ключа)
+- Validates syntax according to ICU MessageFormat
+- Compiles ICU MessageFormat to AST
+- Replaces original keys with hashes (allows reducing key length)
 
-## Использование
+## Usage
 
-Установите плагин:
+Install the plugin:
 
 ```bash
 npm install @gravity-ui/i18n-optimize-plugin --save-dev
 ```
 
-Подключите плагин к сборке. Пример, если вы используете `app-builder` с `rspack`:
+Connect the plugin to the build. Example if you're using `app-builder` with `rspack`:
 
 ```ts
 import {defineConfig} from '@gravity-ui/app-builder';
@@ -43,7 +43,7 @@ export default defineConfig({
 });
 ```
 
-Пример, если вы используете `app-builder` с `webpack`:
+Example if you're using `app-builder` with `webpack`:
 
 ```ts
 import {defineConfig} from '@gravity-ui/app-builder';
@@ -60,15 +60,15 @@ export default defineConfig({
 });
 ```
 
-## Настройки
+## Settings
 
 ### typograf
 
-Позволяет настроить [правила типографа](https://github.com/typograf/typograf/blob/dev/docs/RULES.ru.md).
+Allows configuring [typograf rules](https://github.com/typograf/typograf/blob/dev/docs/RULES.ru.md).
 
-По-умолчанию использует правила [`DEFAULT_TYPOGRAF_CONFIG`](./src/typograf.ts).
+By default, uses [`DEFAULT_TYPOGRAF_CONFIG`](./src/typograf.ts) rules.
 
-Пример кастомизации правил типографа:
+Example of customizing typograf rules:
 
 ```ts
 applyI18nOptimizePlugin(webpackConfig, {
@@ -79,7 +79,7 @@ applyI18nOptimizePlugin(webpackConfig, {
 })
 ```
 
-Пример отключения типографа:
+Example of disabling typograf:
 
 ```ts
 applyI18nOptimizePlugin(webpackConfig, {
@@ -89,15 +89,15 @@ applyI18nOptimizePlugin(webpackConfig, {
 
 ### optimizeLocaleChunks
 
-Оптимизирует загрузку чанков в runtime: на клиент загружаются переводы только для текущего языка.
+Optimizes chunk loading at runtime: only translations for the current language are loaded to the client.
 
-Работает только в режиме production для webpack/rspack. По умолчанию отключен (false).
+Works only in production mode for webpack/rspack. Disabled by default (false).
 
-#### Как подключить?
+#### How to enable?
 
-1. Для правильной загрузки чанков необходимо определить переменную `runtimeLanguageVariableName` с текущим языком пользователя в window.
+1. For proper chunk loading, you need to define the `runtimeLanguageVariableName` variable with the current user language in window.
 
-    Например, если вы используете `core`, то вы можете это сделать через `inlineScripts`:
+    For example, if you're using `core`, you can do this through `inlineScripts`:
 
     ```ts
     return res.renderLayout2({
@@ -108,11 +108,11 @@ applyI18nOptimizePlugin(webpackConfig, {
     })
     ```
 
-    По умолчанию для `runtimeLanguageVariableName` используется `window.I18N_LANG`.
+    By default, `window.I18N_LANG` is used for `runtimeLanguageVariableName`.
 
-1. Настройте динамический манифест в зависимости от языка пользователя (только для production).
+1. Configure dynamic manifest depending on user language (production only).
 
-    Например, при использовании `core` это можно сделать через middleware:
+    For example, when using `core` this can be done through middleware:
 
     ```ts
     import {createMiddleware, getDefaultManifestPath} from '@gravity-ui/ui-core-layout';
@@ -128,40 +128,40 @@ applyI18nOptimizePlugin(webpackConfig, {
     });
     ```
 
-1. Включите опцию `optimizeLocaleChunks` в настройках плагина.
+1. Enable the `optimizeLocaleChunks` option in plugin settings.
 
-1. Добавьте строку `.compiled-locales*` в `.arcignore`.
+1. Add the line `.compiled-locales*` to `.arcignore`.
 
-#### Стратегии оптимизации
+#### Optimization Strategies
 
-Параметр `strategy` определяет способ формирования языковых чанков:
+The `strategy` parameter determines how language chunks are formed:
 
-- `by-module` (по умолчанию) - для каждого модуля `i18n.ts` создаются отдельные языковые чанки. Это позволяет загружать переводы только для тех модулей, которые используются на странице.
+- `by-module` (default) - separate language chunks are created for each `i18n.ts` module. This allows loading translations only for modules used on the page.
 
-- `all-in-one` - создается общий чанк для каждого языка, содержащий все переводы проекта. Подходит для небольших проектов, где объем переводов невелик.
+- `all-in-one` - creates a common chunk for each language containing all project translations. Suitable for small projects where translation volume is small.
 
-- `custom` - кастомная стратегия, позволяющая определить собственную логику формирования имен чанков через функцию `getChunkName`.
+- `custom` - custom strategy allowing you to define your own chunk naming logic through the `getChunkName` function.
 
-#### Настройка переменной языка
+#### Language Variable Configuration
 
-Параметр `runtimeLanguageVariableName` позволяет указать имя переменной, которая хранит текущий язык. По умолчанию используется `window.I18N_LANG`.
+The `runtimeLanguageVariableName` parameter allows specifying the variable name that stores the current language. By default, `window.I18N_LANG` is used.
 
-Пример включения оптимизации:
+Example of enabling optimization:
 
 ```ts
-// Дефолтная стратегия by-module
+// Default by-module strategy
 applyI18nOptimizePlugin(webpackConfig, {
     optimizeLocaleChunks: true,
 })
 
-// Стратегия all-in-one
+// all-in-one strategy
 applyI18nOptimizePlugin(webpackConfig, {
     optimizeLocaleChunks: {
         strategy: 'all-in-one',
     },
 })
 
-// Изменение runtime-переменной, в которой хранится язык пользователя
+// Changing runtime variable that stores user language
 applyI18nOptimizePlugin(webpackConfig, {
     optimizeLocaleChunks: {
         strategy: 'by-module',

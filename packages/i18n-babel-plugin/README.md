@@ -1,30 +1,30 @@
 # @gravity-ui/i18n-babel-plugin
 
-Babel-плагин для оптимизации поставки файлов с переводами.
+Babel plugin for optimizing translation file delivery.
 
-Если вы не используете babel, то вам подойдет [i18n-optimize-plugin](../i18n-optimize-plugin/README.md).
+If you're not using babel, then [i18n-optimize-plugin](../i18n-optimize-plugin/README.md) would be suitable for you.
 
-*Трансформирует файлы `i18n.ts`:*
+*Transforms `i18n.ts` files:*
 
-- Удаляет meta из сообщений (id, description, etc.)
-- Преобразует markdown в html (при `meta.markdown === true`)
-- Применяет типограф к содержимому ключей
+- Removes meta from messages (id, description, etc.)
+- Converts markdown to html (when `meta.markdown === true`)
+- Applies typography rules to key content
 
 *TODO:*
 
-- Проверяет синтаксис согласно ICU MessageFormat
-- Компилирует ICU MessageFormat в AST
-- Заменяет исходные ключи на хэши (позволяет сократить длину ключа)
+- Validates syntax according to ICU MessageFormat
+- Compiles ICU MessageFormat to AST
+- Replaces original keys with hashes (allows reducing key length)
 
-## Использование
+## Usage
 
-Установите плагин:
+Install the plugin:
 
 ```bash
 npm install @gravity-ui/i18n-babel-plugin --save-dev
 ```
 
-Подключите плагин к сборке. Пример, если вы используете `app-builder`:
+Connect the plugin to the build. Example if you're using `app-builder`:
 
 ```ts
 import {defineConfig} from '@gravity-ui/app-builder';
@@ -46,15 +46,15 @@ export default defineConfig({
 });
 ```
 
-## Настройки
+## Settings
 
 ### typograf
 
-Позволяет настроить [правила типографа](https://github.com/typograf/typograf/blob/dev/docs/RULES.ru.md).
+Allows configuring [typography rules](https://github.com/typograf/typograf/blob/dev/docs/RULES.ru.md).
 
-По-умолчанию использует правила [`DEFAULT_TYPOGRAF_CONFIG`](./src/typograf.ts).
+By default, uses [`DEFAULT_TYPOGRAF_CONFIG`](./src/typograf.ts) rules.
 
-Пример кастомизации правил типографа:
+Example of customizing typograph rules:
 
 ```ts
 plugins: [
@@ -67,7 +67,7 @@ plugins: [
 ],
 ```
 
-Пример отключения типографа:
+Example of disabling typograph:
 
 ```ts
 plugins: [
@@ -79,8 +79,8 @@ plugins: [
 
 ### root
 
-Позволяет ограничить область работы плагина. Плагин не будет обрабатывать файлы за пределами заданной области.
+Allows limiting the plugin's scope. The plugin will not process files outside the specified scope.
 
-Тип: `string`.
+Type: `string`.
 
-По-умолчанию: `src`.
+Default: `src`.
