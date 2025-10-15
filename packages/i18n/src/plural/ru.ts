@@ -1,6 +1,6 @@
 import type {PluralForm} from '../types';
 
-export default function(count: number, pluralForms: typeof PluralForm): PluralForm {
+export default function (count: number, pluralForms: typeof PluralForm): PluralForm {
     // the rules for negative numbers are the same
     const lastDigit = Math.abs(count % 10);
     const last2Digits = Math.abs(count % 100);
@@ -13,7 +13,7 @@ export default function(count: number, pluralForms: typeof PluralForm): PluralFo
         return pluralForms.One;
     }
 
-    if ((lastDigit > 1 && lastDigit < 5) && (last2Digits < 10 || last2Digits > 20)) {
+    if (lastDigit > 1 && lastDigit < 5 && (last2Digits < 10 || last2Digits > 20)) {
         return pluralForms.Few;
     }
 

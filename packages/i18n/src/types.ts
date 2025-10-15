@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 export type KeyData = string | DeprecatedPluralValue | PluralValue;
 export type KeysData = Record<string, KeyData>;
 export type KeysetData = Record<string, KeysData>;
@@ -20,10 +21,7 @@ export type I18NFn<T = any> = {
         keysetName: K,
         key: G | NoEnumLikeStringLiteral<S>,
     ): () => S extends G ? T[K][G] : string;
-    has<K extends keyof T>(
-        keysetName: K,
-        key: string
-    ): () => boolean;
+    has<K extends keyof T>(keysetName: K, key: string): () => boolean;
     bind(
         thisArg: any,
     ): <K extends keyof T, G extends keyof T[K], S extends string>(
@@ -52,26 +50,30 @@ export type I18NFn<T = any> = {
 };
 
 // Recursive helper for finding path parameters
-type KeyParam<Path extends string> =
-    Path extends `${infer L}{{${infer K}}}${infer R}`
-        ? K | KeyParam<L> | KeyParam<R>
-        : never;
+type KeyParam<Path extends string> = Path extends `${infer L}{{${infer K}}}${infer R}`
+    ? K | KeyParam<L> | KeyParam<R>
+    : never;
 
 type StringKey = string;
 
 type RequiredPluralValue = {
     count: number;
-}
+};
 
-export type TypedParams<K = (StringKey | PluralValue), V = string | number> = (
-    K extends StringKey
-        ? Record<KeyParam<K>, V>
-        : (
-            K extends PluralValue
-                ? Record<KeyParam<NonNullable<K["zero"]>> | KeyParam<NonNullable<K['one']>> | KeyParam<NonNullable<K['two']>> | KeyParam<NonNullable<K['few']>> | KeyParam<NonNullable<K['many']>> | KeyParam<NonNullable<K['other']>>, V> & RequiredPluralValue
-                : unknown
-            )
-    );
+export type TypedParams<K = StringKey | PluralValue, V = string | number> = K extends StringKey
+    ? Record<KeyParam<K>, V>
+    : K extends PluralValue
+      ? Record<
+            | KeyParam<NonNullable<K['zero']>>
+            | KeyParam<NonNullable<K['one']>>
+            | KeyParam<NonNullable<K['two']>>
+            | KeyParam<NonNullable<K['few']>>
+            | KeyParam<NonNullable<K['many']>>
+            | KeyParam<NonNullable<K['other']>>,
+            V
+        > &
+            RequiredPluralValue
+      : unknown;
 
 export type TypedParamsI18NFn<T = any> = {
     <K extends keyof T, G extends keyof T[K], S extends string>(
@@ -89,10 +91,7 @@ export type TypedParamsI18NFn<T = any> = {
         keysetName: K,
         key: G | NoEnumLikeStringLiteral<S>,
     ): () => string;
-    has<K extends keyof T>(
-        keysetName: K,
-        key: string
-    ): () => boolean;
+    has<K extends keyof T>(keysetName: K, key: string): () => boolean;
     bind(
         thisArg: any,
     ): <K extends keyof T, G extends keyof T[K], S extends string>(
@@ -128,13 +127,13 @@ export enum PluralForm {
     One,
     Few,
     Many,
-    None
+    None,
 }
 
 /**
  * @deprecated Old plurals format. Use new format from type PluralValue. Will be removed in v2.
  */
-export type DeprecatedPluralValue = string[]
+export type DeprecatedPluralValue = string[];
 
 export type PluralValue = {
     zero?: string;
@@ -143,12 +142,15 @@ export type PluralValue = {
     few?: string;
     many?: string;
     other?: string;
-}
+};
 
 export function isPluralValue(value: KeyData): value is DeprecatedPluralValue | PluralValue {
     return typeof value !== 'string';
 }
 
 export interface Logger {
-    log(message: string, options?: {level?: string; logger?: string; extra?: Record<string, unknown>}): void;
+    log(
+        message: string,
+        options?: {level?: string; logger?: string; extra?: Record<string, unknown>},
+    ): void;
 }

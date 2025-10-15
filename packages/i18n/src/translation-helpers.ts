@@ -1,5 +1,5 @@
-import { getNestingTranslationsRegExp } from "./consts";
-import { KeyData } from "./types";
+import {getNestingTranslationsRegExp} from './consts';
+import {KeyData} from './types';
 
 export enum ErrorCode {
     EmptyKeyset = 'EMPTY_KEYSET',
@@ -15,10 +15,15 @@ export enum ErrorCode {
     NoLanguageData = 'NO_LANGUAGE_DATA',
 }
 
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 const codeValues = Object.values(ErrorCode);
 export type ErrorCodeType = (typeof codeValues)[number];
 
-export function mapErrorCodeToMessage(args: {code: ErrorCodeType; lang: string; fallbackLang?: string}) {
+export function mapErrorCodeToMessage(args: {
+    code: ErrorCodeType;
+    lang: string;
+    fallbackLang?: string;
+}) {
     const {code, fallbackLang, lang} = args;
     let message = `Using language ${lang}. `;
 
@@ -41,7 +46,7 @@ export function mapErrorCodeToMessage(args: {code: ErrorCodeType; lang: string; 
         }
         case ErrorCode.MissingKeyFor0: {
             message += 'Missing key for 0';
-            return message
+            return message;
         }
         case ErrorCode.MissingKeyParamsCount: {
             message += 'Missing params.count for key.';
@@ -65,16 +70,16 @@ export function mapErrorCodeToMessage(args: {code: ErrorCodeType; lang: string; 
 
 export const hasNestingTranslations = (keyValue: string): boolean => {
     const NESTING_PREGEXP = getNestingTranslationsRegExp();
-    const match = NESTING_PREGEXP.exec(keyValue)
-    return (match?.length ?? 0) > 0
-}
+    const match = NESTING_PREGEXP.exec(keyValue);
+    return (match?.length ?? 0) > 0;
+};
 
 export const getPluralValues = (keyValue: KeyData): string[] => {
     if (keyValue instanceof Array) {
-        return keyValue
+        return keyValue;
     } else if (keyValue instanceof Object) {
-        return Object.values(keyValue)
+        return Object.values(keyValue);
     }
 
-    return []
-}
+    return [];
+};

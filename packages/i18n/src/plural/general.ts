@@ -1,4 +1,4 @@
-import type { DeprecatedPluralValue, PluralValue, Pluralizer } from "../types";
+import type {DeprecatedPluralValue, PluralValue, Pluralizer} from '../types';
 import {PluralForm} from '../types';
 
 export function getPluralViaIntl(value: PluralValue, count: number, lang: string) {
@@ -29,7 +29,7 @@ type FormatPluralArgs = {
     lang: string;
     pluralizers?: Record<string, Pluralizer>;
     log: (message: string) => void;
-}
+};
 
 export function getPluralValue({value, count, lang, pluralizers, log, key}: FormatPluralArgs) {
     if (!Array.isArray(value)) {
@@ -42,7 +42,9 @@ export function getPluralValue({value, count, lang, pluralizers, log, key}: Form
     }
 
     if (!pluralizers[lang]) {
-        log(`Pluralization is not configured for language '${lang}', falling back to the english ruleset`);
+        log(
+            `Pluralization is not configured for language '${lang}', falling back to the english ruleset`,
+        );
     }
 
     if (value.length < 3) {
