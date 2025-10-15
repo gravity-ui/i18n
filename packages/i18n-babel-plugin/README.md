@@ -8,7 +8,7 @@ If you're not using babel, then [i18n-optimize-plugin](../i18n-optimize-plugin/R
 
 - Removes meta from messages (id, description, etc.)
 - Converts markdown to html (when `meta.markdown === true`)
-- Applies typography rules to key content
+- Applies typograf rules to key content
 
 *TODO:*
 
@@ -50,7 +50,7 @@ export default defineConfig({
 
 ### typograf
 
-Allows configuring [typography rules](https://github.com/typograf/typograf/blob/dev/docs/RULES.ru.md).
+Allows configuring [typograf rules](https://github.com/typograf/typograf/blob/dev/docs/RULES.ru.md).
 
 By default, uses [`DEFAULT_TYPOGRAF_CONFIG`](./src/typograf.ts) rules.
 

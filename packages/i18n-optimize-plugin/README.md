@@ -9,7 +9,7 @@ Under the hood, uses [`i18n-babel-plugin`](../i18n-babel-plugin/README.md).
 
 - Removes meta from messages (id, description, etc.)
 - Converts markdown to html (when `meta.markdown === true`)
-- Applies typography rules to key content
+- Applies typograf rules to key content
 - Creates per-locale chunks and optimizes their runtime loading
 
 *TODO:*
