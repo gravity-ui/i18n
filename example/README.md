@@ -14,8 +14,6 @@
 
 - Подключение плагина [i18n-optimize-plugin](../packages/i18n-optimize-plugin/README.md) для оптимизации текстов и поддержки markdown
 
-- Настройку [конфигурации](./.i18nrc.json) для взаимодействия с танкером через [i18n-sync](../packages/i18n-sync/README.md)
-
 
 ## Запуск проекта
 

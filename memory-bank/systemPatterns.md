@@ -133,8 +133,7 @@ packages/
   ├── eslint-plugin-i18n/ # Правила линтинга
   ├── i18n-cli/          # CLI инструмент
   ├── i18n-babel-plugin/ # Babel плагин
-  ├── i18n-optimize-plugin/ # Webpack/Rspack плагин
-  └── i18n-sync/         # Инструмент для синхронизации с Танкером
+  └── i18n-optimize-plugin/ # Webpack/Rspack плагин
 ```
 
 ### Конфигурация i18n

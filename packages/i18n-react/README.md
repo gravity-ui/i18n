@@ -165,10 +165,6 @@ const intl = createIntl({
 
 ## Рекомендуемые плагины
 
-### i18n-sync
-
-Для интеграции **i18n-react** и [**i18n-sync**](../i18n-sync) нужно добавить [необходимую конфигурацию](../i18n-sync/docs/project-loaders.md).
-
 ### i18n-babel-plugin / i18n-optimize-plugin
 
 Для оптимизации размера поставляемых на клиент ключей нужно использовать плагин:
