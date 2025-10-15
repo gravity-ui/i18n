@@ -1,8 +1,0 @@
-{
-  "button_goto-docs": "Documentation",
-  "button_show-error": "Error details",
-  "label_bad-federation-msg": "Check the federation settings and try again.",
-  "label_bad-federation-title": "Error authenticating in the federation.",
-  "label_default-msg": "An unexpected error has occurred. Try refreshing the page in a few moments.",
-  "label_default-title": "Something went wrong..."
-}

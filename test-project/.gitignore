@@ -1,9 +1,0 @@
-# Settings
-.idea
-.DS_Store
-.vscode
-.env
-
-# Libs
-node_modules
-i18n-keysets/.sync
