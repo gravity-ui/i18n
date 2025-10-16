@@ -43,22 +43,6 @@ jobs:
         run: pnpm exec nx report
         shell: bash
 
-      - name: Unpublish empty 1.0.0 versions
-        run: |
-          echo "Unpublishing packages..."
-          npm unpublish @gravity-ui/i18n-types --force || echo "Failed to unpublish @gravity-ui/i18n-types"
-          npm unpublish @gravity-ui/i18n-core --force || echo "Failed to unpublish @gravity-ui/i18n-core"
-          npm unpublish @gravity-ui/i18n-react --force || echo "Failed to unpublish @gravity-ui/i18n-react"
-          npm unpublish @gravity-ui/i18n-node --force || echo "Failed to unpublish @gravity-ui/i18n-node"
-          npm unpublish @gravity-ui/i18n-cli --force || echo "Failed to unpublish @gravity-ui/i18n-cli"
-          npm unpublish @gravity-ui/i18n-babel-plugin --force || echo "Failed to unpublish @gravity-ui/i18n-babel-plugin"
-          npm unpublish @gravity-ui/i18n-optimize-plugin --force || echo "Failed to unpublish @gravity-ui/i18n-optimize-plugin"
-          npm unpublish @gravity-ui/eslint-plugin-i18n --force || echo "Failed to unpublish @gravity-ui/eslint-plugin-i18n"
-          echo "Unpublish attempts completed"
-        shell: bash
-        env:
-          NODE_AUTH_TOKEN: ${{ secrets.GRAVITY_UI_BOT_NPM_TOKEN }}
-
       - name: Build packages
         run: pnpm exec nx run-many --target=build --all
         shell: bash
