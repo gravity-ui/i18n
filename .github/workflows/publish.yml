@@ -29,9 +29,15 @@ jobs:
         with:
           node-version: 20
           cache: 'pnpm'
+          registry-url: 'https://registry.npmjs.org/'
       
       - run: pnpm install --frozen-lockfile
       - uses: nrwl/nx-set-shas@v4
+
+      - name: Configure npm authentication
+        run: echo "//registry.npmjs.org/:_authToken=${NODE_AUTH_TOKEN}" > ~/.npmrc
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.GRAVITY_UI_BOT_NPM_TOKEN }}
 
       - name: Print Environment Info
         run: pnpm exec nx report
