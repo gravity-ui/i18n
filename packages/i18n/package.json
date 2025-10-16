@@ -6,7 +6,10 @@
   "main": "build/cjs/index.js",
   "module": "build/esm/index.js",
   "types": "build/esm/index.d.ts",
-  "repository": "git@github.com:gravity-ui/i18n",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/gravity-ui/i18n.git"
+  },
   "scripts": {
     "build": "npm run build:clean && npm run build:compile",
     "build:compile": "tsc -p tsconfig.json && tsc -p tsconfig.cjs.json",
