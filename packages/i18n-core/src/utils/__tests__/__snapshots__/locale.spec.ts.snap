@@ -1,0 +1,11 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`locale should not be valid if it is unknown locale for intl: not valid locale error 1`] = `
+[Error: [@formatjs/intl Error MISSING_DATA] Missing locale data for locale: "unknown" in Intl.DateTimeFormat.
+]
+`;
+
+exports[`locale should not be valid if it is unknown locale for intl: not valid locale for Intl error 1`] = `
+[Error: [@formatjs/intl Error MISSING_DATA] Missing locale data for locale: "someUnknownLocale" in Intl.DateTimeFormat.
+]
+`;

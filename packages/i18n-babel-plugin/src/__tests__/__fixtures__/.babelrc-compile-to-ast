@@ -1,0 +1,8 @@
+{
+  "plugins": [
+    
+    ["../../../dist/index.js", {
+      "compileMessageToAst": true
+    }]
+  ]
+}

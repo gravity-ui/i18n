@@ -1,0 +1,46 @@
+{
+  "name": "@gravity-ui/i18n-babel-plugin",
+  "version": "0.9.0",
+  "license": "UNLICENSED",
+  "main": "./dist/index.js",
+  "typings": "./dist/index.d.ts",
+  "scripts": {
+    "build": "pnpm run build:clean && pnpm run build:compile",
+    "build:compile": "tsc -p tsconfig.json",
+    "build:clean": "rm -rf dist",
+    "lint": "eslint .",
+    "lint:fix": "eslint . --fix",
+    "test": "jest",
+    "typecheck": "tsc --noEmit"
+  },
+  "dependencies": {
+    "@babel/core": "^7.26.0",
+    "@babel/helper-plugin-utils": "^7.25.9",
+    "@babel/traverse": "^7.26.4",
+    "@diplodoc/transform": "^4.63.2",
+    "@formatjs/icu-messageformat-parser": "^2.9.4",
+    "@gravity-ui/i18n-types": "workspace:*",
+    "typograf": "^7.4.0"
+  },
+  "devDependencies": {
+    "@babel/types": "^7.26.3",
+    "@types/babel__core": "^7.20.5",
+    "@types/babel__helper-plugin-utils": "^7.10.3",
+    "@types/babel__traverse": "^7.20.6",
+    "@types/estree": "^1.0.6",
+    "@types/jest": "^29.5.14",
+    "@types/node": "^24.7.0",
+    "eslint": "^9.15.0",
+    "eslint-config": "workspace:*",
+    "jest": "29.7.0",
+    "nx": "21.6.3",
+    "prettier": "^3.4.2",
+    "ts-jest": "29.1.1",
+    "tslib": "^2.8.1",
+    "tsx": "^4.20.6"
+  },
+  "engines": {
+    "node": ">= 18"
+  },
+  "nx": {}
+}

@@ -1,0 +1,15 @@
+{
+    "extends": "../../tsconfig.base.json",
+    "compilerOptions": {
+        "outDir": "./dist",
+        "target": "ES2021",
+        "lib": ["ES2021"],
+        "module": "Node16",
+        "moduleResolution": "Node16",
+        "sourceMap": false,
+        "types": ["node", "jest"],
+        "resolveJsonModule": true
+    },
+    "include": ["src/*.ts", "src/**/*.ts"],
+    "exclude": ["**/__tests__/**"]
+}

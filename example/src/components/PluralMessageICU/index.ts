@@ -1,0 +1,1 @@
+export {PluralMessageICU} from './PluralMessageICU';

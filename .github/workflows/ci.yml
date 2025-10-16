@@ -1,31 +1,42 @@
+name: CI
+
 on:
   push:
-    branches: [main, next]
+    branches:
+      - main
   pull_request:
-    branches: [ '**' ]
+
+permissions:
+  actions: read
+  contents: read
 
 jobs:
-  commitlint:
-    if: github.actor != 'yc-ui-bot' && github.event_name == 'pull_request'
+  main:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
         with:
           fetch-depth: 0
-      - uses: actions/setup-node@v3
-        with:
-          node-version: 18
-      - run: npm ci
-      - run: npx commitlint --from ${{ github.event.pull_request.base.sha }} --to ${{ github.event.pull_request.head.sha }} --verbose
 
-  test:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v3
-      - uses: actions/setup-node@v3
+      - uses: pnpm/action-setup@v4
         with:
-          node-version: 18
-      - run: npm ci
-      - run: npm run lint
-      - run: npm run typecheck
-      - run: npm test
+          version: 9.12.3
+
+      # Cache node_modules
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: 'pnpm'
+
+      - run: pnpm install --frozen-lockfile
+      - uses: nrwl/nx-set-shas@v4
+
+      - name: Lint projects
+        run: pnpm exec nx affected -t lint
+
+      - name: Test projects
+        run: pnpm exec nx affected -t test
+      
+      - name: Build projects
+        run: pnpm exec nx affected -t build
+

@@ -1,0 +1,1 @@
+export {CommonMessage} from './CommonMessage';

@@ -1,0 +1,8 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`multi-locale should throw error if new locale is invalid: set invalid locale error 1`] = `"Error"`;
+
+exports[`multi-locale should throw error if new locale is invalid: set invalid locale error from onError 1`] = `
+"Error: [@formatjs/intl Error MISSING_DATA] Missing locale data for locale: "ru" in config.allowedLocales and in config.fallbackLocales.
+"
+`;

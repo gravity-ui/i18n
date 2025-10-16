@@ -1,0 +1,71 @@
+{
+  "name": "@gravity-ui/i18n-optimize-plugin",
+  "type": "module",
+  "version": "0.8.1",
+  "license": "UNLICENSED",
+  "files": [
+    "dist"
+  ],
+  "main": "dist/index.js",
+  "module": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "exports": {
+    ".": "./dist/index.js",
+    "./rspack": "./dist/rspack.js",
+    "./vite": "./dist/vite.js",
+    "./webpack": "./dist/webpack.js",
+    "./constants": "./dist/constants.js"
+  },
+  "typesVersions": {
+    "*": {
+      "*": [
+        "./dist/*",
+        "./*"
+      ]
+    }
+  },
+  "scripts": {
+    "build": "pnpm run build:clean && pnpm run build:compile",
+    "build:compile": "tsc -p tsconfig.build.json",
+    "build:clean": "rm -rf dist",
+    "lint": "eslint .",
+    "lint:fix": "eslint . --fix",
+    "typecheck": "tsc --noEmit"
+  },
+  "keywords": [
+    "i18n",
+    "webpack",
+    "rspack",
+    "vite",
+    "unplugin"
+  ],
+  "dependencies": {
+    "@babel/core": "^7.26.0",
+    "@diplodoc/transform": "^4.63.2",
+    "@gravity-ui/i18n-babel-plugin": "workspace:*",
+    "@gravity-ui/i18n-cli": "workspace:*",
+    "lodash-es": "^4.17.21",
+    "magic-string": "^0.30.17",
+    "rspack-manifest-plugin": "^5.0.3",
+    "unplugin": "^2.1.2",
+    "webpack-assets-manifest": "^5.2.1"
+  },
+  "devDependencies": {
+    "@jest/globals": "^29.7.0",
+    "@rspack/core": "^1.2.8",
+    "@types/babel__core": "^7.20.5",
+    "@types/jest": "^29.5.14",
+    "@types/lodash-es": "^4.17.12",
+    "@types/webpack-assets-manifest": "^5.1.4",
+    "eslint": "^9.15.0",
+    "eslint-config": "workspace:*",
+    "jest": "29.7.0",
+    "prettier": "^3.4.2",
+    "ts-jest": "29.1.1",
+    "typescript": "^5.6.3",
+    "webpack": "^5.98.0"
+  },
+  "engines": {
+    "node": ">= 18"
+  }
+}
