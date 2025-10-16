@@ -1,227 +1,0 @@
-
-> @gravity-ui/i18n-babel-plugin@0.9.0 test
-> jest --no-cache
-
-[1G[0K[1m[2mDetermining test suites to run...[22m[22m[999D[K
-
-[1mTest Suites: [22m0 of 3 total
-[1mTests:       [22m0 total
-[1mSnapshots:   [22m0 total
-[1mTime:[22m        0 s[K[1A[K[1A[K[1A[K[1A[K[1A
-[0m[7m[33m[1m RUNS [22m[39m[27m[0m [2msrc/__tests__/[22m[1mmarkdown.spec.ts[22m
-[0m[7m[33m[1m RUNS [22m[39m[27m[0m [2msrc/__tests__/[22m[1mindex.spec.ts[22m
-[0m[7m[33m[1m RUNS [22m[39m[27m[0m [2msrc/__tests__/[22m[1mtypograf.spec.ts[22m
-
-[1mTest Suites: [22m0 of 3 total
-[1mTests:       [22m0 total
-[1mSnapshots:   [22m0 total
-[1mTime:[22m        0 s[K[1A[K[1A[K[1A[K[1A[K[1A[K[1A[K[1A[K[1A
-[0m[7m[33m[1m RUNS [22m[39m[27m[0m [2msrc/__tests__/[22m[1mmarkdown.spec.ts[22m
-[0m[7m[33m[1m RUNS [22m[39m[27m[0m [2msrc/__tests__/[22m[1mindex.spec.ts[22m
-[0m[7m[33m[1m RUNS [22m[39m[27m[0m [2msrc/__tests__/[22m[1mtypograf.spec.ts[22m
-
-[1mTest Suites: [22m0 of 3 total
-[1mTests:       [22m0 total
-[1mSnapshots:   [22m0 total
-[1mTime:[22m        1 s[K[1A[K[1A[K[1A[K[1A[K[1A[K[1A[K[1A[K[1A[0m[7m[1m[31m FAIL [39m[22m[27m[0m [2msrc/__tests__/[22m[1mmarkdown.spec.ts[22m
-
-[0m[7m[33m[1m RUNS [22m[39m[27m[0m [2msrc/__tests__/[22m[1mmarkdown.spec.ts[22m
-[0m[7m[33m[1m RUNS [22m[39m[27m[0m [2msrc/__tests__/[22m[1mindex.spec.ts[22m
-[0m[7m[33m[1m RUNS [22m[39m[27m[0m [2msrc/__tests__/[22m[1mtypograf.spec.ts[22m
-
-[1mTest Suites: [22m0 of 3 total
-[1mTests:       [22m0 total
-[1mSnapshots:   [22m0 total
-[1mTime:[22m        1 s[K[1A[K[1A[K[1A[K[1A[K[1A[K[1A[K[1A[K[1A  [1m● [22mTest suite failed to run
-
-    [96msrc/markdown.ts[0m:[93m4[0m:[93m9[0m - [91merror[0m[90m TS2459: [0mModule '"@diplodoc/transform/lib/typings"' declares 'MarkdownItPluginCb' locally, but it is not exported.
-
-    [7m4[0m import {MarkdownItPluginCb, StateCore} from '@diplodoc/transform/lib/typings';
-    [7m [0m [91m        ~~~~~~~~~~~~~~~~~~[0m
-
-      [96m../../node_modules/.pnpm/@diplodoc+transform@4.20.0_react@18.3.1/node_modules/@diplodoc/transform/lib/typings.d.ts[0m:[93m5[0m:[93m10[0m
-        [7m5[0m import { MarkdownItPluginCb } from './plugins/typings';
-        [7m [0m [96m         ~~~~~~~~~~~~~~~~~~[0m
-        'MarkdownItPluginCb' is declared here.
-    [96msrc/markdown.ts[0m:[93m17[0m:[93m42[0m - [91merror[0m[90m TS7006: [0mParameter 'md' implicitly has an 'any' type.
-
-    [7m17[0m const linksPlugin: MarkdownItPluginCb = (md) => {
-    [7m  [0m [91m                                         ~~[0m
-
-
-[0m[7m[33m[1m RUNS [22m[39m[27m[0m [2msrc/__tests__/[22m[1mmarkdown.spec.ts[22m
-[0m[7m[33m[1m RUNS [22m[39m[27m[0m [2msrc/__tests__/[22m[1mindex.spec.ts[22m
-[0m[7m[33m[1m RUNS [22m[39m[27m[0m [2msrc/__tests__/[22m[1mtypograf.spec.ts[22m
-
-[1mTest Suites: [22m0 of 3 total
-[1mTests:       [22m0 total
-[1mSnapshots:   [22m0 total
-[1mTime:[22m        1 s[K[1A[K[1A[K[1A[K[1A[K[1A[K[1A[K[1A[K[1A
-[0m[7m[33m[1m RUNS [22m[39m[27m[0m [2msrc/__tests__/[22m[1mmarkdown.spec.ts[22m
-[0m[7m[33m[1m RUNS [22m[39m[27m[0m [2msrc/__tests__/[22m[1mindex.spec.ts[22m
-[0m[7m[33m[1m RUNS [22m[39m[27m[0m [2msrc/__tests__/[22m[1mtypograf.spec.ts[22m
-
-[1mTest Suites: [22m0 of 3 total
-[1mTests:       [22m0 total
-[1mSnapshots:   [22m0 total
-[1mTime:[22m        1 s[K[1A[K[1A[K[1A[K[1A[K[1A[K[1A[K[1A[K[1A[0m[7m[1m[31m FAIL [39m[22m[27m[0m [2msrc/__tests__/[22m[1mtypograf.spec.ts[22m
-
-[0m[7m[33m[1m RUNS [22m[39m[27m[0m [2msrc/__tests__/[22m[1mmarkdown.spec.ts[22m
-[0m[7m[33m[1m RUNS [22m[39m[27m[0m [2msrc/__tests__/[22m[1mindex.spec.ts[22m
-[0m[7m[33m[1m RUNS [22m[39m[27m[0m [2msrc/__tests__/[22m[1mtypograf.spec.ts[22m
-
-[1mTest Suites: [22m0 of 3 total
-[1mTests:       [22m0 total
-[1mSnapshots:   [22m0 total
-[1mTime:[22m        1 s[K[1A[K[1A[K[1A[K[1A[K[1A[K[1A[K[1A[K[1A  [1m● [22mTest suite failed to run
-
-    [96msrc/markdown.ts[0m:[93m4[0m:[93m9[0m - [91merror[0m[90m TS2459: [0mModule '"@diplodoc/transform/lib/typings"' declares 'MarkdownItPluginCb' locally, but it is not exported.
-
-    [7m4[0m import {MarkdownItPluginCb, StateCore} from '@diplodoc/transform/lib/typings';
-    [7m [0m [91m        ~~~~~~~~~~~~~~~~~~[0m
-
-      [96m../../node_modules/.pnpm/@diplodoc+transform@4.20.0_react@18.3.1/node_modules/@diplodoc/transform/lib/typings.d.ts[0m:[93m5[0m:[93m10[0m
-        [7m5[0m import { MarkdownItPluginCb } from './plugins/typings';
-        [7m [0m [96m         ~~~~~~~~~~~~~~~~~~[0m
-        'MarkdownItPluginCb' is declared here.
-    [96msrc/markdown.ts[0m:[93m17[0m:[93m42[0m - [91merror[0m[90m TS7006: [0mParameter 'md' implicitly has an 'any' type.
-
-    [7m17[0m const linksPlugin: MarkdownItPluginCb = (md) => {
-    [7m  [0m [91m                                         ~~[0m
-
-
-[0m[7m[33m[1m RUNS [22m[39m[27m[0m [2msrc/__tests__/[22m[1mmarkdown.spec.ts[22m
-[0m[7m[33m[1m RUNS [22m[39m[27m[0m [2msrc/__tests__/[22m[1mindex.spec.ts[22m
-[0m[7m[33m[1m RUNS [22m[39m[27m[0m [2msrc/__tests__/[22m[1mtypograf.spec.ts[22m
-
-[1mTest Suites: [22m0 of 3 total
-[1mTests:       [22m0 total
-[1mSnapshots:   [22m0 total
-[1mTime:[22m        1 s[K[1A[K[1A[K[1A[K[1A[K[1A[K[1A[K[1A[K[1A
-[0m[7m[33m[1m RUNS [22m[39m[27m[0m [2msrc/__tests__/[22m[1mindex.spec.ts[22m
-
-[1mTest Suites: [22m[1m[31m2 failed[39m[22m, 2 of 3 total
-[1mTests:       [22m0 total
-[1mSnapshots:   [22m0 total
-[1mTime:[22m        1 s[K[1A[K[1A[K[1A[K[1A[K[1A[K[1A[0m[7m[1m[31m FAIL [39m[22m[27m[0m [2msrc/__tests__/[22m[1mindex.spec.ts[22m
-
-[0m[7m[33m[1m RUNS [22m[39m[27m[0m [2msrc/__tests__/[22m[1mindex.spec.ts[22m
-
-[1mTest Suites: [22m[1m[31m2 failed[39m[22m, 2 of 3 total
-[1mTests:       [22m0 total
-[1mSnapshots:   [22m0 total
-[1mTime:[22m        1 s[K[1A[K[1A[K[1A[K[1A[K[1A[K[1A  [1m● [22mConsole
-
-    [2mconsole.info[22m
-      herehere::: /Users/bogdan-korzh/i18n-nx-experiment/packages/i18n-babel-plugin/src/__tests__/__fixtures__/.babelrc-normal
-[2m[22m
-[2m      [2mat transform ([22m[2msrc/__tests__/index.spec.ts[2m:13:13)[22m[2m[22m
-
-    [2mconsole.info[22m
-      herehere::: /Users/bogdan-korzh/i18n-nx-experiment/packages/i18n-babel-plugin/src/__tests__/__fixtures__/.babelrc-without-typograf
-[2m[22m
-[2m      [2mat transform ([22m[2msrc/__tests__/index.spec.ts[2m:13:13)[22m[2m[22m
-
-    [2mconsole.info[22m
-      herehere::: /Users/bogdan-korzh/i18n-nx-experiment/packages/i18n-babel-plugin/src/__tests__/__fixtures__/.babelrc-normal
-[2m[22m
-[2m      [2mat transform ([22m[2msrc/__tests__/index.spec.ts[2m:13:13)[22m[2m[22m
-
-    [2mconsole.info[22m
-      herehere::: /Users/bogdan-korzh/i18n-nx-experiment/packages/i18n-babel-plugin/src/__tests__/__fixtures__/.babelrc-normal
-[2m[22m
-[2m      [2mat transform ([22m[2msrc/__tests__/index.spec.ts[2m:13:13)[22m[2m[22m
-
-    [2mconsole.info[22m
-      herehere::: /Users/bogdan-korzh/i18n-nx-experiment/packages/i18n-babel-plugin/src/__tests__/__fixtures__/.babelrc-only-translations
-[2m[22m
-[2m      [2mat transform ([22m[2msrc/__tests__/index.spec.ts[2m:13:13)[22m[2m[22m
-
-    [2mconsole.info[22m
-      herehere::: /Users/bogdan-korzh/i18n-nx-experiment/packages/i18n-babel-plugin/src/__tests__/__fixtures__/.babelrc-only-translations-with-fallbacks
-[2m[22m
-[2m      [2mat transform ([22m[2msrc/__tests__/index.spec.ts[2m:13:13)[22m[2m[22m
-
-    [2mconsole.info[22m
-      herehere::: /Users/bogdan-korzh/i18n-nx-experiment/packages/i18n-babel-plugin/src/__tests__/__fixtures__/.babelrc-compile-to-ast
-[2m[22m
-[2m      [2mat transform ([22m[2msrc/__tests__/index.spec.ts[2m:13:13)[22m[2m[22m
-
-    [2mconsole.info[22m
-      herehere::: /Users/bogdan-korzh/i18n-nx-experiment/packages/i18n-babel-plugin/src/__tests__/__fixtures__/.babelrc-target-locale-tech
-[2m[22m
-[2m      [2mat transform ([22m[2msrc/__tests__/index.spec.ts[2m:13:13)[22m[2m[22m
-
-
-[0m[7m[33m[1m RUNS [22m[39m[27m[0m [2msrc/__tests__/[22m[1mindex.spec.ts[22m
-
-[1mTest Suites: [22m[1m[31m2 failed[39m[22m, 2 of 3 total
-[1mTests:       [22m0 total
-[1mSnapshots:   [22m0 total
-[1mTime:[22m        1 s[K[1A[K[1A[K[1A[K[1A[K[1A[K[1A[1m[31m  [1m● [22m[1mtransformations › remove meta from messages[39m[22m
-
-
-[2m[22m
-[2m[22m
-
-[1m[31m  [1m● [22m[1mtransformations › global disable typograf[39m[22m
-
-
-[2m[22m
-[2m[22m
-
-[1m[31m  [1m● [22m[1mtransformations › disable typograf for one key[39m[22m
-
-
-[2m[22m
-[2m[22m
-
-[1m[31m  [1m● [22m[1mtransformations › markdown message[39m[22m
-
-
-[2m[22m
-[2m[22m
-
-[1m[31m  [1m● [22m[1mtransformations › only translations mode[39m[22m
-
-
-[2m[22m
-[2m[22m
-
-[1m[31m  [1m● [22m[1mtransformations › only translations mode with fallbacks[39m[22m
-
-
-[2m[22m
-[2m[22m
-
-[1m[31m  [1m● [22m[1mtransformations ��� compile messages to AST[39m[22m
-
-
-[2m[22m
-[2m[22m
-
-[1m[31m  [1m● [22m[1mtransformations › TECH target locale with ids[39m[22m
-
-
-[2m[22m
-[2m[22m
-
-
-[0m[7m[33m[1m RUNS [22m[39m[27m[0m [2msrc/__tests__/[22m[1mindex.spec.ts[22m
-
-[1mTest Suites: [22m[1m[31m2 failed[39m[22m, 2 of 3 total
-[1mTests:       [22m0 total
-[1mSnapshots:   [22m0 total
-[1mTime:[22m        1 s[K[1A[K[1A[K[1A[K[1A[K[1A[K[1A[999D[K[1mTest Suites: [22m[1m[31m3 failed[39m[22m, 3 total
-[1mTests:       [22m[1m[31m8 failed[39m[22m, 8 total
-[1mSnapshots:   [22m0 total
-[1mTime:[22m        1.706 s
-[2mRan all test suites[22m[2m.[22m
-[1G[0K⠙[1G[0K[1mnpm[22m [31merror[39m Lifecycle script `test` failed with error:
-[1G[0K⠙[1G[0K[1mnpm[22m [31merror[39m [94mcode[39m [33m1[39m
-[1G[0K⠙[1G[0K[1mnpm[22m [31merror[39m [94mpath[39m /Users/bogdan-korzh/i18n-nx-experiment/packages/i18n-babel-plugin
-[1G[0K⠙[1G[0K[1mnpm[22m [31merror[39m [94mworkspace[39m @gravity-ui/i18n-babel-plugin@0.9.0
-[1G[0K⠙[1G[0K[1mnpm[22m [31merror[39m [94mlocation[39m /Users/bogdan-korzh/i18n-nx-experiment/packages/i18n-babel-plugin
-[1G[0K⠙[1G[0K[1mnpm[22m [31merror[39m command failed
-[1G[0K⠙[1G[0K[1mnpm[22m [31merror[39m [94mcommand[39m sh -c jest --no-cache
-[1G[0K⠙[1G[0K

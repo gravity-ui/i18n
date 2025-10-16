@@ -20,11 +20,9 @@ npm-debug.log
 .env
 .vscode
 
-node_modules
-build
-dist
+node_modules/
+build/
+dist/
+.nx/
 
 .cache/*
-
-.nx/cache
-.nx/workspace-data

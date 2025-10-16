@@ -1,71 +1,0 @@
-
-> @gravity-ui/i18n-babel-plugin@0.9.0 test
-> jest
-
-[1G[0K[1m[2mDetermining test suites to run...[22m[22m[999D[K
-
-[1mTest Suites: [22m0 of 3 total
-[1mTests:       [22m0 total
-[1mSnapshots:   [22m0 total
-[1mTime:[22m        0 s, estimated 2 s[K[1A[K[1A[K[1A[K[1A[K[1A
-[0m[7m[33m[1m RUNS [22m[39m[27m[0m [2msrc/__tests__/[22m[1mindex.spec.ts[22m
-[0m[7m[33m[1m RUNS [22m[39m[27m[0m [2msrc/__tests__/[22m[1mtypograf.spec.ts[22m
-[0m[7m[33m[1m RUNS [22m[39m[27m[0m [2msrc/__tests__/[22m[1mmarkdown.spec.ts[22m
-
-[1mTest Suites: [22m0 of 3 total
-[1mTests:       [22m0 total
-[1mSnapshots:   [22m0 total
-[1mTime:[22m        0 s, estimated 2 s[K[1A[K[1A[K[1A[K[1A[K[1A[K[1A[K[1A[K[1A
-[0m[7m[33m[1m RUNS [22m[39m[27m[0m [2msrc/__tests__/[22m[1mindex.spec.ts[22m
-[0m[7m[33m[1m RUNS [22m[39m[27m[0m [2msrc/__tests__/[22m[1mtypograf.spec.ts[22m
-[0m[7m[33m[1m RUNS [22m[39m[27m[0m [2msrc/__tests__/[22m[1mmarkdown.spec.ts[22m
-
-[1mTest Suites: [22m0 of 3 total
-[1mTests:       [22m0 total
-[1mSnapshots:   [22m0 total
-[1mTime:[22m        1 s, estimated 2 s[K[1A[K[1A[K[1A[K[1A[K[1A[K[1A[K[1A[K[1A[0m[7m[1m[32m PASS [39m[22m[27m[0m [2msrc/__tests__/[22m[1mtypograf.spec.ts[22m
-
-[0m[7m[33m[1m RUNS [22m[39m[27m[0m [2msrc/__tests__/[22m[1mindex.spec.ts[22m
-[0m[7m[33m[1m RUNS [22m[39m[27m[0m [2msrc/__tests__/[22m[1mtypograf.spec.ts[22m
-[0m[7m[33m[1m RUNS [22m[39m[27m[0m [2msrc/__tests__/[22m[1mmarkdown.spec.ts[22m
-
-[1mTest Suites: [22m0 of 3 total
-[1mTests:       [22m0 total
-[1mSnapshots:   [22m0 total
-[1mTime:[22m        1 s, estimated 2 s[K[1A[K[1A[K[1A[K[1A[K[1A[K[1A[K[1A[K[1A
-[0m[7m[33m[1m RUNS [22m[39m[27m[0m [2msrc/__tests__/[22m[1mindex.spec.ts[22m
-[0m[7m[33m[1m RUNS [22m[39m[27m[0m [2msrc/__tests__/[22m[1mtypograf.spec.ts[22m
-[0m[7m[33m[1m RUNS [22m[39m[27m[0m [2msrc/__tests__/[22m[1mmarkdown.spec.ts[22m
-
-[1mTest Suites: [22m0 of 3 total
-[1mTests:       [22m0 total
-[1mSnapshots:   [22m0 total
-[1mTime:[22m        1 s, estimated 2 s[K[1A[K[1A[K[1A[K[1A[K[1A[K[1A[K[1A[K[1A[0m[7m[1m[32m PASS [39m[22m[27m[0m [2msrc/__tests__/[22m[1mmarkdown.spec.ts[22m
-
-[0m[7m[33m[1m RUNS [22m[39m[27m[0m [2msrc/__tests__/[22m[1mindex.spec.ts[22m
-[0m[7m[33m[1m RUNS [22m[39m[27m[0m [2msrc/__tests__/[22m[1mtypograf.spec.ts[22m
-[0m[7m[33m[1m RUNS [22m[39m[27m[0m [2msrc/__tests__/[22m[1mmarkdown.spec.ts[22m
-
-[1mTest Suites: [22m0 of 3 total
-[1mTests:       [22m0 total
-[1mSnapshots:   [22m0 total
-[1mTime:[22m        1 s, estimated 2 s[K[1A[K[1A[K[1A[K[1A[K[1A[K[1A[K[1A[K[1A
-[0m[7m[33m[1m RUNS [22m[39m[27m[0m [2msrc/__tests__/[22m[1mindex.spec.ts[22m
-
-[1mTest Suites: [22m[1m[32m2 passed[39m[22m, 2 of 3 total
-[1mTests:       [22m[1m[32m11 passed[39m[22m, 11 total
-[1mSnapshots:   [22m0 total
-[1mTime:[22m        1 s, estimated 2 s[K[1A[K[1A[K[1A[K[1A[K[1A[K[1A[0m[7m[1m[32m PASS [39m[22m[27m[0m [2msrc/__tests__/[22m[1mindex.spec.ts[22m
-
-[0m[7m[33m[1m RUNS [22m[39m[27m[0m [2msrc/__tests__/[22m[1mindex.spec.ts[22m
-
-[1mTest Suites: [22m[1m[32m2 passed[39m[22m, 2 of 3 total
-[1mTests:       [22m[1m[32m11 passed[39m[22m, 11 total
-[1mSnapshots:   [22m0 total
-[1mTime:[22m        1 s, estimated 2 s[K[1A[K[1A[K[1A[K[1A[K[1A[K[1A[999D[K
-[1mTest Suites: [22m[1m[32m3 passed[39m[22m, 3 total
-[1mTests:       [22m[1m[32m19 passed[39m[22m, 19 total
-[1mSnapshots:   [22m[1m[32m8 passed[39m[22m, 8 total
-[1mTime:[22m        1.783 s, estimated 2 s
-[2mRan all test suites[22m[2m.[22m
-[1G[0K⠙[1G[0K

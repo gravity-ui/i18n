@@ -1,519 +1,0 @@
-
-> @gravity-ui/i18n-babel-plugin@0.9.0 test
-> jest --no-cache
-
-[1G[0K[1m[2mDetermining test suites to run...[22m[22m[999D[K
-
-[1mTest Suites: [22m0 of 3 total
-[1mTests:       [22m0 total
-[1mSnapshots:   [22m0 total
-[1mTime:[22m        0 s[K[1A[K[1A[K[1A[K[1A[K[1A
-[0m[7m[33m[1m RUNS [22m[39m[27m[0m [2msrc/__tests__/[22m[1mmarkdown.spec.ts[22m
-[0m[7m[33m[1m RUNS [22m[39m[27m[0m [2msrc/__tests__/[22m[1mindex.spec.ts[22m
-[0m[7m[33m[1m RUNS [22m[39m[27m[0m [2msrc/__tests__/[22m[1mtypograf.spec.ts[22m
-
-[1mTest Suites: [22m0 of 3 total
-[1mTests:       [22m0 total
-[1mSnapshots:   [22m0 total
-[1mTime:[22m        0 s[K[1A[K[1A[K[1A[K[1A[K[1A[K[1A[K[1A[K[1A
-[0m[7m[33m[1m RUNS [22m[39m[27m[0m [2msrc/__tests__/[22m[1mmarkdown.spec.ts[22m
-[0m[7m[33m[1m RUNS [22m[39m[27m[0m [2msrc/__tests__/[22m[1mindex.spec.ts[22m
-[0m[7m[33m[1m RUNS [22m[39m[27m[0m [2msrc/__tests__/[22m[1mtypograf.spec.ts[22m
-
-[1mTest Suites: [22m0 of 3 total
-[1mTests:       [22m0 total
-[1mSnapshots:   [22m0 total
-[1mTime:[22m        1 s[K[1A[K[1A[K[1A[K[1A[K[1A[K[1A[K[1A[K[1A[0m[7m[1m[31m FAIL [39m[22m[27m[0m [2msrc/__tests__/[22m[1mindex.spec.ts[22m
-
-[0m[7m[33m[1m RUNS [22m[39m[27m[0m [2msrc/__tests__/[22m[1mmarkdown.spec.ts[22m
-[0m[7m[33m[1m RUNS [22m[39m[27m[0m [2msrc/__tests__/[22m[1mindex.spec.ts[22m
-[0m[7m[33m[1m RUNS [22m[39m[27m[0m [2msrc/__tests__/[22m[1mtypograf.spec.ts[22m
-
-[1mTest Suites: [22m0 of 3 total
-[1mTests:       [22m0 total
-[1mSnapshots:   [22m0 total
-[1mTime:[22m        1 s[K[1A[K[1A[K[1A[K[1A[K[1A[K[1A[K[1A[K[1A[1m[31m  [1m● [22m[1mtransformations › remove meta from messages[39m[22m
-
-    [BABEL]: You are using a .ts config file, but Babel only supports transpiling .cts configs. Either:
-    - Use a .cts config file
-    - Update to Node.js 23.6.0, which has native TypeScript support
-    - Install tsx to transpile .ts files on the fly (While processing: /Users/bogdan-korzh/i18n-nx-experiment/packages/i18n-babel-plugin/src/index.ts)
-[2m[22m
-[2m    [0m [90m  8 |[39m[22m
-[2m     [90m  9 |[39m [36mfunction[39m transform(fileName[33m:[39m string[33m,[39m mode[33m?[39m[33m:[39m string) {[22m
-[2m    [31m[1m>[22m[2m[39m[90m 10 |[39m     [36mreturn[39m babel[33m.[39mtransformFileSync(resolve(fileName)[33m,[39m {[22m
-[2m     [90m    |[39m                  [31m[1m^[22m[2m[39m[22m
-[2m     [90m 11 |[39m         configFile[33m:[39m resolve([32m`.babelrc-${mode || 'normal'}`[39m)[33m,[39m[22m
-[2m     [90m 12 |[39m     })[33m?[39m[33m.[39mcode[33m;[39m[22m
-[2m     [90m 13 |[39m }[0m[22m
-[2m[22m
-[2m      [2mat ensureTsSupport ([22m[2m../../node_modules/.pnpm/@babel+core@7.28.4/node_modules/@babel/core/src/config/files/module-types.ts[2m:215:11)[22m[2m[22m
-[2m      [2mat ensureTsSupport ([22m[2m../../node_modules/.pnpm/@babel+core@7.28.4/node_modules/@babel/core/src/config/files/module-types.ts[2m:147:18)[22m[2m[22m
-[2m          at loadCodeDefault.next (<anonymous>)[22m
-[2m      [2mat requireModule ([22m[2m../../node_modules/.pnpm/@babel+core@7.28.4/node_modules/@babel/core/src/config/files/plugins.ts[2m:255:36)[22m[2m[22m
-[2m          at requireModule.next (<anonymous>)[22m
-[2m      [2mat requireModule ([22m[2m../../node_modules/.pnpm/@babel+core@7.28.4/node_modules/@babel/core/src/config/files/plugins.ts[2m:40:24)[22m[2m[22m
-[2m          at loadPlugin.next (<anonymous>)[22m
-[2m      [2mat resolver ([22m[2m../../node_modules/.pnpm/@babel+core@7.28.4/node_modules/@babel/core/src/config/config-descriptors.ts[2m:327:35)[22m[2m[22m
-[2m          at createDescriptor.next (<anonymous>)[22m
-[2m      [2mat evaluateSync ([22m[2m../../node_modules/.pnpm/gensync@1.0.0-beta.2/node_modules/gensync/index.js[2m:251:28)[22m[2m[22m
-[2m      [2mat [22m[2m../../node_modules/.pnpm/gensync@1.0.0-beta.2/node_modules/gensync/index.js[2m:31:34[22m[2m[22m
-[2m          at Array.map (<anonymous>)[22m
-[2m      [2mat Function.sync ([22m[2m../../node_modules/.pnpm/gensync@1.0.0-beta.2/node_modules/gensync/index.js[2m:31:22)[22m[2m[22m
-[2m      [2mat Function.all ([22m[2m../../node_modules/.pnpm/gensync@1.0.0-beta.2/node_modules/gensync/index.js[2m:210:24)[22m[2m[22m
-[2m      [2mat all ([22m[2m../../node_modules/.pnpm/@babel+core@7.28.4/node_modules/@babel/core/src/config/config-descriptors.ts[2m:268:38)[22m[2m[22m
-[2m          at createDescriptors.next (<anonymous>)[22m
-[2m      [2mat createDescriptors ([22m[2m../../node_modules/.pnpm/@babel+core@7.28.4/node_modules/@babel/core/src/config/config-descriptors.ts[2m:258:17)[22m[2m[22m
-[2m          at createPluginDescriptors.next (<anonymous>)[22m
-[2m      [2mat fn ([22m[2m../../node_modules/.pnpm/@babel+core@7.28.4/node_modules/@babel/core/src/gensync-utils/functional.ts[2m:18:46)[22m[2m[22m
-[2m      [2mat plugins ([22m[2m../../node_modules/.pnpm/@babel+core@7.28.4/node_modules/@babel/core/src/config/config-chain.ts[2m:724:34)[22m[2m[22m
-[2m          at mergeChainOpts.next (<anonymous>)[22m
-[2m      [2mat mergeChainOpts ([22m[2m../../node_modules/.pnpm/@babel+core@7.28.4/node_modules/@babel/core/src/config/config-chain.ts[2m:661:14)[22m[2m[22m
-[2m          at chainWalker.next (<anonymous>)[22m
-[2m      [2mat loadFileChainWalker ([22m[2m../../node_modules/.pnpm/@babel+core@7.28.4/node_modules/@babel/core/src/config/config-chain.ts[2m:398:24)[22m[2m[22m
-[2m          at loadFileChain.next (<anonymous>)[22m
-[2m      [2mat loadFileChain ([22m[2m../../node_modules/.pnpm/@babel+core@7.28.4/node_modules/@babel/core/src/config/config-chain.ts[2m:186:27)[22m[2m[22m
-[2m          at buildRootChain.next (<anonymous>)[22m
-[2m      [2mat loadPrivatePartialConfig ([22m[2m../../node_modules/.pnpm/@babel+core@7.28.4/node_modules/@babel/core/src/config/partial.ts[2m:111:44)[22m[2m[22m
-[2m          at loadPrivatePartialConfig.next (<anonymous>)[22m
-[2m      [2mat loadFullConfig ([22m[2m../../node_modules/.pnpm/@babel+core@7.28.4/node_modules/@babel/core/src/config/full.ts[2m:66:49)[22m[2m[22m
-[2m          at loadFullConfig.next (<anonymous>)[22m
-[2m      [2mat Function.<anonymous> ([22m[2m../../node_modules/.pnpm/@babel+core@7.28.4/node_modules/@babel/core/src/transform-file.ts[2m:23:58)[22m[2m[22m
-[2m      [2mat evaluateSync ([22m[2m../../node_modules/.pnpm/gensync@1.0.0-beta.2/node_modules/gensync/index.js[2m:251:28)[22m[2m[22m
-[2m      [2mat Function.sync ([22m[2m../../node_modules/.pnpm/gensync@1.0.0-beta.2/node_modules/gensync/index.js[2m:89:14)[22m[2m[22m
-[2m      [2mat Object.sync ([22m[2m../../node_modules/.pnpm/@babel+core@7.28.4/node_modules/@babel/core/src/transform-file.ts[2m:49:30)[22m[2m[22m
-[2m      [2mat transform ([22m[2m[0m[36msrc/__tests__/index.spec.ts[39m[0m[2m:10:18)[22m[2m[22m
-[2m      [2mat runTestWithSnap ([22m[2m[0m[36msrc/__tests__/index.spec.ts[39m[0m[2m:16:20)[22m[2m[22m
-[2m      [2mat Object.<anonymous> ([22m[2m[0m[36msrc/__tests__/index.spec.ts[39m[0m[2m:23:9)[22m[2m[22m
-
-[1m[31m  [1m● [22m[1mtransformations › global disable typograf[39m[22m
-
-    [BABEL]: You are using a .ts config file, but Babel only supports transpiling .cts configs. Either:
-    - Use a .cts config file
-    - Update to Node.js 23.6.0, which has native TypeScript support
-    - Install tsx to transpile .ts files on the fly (While processing: /Users/bogdan-korzh/i18n-nx-experiment/packages/i18n-babel-plugin/src/index.ts)
-[2m[22m
-[2m    [0m [90m  8 |[39m[22m
-[2m     [90m  9 |[39m [36mfunction[39m transform(fileName[33m:[39m string[33m,[39m mode[33m?[39m[33m:[39m string) {[22m
-[2m    [31m[1m>[22m[2m[39m[90m 10 |[39m     [36mreturn[39m babel[33m.[39mtransformFileSync(resolve(fileName)[33m,[39m {[22m
-[2m     [90m    |[39m                  [31m[1m^[22m[2m[39m[22m
-[2m     [90m 11 |[39m         configFile[33m:[39m resolve([32m`.babelrc-${mode || 'normal'}`[39m)[33m,[39m[22m
-[2m     [90m 12 |[39m     })[33m?[39m[33m.[39mcode[33m;[39m[22m
-[2m     [90m 13 |[39m }[0m[22m
-[2m[22m
-[2m      [2mat ensureTsSupport ([22m[2m../../node_modules/.pnpm/@babel+core@7.28.4/node_modules/@babel/core/src/config/files/module-types.ts[2m:215:11)[22m[2m[22m
-[2m      [2mat ensureTsSupport ([22m[2m../../node_modules/.pnpm/@babel+core@7.28.4/node_modules/@babel/core/src/config/files/module-types.ts[2m:147:18)[22m[2m[22m
-[2m          at loadCodeDefault.next (<anonymous>)[22m
-[2m      [2mat requireModule ([22m[2m../../node_modules/.pnpm/@babel+core@7.28.4/node_modules/@babel/core/src/config/files/plugins.ts[2m:255:36)[22m[2m[22m
-[2m          at requireModule.next (<anonymous>)[22m
-[2m      [2mat requireModule ([22m[2m../../node_modules/.pnpm/@babel+core@7.28.4/node_modules/@babel/core/src/config/files/plugins.ts[2m:40:24)[22m[2m[22m
-[2m          at loadPlugin.next (<anonymous>)[22m
-[2m      [2mat resolver ([22m[2m../../node_modules/.pnpm/@babel+core@7.28.4/node_modules/@babel/core/src/config/config-descriptors.ts[2m:327:35)[22m[2m[22m
-[2m          at createDescriptor.next (<anonymous>)[22m
-[2m      [2mat evaluateSync ([22m[2m../../node_modules/.pnpm/gensync@1.0.0-beta.2/node_modules/gensync/index.js[2m:251:28)[22m[2m[22m
-[2m      [2mat [22m[2m../../node_modules/.pnpm/gensync@1.0.0-beta.2/node_modules/gensync/index.js[2m:31:34[22m[2m[22m
-[2m          at Array.map (<anonymous>)[22m
-[2m      [2mat Function.sync ([22m[2m../../node_modules/.pnpm/gensync@1.0.0-beta.2/node_modules/gensync/index.js[2m:31:22)[22m[2m[22m
-[2m      [2mat Function.all ([22m[2m../../node_modules/.pnpm/gensync@1.0.0-beta.2/node_modules/gensync/index.js[2m:210:24)[22m[2m[22m
-[2m      [2mat all ([22m[2m../../node_modules/.pnpm/@babel+core@7.28.4/node_modules/@babel/core/src/config/config-descriptors.ts[2m:268:38)[22m[2m[22m
-[2m          at createDescriptors.next (<anonymous>)[22m
-[2m      [2mat createDescriptors ([22m[2m../../node_modules/.pnpm/@babel+core@7.28.4/node_modules/@babel/core/src/config/config-descriptors.ts[2m:258:17)[22m[2m[22m
-[2m          at createPluginDescriptors.next (<anonymous>)[22m
-[2m      [2mat fn ([22m[2m../../node_modules/.pnpm/@babel+core@7.28.4/node_modules/@babel/core/src/gensync-utils/functional.ts[2m:18:46)[22m[2m[22m
-[2m      [2mat plugins ([22m[2m../../node_modules/.pnpm/@babel+core@7.28.4/node_modules/@babel/core/src/config/config-chain.ts[2m:724:34)[22m[2m[22m
-[2m          at mergeChainOpts.next (<anonymous>)[22m
-[2m      [2mat mergeChainOpts ([22m[2m../../node_modules/.pnpm/@babel+core@7.28.4/node_modules/@babel/core/src/config/config-chain.ts[2m:661:14)[22m[2m[22m
-[2m          at chainWalker.next (<anonymous>)[22m
-[2m      [2mat loadFileChainWalker ([22m[2m../../node_modules/.pnpm/@babel+core@7.28.4/node_modules/@babel/core/src/config/config-chain.ts[2m:398:24)[22m[2m[22m
-[2m          at loadFileChain.next (<anonymous>)[22m
-[2m      [2mat loadFileChain ([22m[2m../../node_modules/.pnpm/@babel+core@7.28.4/node_modules/@babel/core/src/config/config-chain.ts[2m:186:27)[22m[2m[22m
-[2m          at buildRootChain.next (<anonymous>)[22m
-[2m      [2mat loadPrivatePartialConfig ([22m[2m../../node_modules/.pnpm/@babel+core@7.28.4/node_modules/@babel/core/src/config/partial.ts[2m:111:44)[22m[2m[22m
-[2m          at loadPrivatePartialConfig.next (<anonymous>)[22m
-[2m      [2mat loadFullConfig ([22m[2m../../node_modules/.pnpm/@babel+core@7.28.4/node_modules/@babel/core/src/config/full.ts[2m:66:49)[22m[2m[22m
-[2m          at loadFullConfig.next (<anonymous>)[22m
-[2m      [2mat Function.<anonymous> ([22m[2m../../node_modules/.pnpm/@babel+core@7.28.4/node_modules/@babel/core/src/transform-file.ts[2m:23:58)[22m[2m[22m
-[2m      [2mat evaluateSync ([22m[2m../../node_modules/.pnpm/gensync@1.0.0-beta.2/node_modules/gensync/index.js[2m:251:28)[22m[2m[22m
-[2m      [2mat Function.sync ([22m[2m../../node_modules/.pnpm/gensync@1.0.0-beta.2/node_modules/gensync/index.js[2m:89:14)[22m[2m[22m
-[2m      [2mat Object.sync ([22m[2m../../node_modules/.pnpm/@babel+core@7.28.4/node_modules/@babel/core/src/transform-file.ts[2m:49:30)[22m[2m[22m
-[2m      [2mat transform ([22m[2m[0m[36msrc/__tests__/index.spec.ts[39m[0m[2m:10:18)[22m[2m[22m
-[2m      [2mat runTestWithSnap ([22m[2m[0m[36msrc/__tests__/index.spec.ts[39m[0m[2m:16:20)[22m[2m[22m
-[2m      [2mat Object.<anonymous> ([22m[2m[0m[36msrc/__tests__/index.spec.ts[39m[0m[2m:27:9)[22m[2m[22m
-
-[1m[31m  [1m● [22m[1mtransformations › disable typograf for one key[39m[22m
-
-    [BABEL]: You are using a .ts config file, but Babel only supports transpiling .cts configs. Either:
-    - Use a .cts config file
-    - Update to Node.js 23.6.0, which has native TypeScript support
-    - Install tsx to transpile .ts files on the fly (While processing: /Users/bogdan-korzh/i18n-nx-experiment/packages/i18n-babel-plugin/src/index.ts)
-[2m[22m
-[2m    [0m [90m  8 |[39m[22m
-[2m     [90m  9 |[39m [36mfunction[39m transform(fileName[33m:[39m string[33m,[39m mode[33m?[39m[33m:[39m string) {[22m
-[2m    [31m[1m>[22m[2m[39m[90m 10 |[39m     [36mreturn[39m babel[33m.[39mtransformFileSync(resolve(fileName)[33m,[39m {[22m
-[2m     [90m    |[39m                  [31m[1m^[22m[2m[39m[22m
-[2m     [90m 11 |[39m         configFile[33m:[39m resolve([32m`.babelrc-${mode || 'normal'}`[39m)[33m,[39m[22m
-[2m     [90m 12 |[39m     })[33m?[39m[33m.[39mcode[33m;[39m[22m
-[2m     [90m 13 |[39m }[0m[22m
-[2m[22m
-[2m      [2mat ensureTsSupport ([22m[2m../../node_modules/.pnpm/@babel+core@7.28.4/node_modules/@babel/core/src/config/files/module-types.ts[2m:215:11)[22m[2m[22m
-[2m      [2mat ensureTsSupport ([22m[2m../../node_modules/.pnpm/@babel+core@7.28.4/node_modules/@babel/core/src/config/files/module-types.ts[2m:147:18)[22m[2m[22m
-[2m          at loadCodeDefault.next (<anonymous>)[22m
-[2m      [2mat requireModule ([22m[2m../../node_modules/.pnpm/@babel+core@7.28.4/node_modules/@babel/core/src/config/files/plugins.ts[2m:255:36)[22m[2m[22m
-[2m          at requireModule.next (<anonymous>)[22m
-[2m      [2mat requireModule ([22m[2m../../node_modules/.pnpm/@babel+core@7.28.4/node_modules/@babel/core/src/config/files/plugins.ts[2m:40:24)[22m[2m[22m
-[2m          at loadPlugin.next (<anonymous>)[22m
-[2m      [2mat resolver ([22m[2m../../node_modules/.pnpm/@babel+core@7.28.4/node_modules/@babel/core/src/config/config-descriptors.ts[2m:327:35)[22m[2m[22m
-[2m          at createDescriptor.next (<anonymous>)[22m
-[2m      [2mat evaluateSync ([22m[2m../../node_modules/.pnpm/gensync@1.0.0-beta.2/node_modules/gensync/index.js[2m:251:28)[22m[2m[22m
-[2m      [2mat [22m[2m../../node_modules/.pnpm/gensync@1.0.0-beta.2/node_modules/gensync/index.js[2m:31:34[22m[2m[22m
-[2m          at Array.map (<anonymous>)[22m
-[2m      [2mat Function.sync ([22m[2m../../node_modules/.pnpm/gensync@1.0.0-beta.2/node_modules/gensync/index.js[2m:31:22)[22m[2m[22m
-[2m      [2mat Function.all ([22m[2m../../node_modules/.pnpm/gensync@1.0.0-beta.2/node_modules/gensync/index.js[2m:210:24)[22m[2m[22m
-[2m      [2mat all ([22m[2m../../node_modules/.pnpm/@babel+core@7.28.4/node_modules/@babel/core/src/config/config-descriptors.ts[2m:268:38)[22m[2m[22m
-[2m          at createDescriptors.next (<anonymous>)[22m
-[2m      [2mat createDescriptors ([22m[2m../../node_modules/.pnpm/@babel+core@7.28.4/node_modules/@babel/core/src/config/config-descriptors.ts[2m:258:17)[22m[2m[22m
-[2m          at createPluginDescriptors.next (<anonymous>)[22m
-[2m      [2mat fn ([22m[2m../../node_modules/.pnpm/@babel+core@7.28.4/node_modules/@babel/core/src/gensync-utils/functional.ts[2m:18:46)[22m[2m[22m
-[2m      [2mat plugins ([22m[2m../../node_modules/.pnpm/@babel+core@7.28.4/node_modules/@babel/core/src/config/config-chain.ts[2m:724:34)[22m[2m[22m
-[2m          at mergeChainOpts.next (<anonymous>)[22m
-[2m      [2mat mergeChainOpts ([22m[2m../../node_modules/.pnpm/@babel+core@7.28.4/node_modules/@babel/core/src/config/config-chain.ts[2m:661:14)[22m[2m[22m
-[2m          at chainWalker.next (<anonymous>)[22m
-[2m      [2mat loadFileChainWalker ([22m[2m../../node_modules/.pnpm/@babel+core@7.28.4/node_modules/@babel/core/src/config/config-chain.ts[2m:398:24)[22m[2m[22m
-[2m          at loadFileChain.next (<anonymous>)[22m
-[2m      [2mat loadFileChain ([22m[2m../../node_modules/.pnpm/@babel+core@7.28.4/node_modules/@babel/core/src/config/config-chain.ts[2m:186:27)[22m[2m[22m
-[2m          at buildRootChain.next (<anonymous>)[22m
-[2m      [2mat loadPrivatePartialConfig ([22m[2m../../node_modules/.pnpm/@babel+core@7.28.4/node_modules/@babel/core/src/config/partial.ts[2m:111:44)[22m[2m[22m
-[2m          at loadPrivatePartialConfig.next (<anonymous>)[22m
-[2m      [2mat loadFullConfig ([22m[2m../../node_modules/.pnpm/@babel+core@7.28.4/node_modules/@babel/core/src/config/full.ts[2m:66:49)[22m[2m[22m
-[2m          at loadFullConfig.next (<anonymous>)[22m
-[2m      [2mat Function.<anonymous> ([22m[2m../../node_modules/.pnpm/@babel+core@7.28.4/node_modules/@babel/core/src/transform-file.ts[2m:23:58)[22m[2m[22m
-[2m      [2mat evaluateSync ([22m[2m../../node_modules/.pnpm/gensync@1.0.0-beta.2/node_modules/gensync/index.js[2m:251:28)[22m[2m[22m
-[2m      [2mat Function.sync ([22m[2m../../node_modules/.pnpm/gensync@1.0.0-beta.2/node_modules/gensync/index.js[2m:89:14)[22m[2m[22m
-[2m      [2mat Object.sync ([22m[2m../../node_modules/.pnpm/@babel+core@7.28.4/node_modules/@babel/core/src/transform-file.ts[2m:49:30)[22m[2m[22m
-[2m      [2mat transform ([22m[2m[0m[36msrc/__tests__/index.spec.ts[39m[0m[2m:10:18)[22m[2m[22m
-[2m      [2mat runTestWithSnap ([22m[2m[0m[36msrc/__tests__/index.spec.ts[39m[0m[2m:16:20)[22m[2m[22m
-[2m      [2mat Object.<anonymous> ([22m[2m[0m[36msrc/__tests__/index.spec.ts[39m[0m[2m:23:9)[22m[2m[22m
-
-[1m[31m  [1m● [22m[1mtransformations › markdown message[39m[22m
-
-    [BABEL]: You are using a .ts config file, but Babel only supports transpiling .cts configs. Either:
-    - Use a .cts config file
-    - Update to Node.js 23.6.0, which has native TypeScript support
-    - Install tsx to transpile .ts files on the fly (While processing: /Users/bogdan-korzh/i18n-nx-experiment/packages/i18n-babel-plugin/src/index.ts)
-[2m[22m
-[2m    [0m [90m  8 |[39m[22m
-[2m     [90m  9 |[39m [36mfunction[39m transform(fileName[33m:[39m string[33m,[39m mode[33m?[39m[33m:[39m string) {[22m
-[2m    [31m[1m>[22m[2m[39m[90m 10 |[39m     [36mreturn[39m babel[33m.[39mtransformFileSync(resolve(fileName)[33m,[39m {[22m
-[2m     [90m    |[39m                  [31m[1m^[22m[2m[39m[22m
-[2m     [90m 11 |[39m         configFile[33m:[39m resolve([32m`.babelrc-${mode || 'normal'}`[39m)[33m,[39m[22m
-[2m     [90m 12 |[39m     })[33m?[39m[33m.[39mcode[33m;[39m[22m
-[2m     [90m 13 |[39m }[0m[22m
-[2m[22m
-[2m      [2mat ensureTsSupport ([22m[2m../../node_modules/.pnpm/@babel+core@7.28.4/node_modules/@babel/core/src/config/files/module-types.ts[2m:215:11)[22m[2m[22m
-[2m      [2mat ensureTsSupport ([22m[2m../../node_modules/.pnpm/@babel+core@7.28.4/node_modules/@babel/core/src/config/files/module-types.ts[2m:147:18)[22m[2m[22m
-[2m          at loadCodeDefault.next (<anonymous>)[22m
-[2m      [2mat requireModule ([22m[2m../../node_modules/.pnpm/@babel+core@7.28.4/node_modules/@babel/core/src/config/files/plugins.ts[2m:255:36)[22m[2m[22m
-[2m          at requireModule.next (<anonymous>)[22m
-[2m      [2mat requireModule ([22m[2m../../node_modules/.pnpm/@babel+core@7.28.4/node_modules/@babel/core/src/config/files/plugins.ts[2m:40:24)[22m[2m[22m
-[2m          at loadPlugin.next (<anonymous>)[22m
-[2m      [2mat resolver ([22m[2m../../node_modules/.pnpm/@babel+core@7.28.4/node_modules/@babel/core/src/config/config-descriptors.ts[2m:327:35)[22m[2m[22m
-[2m          at createDescriptor.next (<anonymous>)[22m
-[2m      [2mat evaluateSync ([22m[2m../../node_modules/.pnpm/gensync@1.0.0-beta.2/node_modules/gensync/index.js[2m:251:28)[22m[2m[22m
-[2m      [2mat [22m[2m../../node_modules/.pnpm/gensync@1.0.0-beta.2/node_modules/gensync/index.js[2m:31:34[22m[2m[22m
-[2m          at Array.map (<anonymous>)[22m
-[2m      [2mat Function.sync ([22m[2m../../node_modules/.pnpm/gensync@1.0.0-beta.2/node_modules/gensync/index.js[2m:31:22)[22m[2m[22m
-[2m      [2mat Function.all ([22m[2m../../node_modules/.pnpm/gensync@1.0.0-beta.2/node_modules/gensync/index.js[2m:210:24)[22m[2m[22m
-[2m      [2mat all ([22m[2m../../node_modules/.pnpm/@babel+core@7.28.4/node_modules/@babel/core/src/config/config-descriptors.ts[2m:268:38)[22m[2m[22m
-[2m          at createDescriptors.next (<anonymous>)[22m
-[2m      [2mat createDescriptors ([22m[2m../../node_modules/.pnpm/@babel+core@7.28.4/node_modules/@babel/core/src/config/config-descriptors.ts[2m:258:17)[22m[2m[22m
-[2m          at createPluginDescriptors.next (<anonymous>)[22m
-[2m      [2mat fn ([22m[2m../../node_modules/.pnpm/@babel+core@7.28.4/node_modules/@babel/core/src/gensync-utils/functional.ts[2m:18:46)[22m[2m[22m
-[2m      [2mat plugins ([22m[2m../../node_modules/.pnpm/@babel+core@7.28.4/node_modules/@babel/core/src/config/config-chain.ts[2m:724:34)[22m[2m[22m
-[2m          at mergeChainOpts.next (<anonymous>)[22m
-[2m      [2mat mergeChainOpts ([22m[2m../../node_modules/.pnpm/@babel+core@7.28.4/node_modules/@babel/core/src/config/config-chain.ts[2m:661:14)[22m[2m[22m
-[2m          at chainWalker.next (<anonymous>)[22m
-[2m      [2mat loadFileChainWalker ([22m[2m../../node_modules/.pnpm/@babel+core@7.28.4/node_modules/@babel/core/src/config/config-chain.ts[2m:398:24)[22m[2m[22m
-[2m          at loadFileChain.next (<anonymous>)[22m
-[2m      [2mat loadFileChain ([22m[2m../../node_modules/.pnpm/@babel+core@7.28.4/node_modules/@babel/core/src/config/config-chain.ts[2m:186:27)[22m[2m[22m
-[2m          at buildRootChain.next (<anonymous>)[22m
-[2m      [2mat loadPrivatePartialConfig ([22m[2m../../node_modules/.pnpm/@babel+core@7.28.4/node_modules/@babel/core/src/config/partial.ts[2m:111:44)[22m[2m[22m
-[2m          at loadPrivatePartialConfig.next (<anonymous>)[22m
-[2m      [2mat loadFullConfig ([22m[2m../../node_modules/.pnpm/@babel+core@7.28.4/node_modules/@babel/core/src/config/full.ts[2m:66:49)[22m[2m[22m
-[2m          at loadFullConfig.next (<anonymous>)[22m
-[2m      [2mat Function.<anonymous> ([22m[2m../../node_modules/.pnpm/@babel+core@7.28.4/node_modules/@babel/core/src/transform-file.ts[2m:23:58)[22m[2m[22m
-[2m      [2mat evaluateSync ([22m[2m../../node_modules/.pnpm/gensync@1.0.0-beta.2/node_modules/gensync/index.js[2m:251:28)[22m[2m[22m
-[2m      [2mat Function.sync ([22m[2m../../node_modules/.pnpm/gensync@1.0.0-beta.2/node_modules/gensync/index.js[2m:89:14)[22m[2m[22m
-[2m      [2mat Object.sync ([22m[2m../../node_modules/.pnpm/@babel+core@7.28.4/node_modules/@babel/core/src/transform-file.ts[2m:49:30)[22m[2m[22m
-[2m      [2mat transform ([22m[2m[0m[36msrc/__tests__/index.spec.ts[39m[0m[2m:10:18)[22m[2m[22m
-[2m      [2mat runTestWithSnap ([22m[2m[0m[36msrc/__tests__/index.spec.ts[39m[0m[2m:16:20)[22m[2m[22m
-[2m      [2mat Object.<anonymous> ([22m[2m[0m[36msrc/__tests__/index.spec.ts[39m[0m[2m:23:9)[22m[2m[22m
-
-[1m[31m  [1m● [22m[1mtransformations › only translations mode[39m[22m
-
-    [BABEL]: You are using a .ts config file, but Babel only supports transpiling .cts configs. Either:
-    - Use a .cts config file
-    - Update to Node.js 23.6.0, which has native TypeScript support
-    - Install tsx to transpile .ts files on the fly (While processing: /Users/bogdan-korzh/i18n-nx-experiment/packages/i18n-babel-plugin/src/index.ts)
-[2m[22m
-[2m    [0m [90m  8 |[39m[22m
-[2m     [90m  9 |[39m [36mfunction[39m transform(fileName[33m:[39m string[33m,[39m mode[33m?[39m[33m:[39m string) {[22m
-[2m    [31m[1m>[22m[2m[39m[90m 10 |[39m     [36mreturn[39m babel[33m.[39mtransformFileSync(resolve(fileName)[33m,[39m {[22m
-[2m     [90m    |[39m                  [31m[1m^[22m[2m[39m[22m
-[2m     [90m 11 |[39m         configFile[33m:[39m resolve([32m`.babelrc-${mode || 'normal'}`[39m)[33m,[39m[22m
-[2m     [90m 12 |[39m     })[33m?[39m[33m.[39mcode[33m;[39m[22m
-[2m     [90m 13 |[39m }[0m[22m
-[2m[22m
-[2m      [2mat ensureTsSupport ([22m[2m../../node_modules/.pnpm/@babel+core@7.28.4/node_modules/@babel/core/src/config/files/module-types.ts[2m:215:11)[22m[2m[22m
-[2m      [2mat ensureTsSupport ([22m[2m../../node_modules/.pnpm/@babel+core@7.28.4/node_modules/@babel/core/src/config/files/module-types.ts[2m:147:18)[22m[2m[22m
-[2m          at loadCodeDefault.next (<anonymous>)[22m
-[2m      [2mat requireModule ([22m[2m../../node_modules/.pnpm/@babel+core@7.28.4/node_modules/@babel/core/src/config/files/plugins.ts[2m:255:36)[22m[2m[22m
-[2m          at requireModule.next (<anonymous>)[22m
-[2m      [2mat requireModule ([22m[2m../../node_modules/.pnpm/@babel+core@7.28.4/node_modules/@babel/core/src/config/files/plugins.ts[2m:40:24)[22m[2m[22m
-[2m          at loadPlugin.next (<anonymous>)[22m
-[2m      [2mat resolver ([22m[2m../../node_modules/.pnpm/@babel+core@7.28.4/node_modules/@babel/core/src/config/config-descriptors.ts[2m:327:35)[22m[2m[22m
-[2m          at createDescriptor.next (<anonymous>)[22m
-[2m      [2mat evaluateSync ([22m[2m../../node_modules/.pnpm/gensync@1.0.0-beta.2/node_modules/gensync/index.js[2m:251:28)[22m[2m[22m
-[2m      [2mat [22m[2m../../node_modules/.pnpm/gensync@1.0.0-beta.2/node_modules/gensync/index.js[2m:31:34[22m[2m[22m
-[2m          at Array.map (<anonymous>)[22m
-[2m      [2mat Function.sync ([22m[2m../../node_modules/.pnpm/gensync@1.0.0-beta.2/node_modules/gensync/index.js[2m:31:22)[22m[2m[22m
-[2m      [2mat Function.all ([22m[2m../../node_modules/.pnpm/gensync@1.0.0-beta.2/node_modules/gensync/index.js[2m:210:24)[22m[2m[22m
-[2m      [2mat all ([22m[2m../../node_modules/.pnpm/@babel+core@7.28.4/node_modules/@babel/core/src/config/config-descriptors.ts[2m:268:38)[22m[2m[22m
-[2m          at createDescriptors.next (<anonymous>)[22m
-[2m      [2mat createDescriptors ([22m[2m../../node_modules/.pnpm/@babel+core@7.28.4/node_modules/@babel/core/src/config/config-descriptors.ts[2m:258:17)[22m[2m[22m
-[2m          at createPluginDescriptors.next (<anonymous>)[22m
-[2m      [2mat fn ([22m[2m../../node_modules/.pnpm/@babel+core@7.28.4/node_modules/@babel/core/src/gensync-utils/functional.ts[2m:18:46)[22m[2m[22m
-[2m      [2mat plugins ([22m[2m../../node_modules/.pnpm/@babel+core@7.28.4/node_modules/@babel/core/src/config/config-chain.ts[2m:724:34)[22m[2m[22m
-[2m          at mergeChainOpts.next (<anonymous>)[22m
-[2m      [2mat mergeChainOpts ([22m[2m../../node_modules/.pnpm/@babel+core@7.28.4/node_modules/@babel/core/src/config/config-chain.ts[2m:661:14)[22m[2m[22m
-[2m          at chainWalker.next (<anonymous>)[22m
-[2m      [2mat loadFileChainWalker ([22m[2m../../node_modules/.pnpm/@babel+core@7.28.4/node_modules/@babel/core/src/config/config-chain.ts[2m:398:24)[22m[2m[22m
-[2m          at loadFileChain.next (<anonymous>)[22m
-[2m      [2mat loadFileChain ([22m[2m../../node_modules/.pnpm/@babel+core@7.28.4/node_modules/@babel/core/src/config/config-chain.ts[2m:186:27)[22m[2m[22m
-[2m          at buildRootChain.next (<anonymous>)[22m
-[2m      [2mat loadPrivatePartialConfig ([22m[2m../../node_modules/.pnpm/@babel+core@7.28.4/node_modules/@babel/core/src/config/partial.ts[2m:111:44)[22m[2m[22m
-[2m          at loadPrivatePartialConfig.next (<anonymous>)[22m
-[2m      [2mat loadFullConfig ([22m[2m../../node_modules/.pnpm/@babel+core@7.28.4/node_modules/@babel/core/src/config/full.ts[2m:66:49)[22m[2m[22m
-[2m          at loadFullConfig.next (<anonymous>)[22m
-[2m      [2mat Function.<anonymous> ([22m[2m../../node_modules/.pnpm/@babel+core@7.28.4/node_modules/@babel/core/src/transform-file.ts[2m:23:58)[22m[2m[22m
-[2m      [2mat evaluateSync ([22m[2m../../node_modules/.pnpm/gensync@1.0.0-beta.2/node_modules/gensync/index.js[2m:251:28)[22m[2m[22m
-[2m      [2mat Function.sync ([22m[2m../../node_modules/.pnpm/gensync@1.0.0-beta.2/node_modules/gensync/index.js[2m:89:14)[22m[2m[22m
-[2m      [2mat Object.sync ([22m[2m../../node_modules/.pnpm/@babel+core@7.28.4/node_modules/@babel/core/src/transform-file.ts[2m:49:30)[22m[2m[22m
-[2m      [2mat transform ([22m[2m[0m[36msrc/__tests__/index.spec.ts[39m[0m[2m:10:18)[22m[2m[22m
-[2m      [2mat runTestWithSnap ([22m[2m[0m[36msrc/__tests__/index.spec.ts[39m[0m[2m:16:20)[22m[2m[22m
-[2m      [2mat Object.<anonymous> ([22m[2m[0m[36msrc/__tests__/index.spec.ts[39m[0m[2m:39:9)[22m[2m[22m
-
-[1m[31m  [1m● [22m[1mtransformations › only translations mode with fallbacks[39m[22m
-
-    [BABEL]: You are using a .ts config file, but Babel only supports transpiling .cts configs. Either:
-    - Use a .cts config file
-    - Update to Node.js 23.6.0, which has native TypeScript support
-    - Install tsx to transpile .ts files on the fly (While processing: /Users/bogdan-korzh/i18n-nx-experiment/packages/i18n-babel-plugin/src/index.ts)
-[2m[22m
-[2m    [0m [90m  8 |[39m[22m
-[2m     [90m  9 |[39m [36mfunction[39m transform(fileName[33m:[39m string[33m,[39m mode[33m?[39m[33m:[39m string) {[22m
-[2m    [31m[1m>[22m[2m[39m[90m 10 |[39m     [36mreturn[39m babel[33m.[39mtransformFileSync(resolve(fileName)[33m,[39m {[22m
-[2m     [90m    |[39m                  [31m[1m^[22m[2m[39m[22m
-[2m     [90m 11 |[39m         configFile[33m:[39m resolve([32m`.babelrc-${mode || 'normal'}`[39m)[33m,[39m[22m
-[2m     [90m 12 |[39m     })[33m?[39m[33m.[39mcode[33m;[39m[22m
-[2m     [90m 13 |[39m }[0m[22m
-[2m[22m
-[2m      [2mat ensureTsSupport ([22m[2m../../node_modules/.pnpm/@babel+core@7.28.4/node_modules/@babel/core/src/config/files/module-types.ts[2m:215:11)[22m[2m[22m
-[2m      [2mat ensureTsSupport ([22m[2m../../node_modules/.pnpm/@babel+core@7.28.4/node_modules/@babel/core/src/config/files/module-types.ts[2m:147:18)[22m[2m[22m
-[2m          at loadCodeDefault.next (<anonymous>)[22m
-[2m      [2mat requireModule ([22m[2m../../node_modules/.pnpm/@babel+core@7.28.4/node_modules/@babel/core/src/config/files/plugins.ts[2m:255:36)[22m[2m[22m
-[2m          at requireModule.next (<anonymous>)[22m
-[2m      [2mat requireModule ([22m[2m../../node_modules/.pnpm/@babel+core@7.28.4/node_modules/@babel/core/src/config/files/plugins.ts[2m:40:24)[22m[2m[22m
-[2m          at loadPlugin.next (<anonymous>)[22m
-[2m      [2mat resolver ([22m[2m../../node_modules/.pnpm/@babel+core@7.28.4/node_modules/@babel/core/src/config/config-descriptors.ts[2m:327:35)[22m[2m[22m
-[2m          at createDescriptor.next (<anonymous>)[22m
-[2m      [2mat evaluateSync ([22m[2m../../node_modules/.pnpm/gensync@1.0.0-beta.2/node_modules/gensync/index.js[2m:251:28)[22m[2m[22m
-[2m      [2mat [22m[2m../../node_modules/.pnpm/gensync@1.0.0-beta.2/node_modules/gensync/index.js[2m:31:34[22m[2m[22m
-[2m          at Array.map (<anonymous>)[22m
-[2m      [2mat Function.sync ([22m[2m../../node_modules/.pnpm/gensync@1.0.0-beta.2/node_modules/gensync/index.js[2m:31:22)[22m[2m[22m
-[2m      [2mat Function.all ([22m[2m../../node_modules/.pnpm/gensync@1.0.0-beta.2/node_modules/gensync/index.js[2m:210:24)[22m[2m[22m
-[2m      [2mat all ([22m[2m../../node_modules/.pnpm/@babel+core@7.28.4/node_modules/@babel/core/src/config/config-descriptors.ts[2m:268:38)[22m[2m[22m
-[2m          at createDescriptors.next (<anonymous>)[22m
-[2m      [2mat createDescriptors ([22m[2m../../node_modules/.pnpm/@babel+core@7.28.4/node_modules/@babel/core/src/config/config-descriptors.ts[2m:258:17)[22m[2m[22m
-[2m          at createPluginDescriptors.next (<anonymous>)[22m
-[2m      [2mat fn ([22m[2m../../node_modules/.pnpm/@babel+core@7.28.4/node_modules/@babel/core/src/gensync-utils/functional.ts[2m:18:46)[22m[2m[22m
-[2m      [2mat plugins ([22m[2m../../node_modules/.pnpm/@babel+core@7.28.4/node_modules/@babel/core/src/config/config-chain.ts[2m:724:34)[22m[2m[22m
-[2m          at mergeChainOpts.next (<anonymous>)[22m
-[2m      [2mat mergeChainOpts ([22m[2m../../node_modules/.pnpm/@babel+core@7.28.4/node_modules/@babel/core/src/config/config-chain.ts[2m:661:14)[22m[2m[22m
-[2m          at chainWalker.next (<anonymous>)[22m
-[2m      [2mat loadFileChainWalker ([22m[2m../../node_modules/.pnpm/@babel+core@7.28.4/node_modules/@babel/core/src/config/config-chain.ts[2m:398:24)[22m[2m[22m
-[2m          at loadFileChain.next (<anonymous>)[22m
-[2m      [2mat loadFileChain ([22m[2m../../node_modules/.pnpm/@babel+core@7.28.4/node_modules/@babel/core/src/config/config-chain.ts[2m:186:27)[22m[2m[22m
-[2m          at buildRootChain.next (<anonymous>)[22m
-[2m      [2mat loadPrivatePartialConfig ([22m[2m../../node_modules/.pnpm/@babel+core@7.28.4/node_modules/@babel/core/src/config/partial.ts[2m:111:44)[22m[2m[22m
-[2m          at loadPrivatePartialConfig.next (<anonymous>)[22m
-[2m      [2mat loadFullConfig ([22m[2m../../node_modules/.pnpm/@babel+core@7.28.4/node_modules/@babel/core/src/config/full.ts[2m:66:49)[22m[2m[22m
-[2m          at loadFullConfig.next (<anonymous>)[22m
-[2m      [2mat Function.<anonymous> ([22m[2m../../node_modules/.pnpm/@babel+core@7.28.4/node_modules/@babel/core/src/transform-file.ts[2m:23:58)[22m[2m[22m
-[2m      [2mat evaluateSync ([22m[2m../../node_modules/.pnpm/gensync@1.0.0-beta.2/node_modules/gensync/index.js[2m:251:28)[22m[2m[22m
-[2m      [2mat Function.sync ([22m[2m../../node_modules/.pnpm/gensync@1.0.0-beta.2/node_modules/gensync/index.js[2m:89:14)[22m[2m[22m
-[2m      [2mat Object.sync ([22m[2m../../node_modules/.pnpm/@babel+core@7.28.4/node_modules/@babel/core/src/transform-file.ts[2m:49:30)[22m[2m[22m
-[2m      [2mat transform ([22m[2m[0m[36msrc/__tests__/index.spec.ts[39m[0m[2m:10:18)[22m[2m[22m
-[2m      [2mat runTestWithSnap ([22m[2m[0m[36msrc/__tests__/index.spec.ts[39m[0m[2m:16:20)[22m[2m[22m
-[2m      [2mat Object.<anonymous> ([22m[2m[0m[36msrc/__tests__/index.spec.ts[39m[0m[2m:43:9)[22m[2m[22m
-
-[1m[31m  [1m● [22m[1mtransformations › compile messages to AST[39m[22m
-
-    [BABEL]: You are using a .ts config file, but Babel only supports transpiling .cts configs. Either:
-    - Use a .cts config file
-    - Update to Node.js 23.6.0, which has native TypeScript support
-    - Install tsx to transpile .ts files on the fly (While processing: /Users/bogdan-korzh/i18n-nx-experiment/packages/i18n-babel-plugin/src/index.ts)
-[2m[22m
-[2m    [0m [90m  8 |[39m[22m
-[2m     [90m  9 |[39m [36mfunction[39m transform(fileName[33m:[39m string[33m,[39m mode[33m?[39m[33m:[39m string) {[22m
-[2m    [31m[1m>[22m[2m[39m[90m 10 |[39m     [36mreturn[39m babel[33m.[39mtransformFileSync(resolve(fileName)[33m,[39m {[22m
-[2m     [90m    |[39m                  [31m[1m^[22m[2m[39m[22m
-[2m     [90m 11 |[39m         configFile[33m:[39m resolve([32m`.babelrc-${mode || 'normal'}`[39m)[33m,[39m[22m
-[2m     [90m 12 |[39m     })[33m?[39m[33m.[39mcode[33m;[39m[22m
-[2m     [90m 13 |[39m }[0m[22m
-[2m[22m
-[2m      [2mat ensureTsSupport ([22m[2m../../node_modules/.pnpm/@babel+core@7.28.4/node_modules/@babel/core/src/config/files/module-types.ts[2m:215:11)[22m[2m[22m
-[2m      [2mat ensureTsSupport ([22m[2m../../node_modules/.pnpm/@babel+core@7.28.4/node_modules/@babel/core/src/config/files/module-types.ts[2m:147:18)[22m[2m[22m
-[2m          at loadCodeDefault.next (<anonymous>)[22m
-[2m      [2mat requireModule ([22m[2m../../node_modules/.pnpm/@babel+core@7.28.4/node_modules/@babel/core/src/config/files/plugins.ts[2m:255:36)[22m[2m[22m
-[2m          at requireModule.next (<anonymous>)[22m
-[2m      [2mat requireModule ([22m[2m../../node_modules/.pnpm/@babel+core@7.28.4/node_modules/@babel/core/src/config/files/plugins.ts[2m:40:24)[22m[2m[22m
-[2m          at loadPlugin.next (<anonymous>)[22m
-[2m      [2mat resolver ([22m[2m../../node_modules/.pnpm/@babel+core@7.28.4/node_modules/@babel/core/src/config/config-descriptors.ts[2m:327:35)[22m[2m[22m
-[2m          at createDescriptor.next (<anonymous>)[22m
-[2m      [2mat evaluateSync ([22m[2m../../node_modules/.pnpm/gensync@1.0.0-beta.2/node_modules/gensync/index.js[2m:251:28)[22m[2m[22m
-[2m      [2mat [22m[2m../../node_modules/.pnpm/gensync@1.0.0-beta.2/node_modules/gensync/index.js[2m:31:34[22m[2m[22m
-[2m          at Array.map (<anonymous>)[22m
-[2m      [2mat Function.sync ([22m[2m../../node_modules/.pnpm/gensync@1.0.0-beta.2/node_modules/gensync/index.js[2m:31:22)[22m[2m[22m
-[2m      [2mat Function.all ([22m[2m../../node_modules/.pnpm/gensync@1.0.0-beta.2/node_modules/gensync/index.js[2m:210:24)[22m[2m[22m
-[2m      [2mat all ([22m[2m../../node_modules/.pnpm/@babel+core@7.28.4/node_modules/@babel/core/src/config/config-descriptors.ts[2m:268:38)[22m[2m[22m
-[2m          at createDescriptors.next (<anonymous>)[22m
-[2m      [2mat createDescriptors ([22m[2m../../node_modules/.pnpm/@babel+core@7.28.4/node_modules/@babel/core/src/config/config-descriptors.ts[2m:258:17)[22m[2m[22m
-[2m          at createPluginDescriptors.next (<anonymous>)[22m
-[2m      [2mat fn ([22m[2m../../node_modules/.pnpm/@babel+core@7.28.4/node_modules/@babel/core/src/gensync-utils/functional.ts[2m:18:46)[22m[2m[22m
-[2m      [2mat plugins ([22m[2m../../node_modules/.pnpm/@babel+core@7.28.4/node_modules/@babel/core/src/config/config-chain.ts[2m:724:34)[22m[2m[22m
-[2m          at mergeChainOpts.next (<anonymous>)[22m
-[2m      [2mat mergeChainOpts ([22m[2m../../node_modules/.pnpm/@babel+core@7.28.4/node_modules/@babel/core/src/config/config-chain.ts[2m:661:14)[22m[2m[22m
-[2m          at chainWalker.next (<anonymous>)[22m
-[2m      [2mat loadFileChainWalker ([22m[2m../../node_modules/.pnpm/@babel+core@7.28.4/node_modules/@babel/core/src/config/config-chain.ts[2m:398:24)[22m[2m[22m
-[2m          at loadFileChain.next (<anonymous>)[22m
-[2m      [2mat loadFileChain ([22m[2m../../node_modules/.pnpm/@babel+core@7.28.4/node_modules/@babel/core/src/config/config-chain.ts[2m:186:27)[22m[2m[22m
-[2m          at buildRootChain.next (<anonymous>)[22m
-[2m      [2mat loadPrivatePartialConfig ([22m[2m../../node_modules/.pnpm/@babel+core@7.28.4/node_modules/@babel/core/src/config/partial.ts[2m:111:44)[22m[2m[22m
-[2m          at loadPrivatePartialConfig.next (<anonymous>)[22m
-[2m      [2mat loadFullConfig ([22m[2m../../node_modules/.pnpm/@babel+core@7.28.4/node_modules/@babel/core/src/config/full.ts[2m:66:49)[22m[2m[22m
-[2m          at loadFullConfig.next (<anonymous>)[22m
-[2m      [2mat Function.<anonymous> ([22m[2m../../node_modules/.pnpm/@babel+core@7.28.4/node_modules/@babel/core/src/transform-file.ts[2m:23:58)[22m[2m[22m
-[2m      [2mat evaluateSync ([22m[2m../../node_modules/.pnpm/gensync@1.0.0-beta.2/node_modules/gensync/index.js[2m:251:28)[22m[2m[22m
-[2m      [2mat Function.sync ([22m[2m../../node_modules/.pnpm/gensync@1.0.0-beta.2/node_modules/gensync/index.js[2m:89:14)[22m[2m[22m
-[2m      [2mat Object.sync ([22m[2m../../node_modules/.pnpm/@babel+core@7.28.4/node_modules/@babel/core/src/transform-file.ts[2m:49:30)[22m[2m[22m
-[2m      [2mat transform ([22m[2m[0m[36msrc/__tests__/index.spec.ts[39m[0m[2m:10:18)[22m[2m[22m
-[2m      [2mat runTestWithSnap ([22m[2m[0m[36msrc/__tests__/index.spec.ts[39m[0m[2m:16:20)[22m[2m[22m
-[2m      [2mat Object.<anonymous> ([22m[2m[0m[36msrc/__tests__/index.spec.ts[39m[0m[2m:47:9)[22m[2m[22m
-
-[1m[31m  [1m● [22m[1mtransformations › TECH target locale with ids[39m[22m
-
-    [BABEL]: You are using a .ts config file, but Babel only supports transpiling .cts configs. Either:
-    - Use a .cts config file
-    - Update to Node.js 23.6.0, which has native TypeScript support
-    - Install tsx to transpile .ts files on the fly (While processing: /Users/bogdan-korzh/i18n-nx-experiment/packages/i18n-babel-plugin/src/index.ts)
-[2m[22m
-[2m    [0m [90m  8 |[39m[22m
-[2m     [90m  9 |[39m [36mfunction[39m transform(fileName[33m:[39m string[33m,[39m mode[33m?[39m[33m:[39m string) {[22m
-[2m    [31m[1m>[22m[2m[39m[90m 10 |[39m     [36mreturn[39m babel[33m.[39mtransformFileSync(resolve(fileName)[33m,[39m {[22m
-[2m     [90m    |[39m                  [31m[1m^[22m[2m[39m[22m
-[2m     [90m 11 |[39m         configFile[33m:[39m resolve([32m`.babelrc-${mode || 'normal'}`[39m)[33m,[39m[22m
-[2m     [90m 12 |[39m     })[33m?[39m[33m.[39mcode[33m;[39m[22m
-[2m     [90m 13 |[39m }[0m[22m
-[2m[22m
-[2m      [2mat ensureTsSupport ([22m[2m../../node_modules/.pnpm/@babel+core@7.28.4/node_modules/@babel/core/src/config/files/module-types.ts[2m:215:11)[22m[2m[22m
-[2m      [2mat ensureTsSupport ([22m[2m../../node_modules/.pnpm/@babel+core@7.28.4/node_modules/@babel/core/src/config/files/module-types.ts[2m:147:18)[22m[2m[22m
-[2m          at loadCodeDefault.next (<anonymous>)[22m
-[2m      [2mat requireModule ([22m[2m../../node_modules/.pnpm/@babel+core@7.28.4/node_modules/@babel/core/src/config/files/plugins.ts[2m:255:36)[22m[2m[22m
-[2m          at requireModule.next (<anonymous>)[22m
-[2m      [2mat requireModule ([22m[2m../../node_modules/.pnpm/@babel+core@7.28.4/node_modules/@babel/core/src/config/files/plugins.ts[2m:40:24)[22m[2m[22m
-[2m          at loadPlugin.next (<anonymous>)[22m
-[2m      [2mat resolver ([22m[2m../../node_modules/.pnpm/@babel+core@7.28.4/node_modules/@babel/core/src/config/config-descriptors.ts[2m:327:35)[22m[2m[22m
-[2m          at createDescriptor.next (<anonymous>)[22m
-[2m      [2mat evaluateSync ([22m[2m../../node_modules/.pnpm/gensync@1.0.0-beta.2/node_modules/gensync/index.js[2m:251:28)[22m[2m[22m
-[2m      [2mat [22m[2m../../node_modules/.pnpm/gensync@1.0.0-beta.2/node_modules/gensync/index.js[2m:31:34[22m[2m[22m
-[2m          at Array.map (<anonymous>)[22m
-[2m      [2mat Function.sync ([22m[2m../../node_modules/.pnpm/gensync@1.0.0-beta.2/node_modules/gensync/index.js[2m:31:22)[22m[2m[22m
-[2m      [2mat Function.all ([22m[2m../../node_modules/.pnpm/gensync@1.0.0-beta.2/node_modules/gensync/index.js[2m:210:24)[22m[2m[22m
-[2m      [2mat all ([22m[2m../../node_modules/.pnpm/@babel+core@7.28.4/node_modules/@babel/core/src/config/config-descriptors.ts[2m:268:38)[22m[2m[22m
-[2m          at createDescriptors.next (<anonymous>)[22m
-[2m      [2mat createDescriptors ([22m[2m../../node_modules/.pnpm/@babel+core@7.28.4/node_modules/@babel/core/src/config/config-descriptors.ts[2m:258:17)[22m[2m[22m
-[2m          at createPluginDescriptors.next (<anonymous>)[22m
-[2m      [2mat fn ([22m[2m../../node_modules/.pnpm/@babel+core@7.28.4/node_modules/@babel/core/src/gensync-utils/functional.ts[2m:18:46)[22m[2m[22m
-[2m      [2mat plugins ([22m[2m../../node_modules/.pnpm/@babel+core@7.28.4/node_modules/@babel/core/src/config/config-chain.ts[2m:724:34)[22m[2m[22m
-[2m          at mergeChainOpts.next (<anonymous>)[22m
-[2m      [2mat mergeChainOpts ([22m[2m../../node_modules/.pnpm/@babel+core@7.28.4/node_modules/@babel/core/src/config/config-chain.ts[2m:661:14)[22m[2m[22m
-[2m          at chainWalker.next (<anonymous>)[22m
-[2m      [2mat loadFileChainWalker ([22m[2m../../node_modules/.pnpm/@babel+core@7.28.4/node_modules/@babel/core/src/config/config-chain.ts[2m:398:24)[22m[2m[22m
-[2m          at loadFileChain.next (<anonymous>)[22m
-[2m      [2mat loadFileChain ([22m[2m../../node_modules/.pnpm/@babel+core@7.28.4/node_modules/@babel/core/src/config/config-chain.ts[2m:186:27)[22m[2m[22m
-[2m          at buildRootChain.next (<anonymous>)[22m
-[2m      [2mat loadPrivatePartialConfig ([22m[2m../../node_modules/.pnpm/@babel+core@7.28.4/node_modules/@babel/core/src/config/partial.ts[2m:111:44)[22m[2m[22m
-[2m          at loadPrivatePartialConfig.next (<anonymous>)[22m
-[2m      [2mat loadFullConfig ([22m[2m../../node_modules/.pnpm/@babel+core@7.28.4/node_modules/@babel/core/src/config/full.ts[2m:66:49)[22m[2m[22m
-[2m          at loadFullConfig.next (<anonymous>)[22m
-[2m      [2mat Function.<anonymous> ([22m[2m../../node_modules/.pnpm/@babel+core@7.28.4/node_modules/@babel/core/src/transform-file.ts[2m:23:58)[22m[2m[22m
-[2m      [2mat evaluateSync ([22m[2m../../node_modules/.pnpm/gensync@1.0.0-beta.2/node_modules/gensync/index.js[2m:251:28)[22m[2m[22m
-[2m      [2mat Function.sync ([22m[2m../../node_modules/.pnpm/gensync@1.0.0-beta.2/node_modules/gensync/index.js[2m:89:14)[22m[2m[22m
-[2m      [2mat Object.sync ([22m[2m../../node_modules/.pnpm/@babel+core@7.28.4/node_modules/@babel/core/src/transform-file.ts[2m:49:30)[22m[2m[22m
-[2m      [2mat transform ([22m[2m[0m[36msrc/__tests__/index.spec.ts[39m[0m[2m:10:18)[22m[2m[22m
-[2m      [2mat runTestWithSnap ([22m[2m[0m[36msrc/__tests__/index.spec.ts[39m[0m[2m:16:20)[22m[2m[22m
-[2m      [2mat Object.<anonymous> ([22m[2m[0m[36msrc/__tests__/index.spec.ts[39m[0m[2m:51:9)[22m[2m[22m
-
-
-[0m[7m[33m[1m RUNS [22m[39m[27m[0m [2msrc/__tests__/[22m[1mmarkdown.spec.ts[22m
-[0m[7m[33m[1m RUNS [22m[39m[27m[0m [2msrc/__tests__/[22m[1mindex.spec.ts[22m
-[0m[7m[33m[1m RUNS [22m[39m[27m[0m [2msrc/__tests__/[22m[1mtypograf.spec.ts[22m
-
-[1mTest Suites: [22m0 of 3 total
-[1mTests:       [22m0 total
-[1mSnapshots:   [22m0 total
-[1mTime:[22m        1 s[K[1A[K[1A[K[1A[K[1A[K[1A[K[1A[K[1A[K[1A
-[0m[7m[33m[1m RUNS [22m[39m[27m[0m [2msrc/__tests__/[22m[1mmarkdown.spec.ts[22m
-[0m[7m[33m[1m RUNS [22m[39m[27m[0m [2msrc/__tests__/[22m[1mindex.spec.ts[22m
-[0m[7m[33m[1m RUNS [22m[39m[27m[0m [2msrc/__tests__/[22m[1mtypograf.spec.ts[22m
-
-[1mTest Suites: [22m0 of 3 total
-[1mTests:       [22m0 total
-[1mSnapshots:   [22m0 total
-[1mTime:[22m        1 s[K[1A[K[1A[K[1A[K[1A[K[1A[K[1A[K[1A[K[1A
-[0m[7m[33m[1m RUNS [22m[39m[27m[0m [2msrc/__tests__/[22m[1mmarkdown.spec.ts[22m
-[0m[7m[33m[1m RUNS [22m[39m[27m[0m [2msrc/__tests__/[22m[1mtypograf.spec.ts[22m
-
-[1mTest Suites: [22m[1m[31m1 failed[39m[22m, 1 of 3 total
-[1mTests:       [22m[1m[31m8 failed[39m[22m, [1m[32m1 passed[39m[22m, 9 total
-[1mSnapshots:   [22m0 total
-[1mTime:[22m        1 s[K[1A[K[1A[K[1A[K[1A[K[1A[K[1A[K[1A[0m[7m[1m[32m PASS [39m[22m[27m[0m [2msrc/__tests__/[22m[1mtypograf.spec.ts[22m
-
-[0m[7m[33m[1m RUNS [22m[39m[27m[0m [2msrc/__tests__/[22m[1mmarkdown.spec.ts[22m
-[0m[7m[33m[1m RUNS [22m[39m[27m[0m [2msrc/__tests__/[22m[1mtypograf.spec.ts[22m
-
-[1mTest Suites: [22m[1m[31m1 failed[39m[22m, 1 of 3 total
-[1mTests:       [22m[1m[31m8 failed[39m[22m, [1m[32m1 passed[39m[22m, 9 total
-[1mSnapshots:   [22m0 total
-[1mTime:[22m        1 s[K[1A[K[1A[K[1A[K[1A[K[1A[K[1A[K[1A[0m[7m[1m[32m PASS [39m[22m[27m[0m [2msrc/__tests__/[22m[1mmarkdown.spec.ts[22m
-
-[0m[7m[33m[1m RUNS [22m[39m[27m[0m [2msrc/__tests__/[22m[1mmarkdown.spec.ts[22m
-[0m[7m[33m[1m RUNS [22m[39m[27m[0m [2msrc/__tests__/[22m[1mtypograf.spec.ts[22m
-
-[1mTest Suites: [22m[1m[31m1 failed[39m[22m, 1 of 3 total
-[1mTests:       [22m[1m[31m8 failed[39m[22m, [1m[32m1 passed[39m[22m, 9 total
-[1mSnapshots:   [22m0 total
-[1mTime:[22m        1 s[K[1A[K[1A[K[1A[K[1A[K[1A[K[1A[K[1A[999D[K
-[1mTest Suites: [22m[1m[31m1 failed[39m[22m, [1m[32m2 passed[39m[22m, 3 total
-[1mTests:       [22m[1m[31m8 failed[39m[22m, [1m[32m11 passed[39m[22m, 19 total
-[1mSnapshots:   [22m0 total
-[1mTime:[22m        1.637 s
-[2mRan all test suites[22m[2m.[22m
-[1G[0K⠙[1G[0K[1mnpm[22m [31merror[39m Lifecycle script `test` failed with error:
-[1G[0K⠙[1G[0K[1mnpm[22m [31merror[39m [94mcode[39m [33m1[39m
-[1G[0K⠙[1G[0K[1mnpm[22m [31merror[39m [94mpath[39m /Users/bogdan-korzh/i18n-nx-experiment/packages/i18n-babel-plugin
-[1G[0K⠙[1G[0K[1mnpm[22m [31merror[39m [94mworkspace[39m @gravity-ui/i18n-babel-plugin@0.9.0
-[1G[0K⠙[1G[0K[1mnpm[22m [31merror[39m [94mlocation[39m /Users/bogdan-korzh/i18n-nx-experiment/packages/i18n-babel-plugin
-[1G[0K⠙[1G[0K[1mnpm[22m [31merror[39m command failed
-[1G[0K⠙[1G[0K[1mnpm[22m [31merror[39m [94mcommand[39m sh -c jest --no-cache
-[1G[0K⠙[1G[0K
