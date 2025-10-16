@@ -37,7 +37,7 @@ jobs:
         shell: bash
 
       - name: Publish packages
-        run: pnpm exec nx release publish --dry-run
+        run: pnpm exec nx release publish
         shell: bash
         env:
           NODE_AUTH_TOKEN: ${{ secrets.GRAVITY_UI_BOT_NPM_TOKEN }}
