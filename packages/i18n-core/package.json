@@ -1,7 +1,7 @@
 {
   "name": "@gravity-ui/i18n-core",
   "version": "1.0.0",
-  "license": "UNLICENSED",
+  "license": "MIT",
   "main": "dist/cjs/index.js",
   "module": "dist/esm/index.js",
   "types": "dist/esm/index.d.ts",
@@ -16,6 +16,9 @@
     "lint:fix": "eslint . --fix",
     "test": "jest",
     "typecheck": "tsc --noEmit"
+  },
+  "publishConfig": {
+    "access": "public"
   },
   "keywords": [
     "i18n"

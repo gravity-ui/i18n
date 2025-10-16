@@ -1,7 +1,7 @@
 {
   "name": "@gravity-ui/i18n-babel-plugin",
   "version": "1.0.0",
-  "license": "UNLICENSED",
+  "license": "MIT",
   "main": "./dist/index.js",
   "typings": "./dist/index.d.ts",
   "scripts": {
@@ -12,6 +12,9 @@
     "lint:fix": "eslint . --fix",
     "test": "jest",
     "typecheck": "tsc --noEmit"
+  },
+  "publishConfig": {
+    "access": "public"
   },
   "dependencies": {
     "@babel/core": "^7.26.0",

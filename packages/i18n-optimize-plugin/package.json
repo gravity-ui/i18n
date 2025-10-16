@@ -2,7 +2,7 @@
   "name": "@gravity-ui/i18n-optimize-plugin",
   "type": "module",
   "version": "1.0.0",
-  "license": "UNLICENSED",
+  "license": "MIT",
   "files": [
     "dist"
   ],
@@ -31,6 +31,9 @@
     "lint": "eslint .",
     "lint:fix": "eslint . --fix",
     "typecheck": "tsc --noEmit"
+  },
+  "publishConfig": {
+    "access": "public"
   },
   "keywords": [
     "i18n",

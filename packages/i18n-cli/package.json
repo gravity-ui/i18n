@@ -46,6 +46,9 @@
     "test": "jest",
     "typecheck": "tsc --noEmit"
   },
+  "publishConfig": {
+    "access": "public"
+  },
   "keywords": [
     "i18n"
   ],
