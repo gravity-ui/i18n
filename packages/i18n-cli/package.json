@@ -1,6 +1,6 @@
 {
   "name": "@gravity-ui/i18n-cli",
-  "version": "0.17.5",
+  "version": "1.0.0",
   "license": "MIT",
   "main": "./dist/index.js",
   "module": "./dist/index.mjs",

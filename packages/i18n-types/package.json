@@ -1,6 +1,6 @@
 {
   "name": "@gravity-ui/i18n-types",
-  "version": "0.8.0",
+  "version": "1.0.0",
   "license": "UNLICENSED",
   "main": "dist/cjs/index.js",
   "module": "dist/esm/index.js",

@@ -1,6 +1,6 @@
 {
   "name": "@gravity-ui/i18n-react",
-  "version": "0.7.0",
+  "version": "1.0.0",
   "description": "",
   "license": "UNLICENSED",
   "main": "dist/cjs/index.js",

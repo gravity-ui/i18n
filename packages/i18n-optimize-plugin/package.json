@@ -1,7 +1,7 @@
 {
   "name": "@gravity-ui/i18n-optimize-plugin",
   "type": "module",
-  "version": "0.8.1",
+  "version": "1.0.0",
   "license": "UNLICENSED",
   "files": [
     "dist"
