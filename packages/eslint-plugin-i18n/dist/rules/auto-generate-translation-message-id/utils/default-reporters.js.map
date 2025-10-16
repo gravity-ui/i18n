@@ -1,1 +1,0 @@
-{"version":3,"file":"default-reporters.js","sourceRoot":"","sources":["../../../../rules/auto-generate-translation-message-id/utils/default-reporters.ts"],"names":[],"mappings":";;;AAEO,MAAM,mCAAmC,GAAG,CAAC,EAChD,OAAO,EACP,IAAI,EACJ,cAAc,GACyB,EAAE,EAAE;IAC3C,OAAO,CAAC,MAAM,CAAC;QACX,IAAI;QACJ,OAAO,EAAE,4EAA4E,cAAc,+HAA+H;KACrO,CAAC,CAAC;AACP,CAAC,CAAC;AATW,QAAA,mCAAmC,uCAS9C"}
