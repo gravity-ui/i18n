@@ -5,6 +5,8 @@
 name: Publish
 
 on:
+  # Manually trigger the release workflow
+  workflow_dispatch:
   # Runs when a GitHub release gets published
   release:
     types: [published]

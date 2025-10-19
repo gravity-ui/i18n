@@ -5,10 +5,11 @@
     },
     "changelog": {
       "workspaceChangelog": {
+        "file": true,
         "createRelease": "github"
       },
       "projectChangelogs": {
-        "file": false,
+        "file": true,
         "createRelease": "github"
       }
     },
