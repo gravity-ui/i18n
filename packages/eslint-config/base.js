@@ -44,7 +44,7 @@ export const config = [
                 },
             ],
             '@typescript-eslint/ban-ts-comment': 'off',
-            'import/no-unresolved': 'off', // TODO: настроить резолвер позже
+            'import/no-unresolved': 'off', // TODO: fix resolver later
         },
     },
     {

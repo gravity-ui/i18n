@@ -11,44 +11,47 @@ const main = () => {
         return;
     }
 
-    // Определяем рабочую директорию - корень проекта
+    // Define workspace folder - root of the project
     const workspaceFolders = vscode.workspace.workspaceFolders;
     if (!workspaceFolders || workspaceFolders.length === 0) {
-        vscode.window.showErrorMessage('Не найдена рабочая директория проекта.');
+        vscode.window.showErrorMessage('Workspace folder not found.');
         return;
     }
 
     const workspaceRoot = workspaceFolders[0]?.uri.fsPath;
     if (!workspaceRoot) {
-        vscode.window.showErrorMessage('Не найдена рабочая директория проекта.');
+        vscode.window.showErrorMessage('Workspace folder not found.');
         return;
     }
 
-    const command = `npm exec -- i18n-cli create-keys "${currentlyOpenTabfilePath}"`;
+    const pnpmCommand = `pnpm exec -- i18n-cli create-keys "${currentlyOpenTabfilePath}"`;
+    const npmCommand = `npm exec -- i18n-cli create-keys "${currentlyOpenTabfilePath}"`;
 
-    vscode.window.showInformationMessage('Генерация ключей...');
+    const command = `[[ -f "${workspaceRoot}/pnpm-lock.yaml" || -f "${workspaceRoot}/pnpm-workspace.yaml" ]] && ${pnpmCommand} || ${npmCommand}`;
+
+    vscode.window.showInformationMessage('Generating keys...');
 
     exec(command, {cwd: workspaceRoot, env: process.env}, async (error, stdout, stderr) => {
         const outputChannel = vscode.window.createOutputChannel(EXTENSION_NAME);
-        outputChannel.appendLine(`Команда: ${command}`);
-        outputChannel.appendLine(`В директории: ${workspaceRoot}`);
+        outputChannel.appendLine(`Command: ${command}`);
+        outputChannel.appendLine(`In directory: ${workspaceRoot}`);
 
         if (!error && !stderr) {
-            vscode.window.showInformationMessage('Ключи успешно инициализированы');
+            vscode.window.showInformationMessage('Keys successfully initialized');
             await vscode.window.activeTextEditor?.document.save();
             outputChannel.appendLine(stdout);
             return;
         }
 
         if (error) {
-            outputChannel.appendLine(`Ошибка: ${error.message}`);
-            vscode.window.showErrorMessage(`Ошибка при генерации ключей: ${error.message}`);
+            outputChannel.appendLine(`Error: ${error.message}`);
+            vscode.window.showErrorMessage(`Error when generating keys: ${error.message}`);
             outputChannel.show();
             return;
         }
 
         if (stderr) {
-            outputChannel.appendLine(`stderr: ${stderr}`);
+            outputChannel.appendLine(`Stderr: ${stderr}`);
             outputChannel.show();
         }
     });

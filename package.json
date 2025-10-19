@@ -1,11 +1,6 @@
 {
   "name": "i18n",
   "private": true,
-  "workspaces": [
-    "./packages/*",
-    "./example",
-    "./scripts/migration"
-  ],
   "scripts": {
     "build": "nx run-many --nx-bail --target=build --parallel",
     "test": "nx run-many --target=test --parallel",

@@ -3,7 +3,7 @@
     "private": true,
     "version": "0.0.1",
     "displayName": "i18n keys",
-    "description": "Генерация ключей для i18n",
+    "description": "Keys generation for i18n",
     "icon": "resources/i18n-icon.png",
     "engines": {
         "vscode": "^1.96.0"
@@ -50,7 +50,7 @@
         "pretest": "npm run compile && npm run lint",
         "lint": "eslint src --config eslint.config.mjs",
         "lint:fix": "eslint src --config eslint.config.mjs --fix",
-        "build": "vsce package --no-dependencies --baseContentUrl=https://a.yandex-team.ru/data-ui/i18n/packages/vscode-extension --allow-missing-repository --skip-license",
+        "build": "vsce package --no-dependencies --baseContentUrl=https://github.com/gravity-ui/i18n/packages/vscode-extension --allow-missing-repository --skip-license",
         "typecheck": "tsc --noEmit"
     },
     "dependencies": {
