@@ -1,7 +1,7 @@
 import type {Argv} from 'yargs';
 import {NormalizedProjectConfig} from '../config/loadProjectConfig';
 
-// eslint-disable-next-line
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 type PlainObject<T = any> = {
     [key: string]: T;
 };

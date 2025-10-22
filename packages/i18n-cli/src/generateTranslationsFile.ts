@@ -34,8 +34,7 @@ function prettifyMultilineICU(message: string): string {
     try {
         const ast = parseIcuMessage(message);
         return createPrettyIcuMessage(ast);
-    } catch (err) {
-        log(`Invalid ICU message "${message}"`, err);
+    } catch (_err) {
         return message;
     }
 }
@@ -87,6 +86,12 @@ function generateMeta(meta: MessageMeta): ObjectExpression | undefined {
 
     if (typeof meta.markdown === 'boolean') {
         properties.push(b.property('init', b.identifier('markdown'), b.literal(meta.markdown)));
+    }
+
+    if (typeof meta.disableTypograf === 'boolean') {
+        properties.push(
+            b.property('init', b.identifier('disableTypograf'), b.literal(meta.disableTypograf)),
+        );
     }
 
     return properties.length ? b.objectExpression(properties) : undefined;
