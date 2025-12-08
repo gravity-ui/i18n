@@ -15,7 +15,6 @@ describe('clear intl cache', () => {
             relativeTime: {test: {}},
             // @ts-expect-error
             pluralRules: {test: {}},
-            // @ts-expect-error
             list: {test: {}},
             // @ts-expect-error
             displayNames: {test: {}},

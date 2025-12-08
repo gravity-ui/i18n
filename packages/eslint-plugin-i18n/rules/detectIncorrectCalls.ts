@@ -5,6 +5,7 @@ const DEFAULT_I18N_PREFIX = 'i18n';
 const DEFAULT_GLOBAL_I18N_HELPERS = ['ci18n'];
 const DEFAULT_IGNORED_IDENTIFIERS = ['i18nCodemod'];
 
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 function isI18nBind(node: any, globalI18nName: string) {
     return (
         node.type === 'CallExpression' &&
@@ -16,6 +17,7 @@ function isI18nBind(node: any, globalI18nName: string) {
     );
 }
 
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 function isI18nDeclaration(node: any, globalI18nName: string) {
     return (
         node.type === 'VariableDeclaration' &&
@@ -26,6 +28,7 @@ function isI18nDeclaration(node: any, globalI18nName: string) {
     );
 }
 
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 function getI18nDeclarationParams(node: any) {
     const init = node.declarations[0].init;
 
@@ -39,14 +42,17 @@ function getI18nDeclarationParams(node: any) {
     throw new Error('Incorrect args count');
 }
 
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 function isValidKey(node: any) {
     return node.type === 'Literal';
 }
 
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 function isValidParams(node: any) {
     return node.type === 'ObjectExpression';
 }
 
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 function create(context: any) {
     const {
         globalI18nName = DEFAULT_GLOBAL_I18N_NAME,
@@ -59,6 +65,7 @@ function create(context: any) {
     const ignoredIdentifiers = new Set(ignoredIdentifiersOrig);
 
     return {
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
         VariableDeclaration(node: any) {
             if (isI18nDeclaration(node, globalI18nName)) {
                 const {keysetName, variableName} = getI18nDeclarationParams(node);
@@ -84,6 +91,7 @@ function create(context: any) {
                 }
             }
         },
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
         CallExpression(node: any) {
             if (
                 isI18nBind(node, globalI18nName) &&
@@ -190,6 +198,7 @@ function create(context: any) {
                 });
             }
         },
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
         ExportDefaultDeclaration(node: any) {
             if (
                 isI18nBind(node.declaration, globalI18nName) ||
@@ -201,6 +210,7 @@ function create(context: any) {
                 });
             }
         },
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
         ExportNamedDeclaration(node: any) {
             if (node.declaration && isI18nDeclaration(node.declaration, globalI18nName)) {
                 context.report({
@@ -209,6 +219,7 @@ function create(context: any) {
                 });
             }
         },
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
         ExportSpecifier(node: any) {
             if (node.local.type === 'Identifier' && i18nInstances.has(node.local.name)) {
                 context.report({
