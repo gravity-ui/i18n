@@ -42,7 +42,7 @@ jobs:
           git config user.email "github-actions[bot]@users.noreply.github.com"
 
           # Use nx release - handles versioning, changelog, and GitHub release
-          pnpm exec nx release --skip-publish
+          pnpm exec nx release --skip-publish --verbose
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
