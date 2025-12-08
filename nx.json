@@ -5,12 +5,7 @@
       "conventionalCommits": true
     },
     "changelog": {
-      "workspaceChangelog": {
-        "file": true,
-        "createRelease": "github"
-      },
       "projectChangelogs": {
-        "file": true,
         "createRelease": "github"
       }
     },
