@@ -36,6 +36,7 @@
     "tslib": "catalog:"
   },
   "devDependencies": {
+    "eslint-config": "workspace:*",
     "@gravity-ui/prettier-config": "^1.1.0",
     "@rollup/plugin-json": "^6.1.0",
     "@types/estree": "^1.0.8",

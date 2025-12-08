@@ -217,6 +217,9 @@ importers:
       eslint:
         specifier: 'catalog:'
         version: 9.37.0(jiti@2.6.1)
+      eslint-config:
+        specifier: workspace:*
+        version: link:../eslint-config
       jest:
         specifier: 'catalog:'
         version: 29.7.0(@types/node@24.7.0)(babel-plugin-macros@3.1.0)(ts-node@10.9.2(@swc/core@1.5.29(@swc/helpers@0.5.17))(@types/node@24.7.0)(typescript@5.9.3))
