@@ -1,26 +1,29 @@
 {
   "name": "i18n",
   "private": true,
+  "engines": {
+    "pnpm": "10.17.1",
+    "node": ">= 24.0.0",
+    "yarn": "Please use pnpm instead of yarn to install dependencies",
+    "npm": "Please use pnpm instead of npm to install dependencies"
+  },
+  "packageManager": "pnpm@10.17.1",
   "scripts": {
+    "preinstall": "npx only-allow pnpm",
+    "install:global": "npm install -g pnpm@10.17.1",
     "build": "nx run-many --nx-bail --target=build --parallel",
     "test": "nx run-many --target=test --parallel",
     "lint": "nx run-many --target=lint --parallel",
     "lint:fix": "nx run-many --target=lint:fix --parallel",
     "typecheck": "nx run-many --target=typecheck --parallel"
   },
-  "packageManager": "pnpm@9.12.3",
   "devDependencies": {
     "@gravity-ui/eslint-config": "^3.1.1",
     "@gravity-ui/prettier-config": "^1.1.0",
-    "@gravity-ui/tsconfig": "^1.0.0",
     "@nx/js": "21.6.4",
-    "@swc-node/register": "~1.9.1",
-    "@swc/core": "~1.5.7",
-    "@swc/helpers": "~0.5.11",
     "nx": "21.6.4",
-    "prettier": "^3.3.3",
-    "tslib": "^2.3.0",
-    "typescript": "^5.6.3"
+    "prettier": "catalog:",
+    "typescript": "catalog:"
   },
   "dependencies": {}
 }

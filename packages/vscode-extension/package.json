@@ -54,7 +54,7 @@
         "typecheck": "tsc --noEmit"
     },
     "dependencies": {
-        "tslib": "^2.8.1"
+        "tslib": "catalog:"
     },
     "devDependencies": {
         "@types/vscode": "^1.96.0",

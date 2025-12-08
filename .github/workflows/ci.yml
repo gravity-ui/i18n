@@ -20,12 +20,12 @@ jobs:
 
       - uses: pnpm/action-setup@v4
         with:
-          version: 9.12.3
+          version: 10.17.1
 
       # Cache node_modules
       - uses: actions/setup-node@v4
         with:
-          node-version: 20
+          node-version: 24
           cache: 'pnpm'
 
       - run: pnpm install --frozen-lockfile
@@ -36,7 +36,7 @@ jobs:
 
       - name: Test projects
         run: pnpm exec nx affected -t test
-      
+
       - name: Build projects
         run: pnpm exec nx affected -t build
 

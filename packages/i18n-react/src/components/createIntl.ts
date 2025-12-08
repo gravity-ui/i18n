@@ -21,6 +21,7 @@ export function createIntl<AvailableLocale extends string>(
     let currentLocale = config.locale;
 
     const cache = createIntlCache();
+
     const coreIntl = coreCreateIntl(
         {
             defaultLocale: currentLocale,
