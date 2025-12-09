@@ -1,3 +1,13 @@
+## 1.3.0 (2025-12-09)
+
+### 🚀 Features
+
+- escape html in params ([#66](https://github.com/gravity-ui/i18n/pull/66))
+
+### ❤️ Thank You
+
+- dgaponov
+
 ## 1.2.0 (2025-12-09)
 
 ### 🚀 Features
