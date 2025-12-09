@@ -1,15 +1,12 @@
 # This workflow is used to publish the packages to npm.
 # Before running this workflow, the release workflow (release.yml) must be run to create the draft release on GitHub.
-# This workflow will automatically publish the packages to npm based on the github release.
+# This workflow must be run manually after the release workflow is run.
 
 name: Publish
 
 on:
-  # Manually trigger the release workflow
+  # Manually trigger the publish workflow
   workflow_dispatch:
-  # Runs when a GitHub release gets published
-  release:
-    types: [published]
 
 jobs:
   publish:
