@@ -91,7 +91,7 @@ export const getMemberExpression = ({
             checkId({
                 ...rest,
                 context,
-                // eslint-disable-next-line @typescript-eslint/no-shadow
+
                 reportLackId({context, node, id}) {
                     if (translation && !isArgumentObject) {
                         return;

@@ -68,6 +68,49 @@ describe('intl entity', () => {
 
         expect(t('create')).toBe(create);
     });
+
+    it('should escape parameters when escapeParameter enabled in config', () => {
+        const intl = createIntl({
+            allowedLocales: ['en'],
+            locale: 'en',
+            escapeParameter: true,
+        });
+
+        const {t} = intl.createMessages({
+            escaped: {
+                en: 'Escape {param}',
+            },
+        });
+
+        expect(
+            t('escaped', {
+                param: '<b>tag</b>',
+            }),
+        ).toBe('Escape &lt;b&gt;tag&lt;/b&gt;');
+    });
+
+    it('should escape parameters when escapeParameter enabled in call options', () => {
+        const intl = createIntl({
+            allowedLocales: ['en'],
+            locale: 'en',
+        });
+
+        const {t} = intl.createMessages({
+            escaped: {
+                en: 'Escape {param}',
+            },
+        });
+
+        expect(
+            t(
+                'escaped',
+                {
+                    param: '<b>tag</b>',
+                },
+                {escapeParameter: true},
+            ),
+        ).toBe('Escape &lt;b&gt;tag&lt;/b&gt;');
+    });
 });
 
 describe('multi-locale', () => {

@@ -9,7 +9,7 @@ export const getObjectProperty: GetObjectProperty = ({argument, propertyName}) =
     if (argument?.type !== 'ObjectExpression') {
         return;
     }
-    // eslint-disable-next-line consistent-return
+
     return argument?.properties
         ?.filter((item): item is Property => item.type === 'Property')
         .find(

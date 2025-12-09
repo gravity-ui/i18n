@@ -50,8 +50,12 @@ describe('factoryCreateMessageFunctions', () => {
     });
 
     const createMessageF = factoryCreateMessageFunctions(intl);
+    const createMessageFWithEscape = factoryCreateMessageFunctions(intl, {
+        escapeParameter: true,
+    });
 
     const {t} = createMessageF(messages);
+    const {t: tWithEscape} = createMessageFWithEscape(messages);
 
     it('simple text', () => {
         expect(t('simple')).toBe(INPUT_SIMPLE);
@@ -79,5 +83,25 @@ describe('factoryCreateMessageFunctions', () => {
 
     it('ICU message syntax', () => {
         expect(t('wihICU', {count: 123})).toBe('this is 123 dogs');
+    });
+
+    it('should escape parameters when enabled in config', () => {
+        expect(
+            tWithEscape('withParam', {
+                param1: '<escaped>',
+            }),
+        ).toBe('String with &lt;escaped&gt;');
+    });
+
+    it('should escape parameters when enabled in call options', () => {
+        expect(
+            t(
+                'withParam',
+                {
+                    param1: '<escaped>',
+                },
+                {escapeParameter: true},
+            ),
+        ).toBe('String with &lt;escaped&gt;');
     });
 });

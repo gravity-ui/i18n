@@ -15,7 +15,9 @@ export function factoryCreateMessagesFunction<AvailableLocale extends string>(
     return function createMessages<K extends string>(msgs: Messages<AvailableLocale, K>) {
         const coreCreateMessages = coreFactoryCreateMessagesFunction(config);
         const messages = coreCreateMessages(msgs);
-        const createMessageFunctions = factoryCreateMessageFunctions(intlFormatters);
+        const createMessageFunctions = factoryCreateMessageFunctions(intlFormatters, {
+            escapeParameter: config.escapeParameter,
+        });
 
         return createMessageFunctions(messages);
     };

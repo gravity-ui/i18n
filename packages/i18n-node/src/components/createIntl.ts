@@ -31,6 +31,7 @@ export function createIntl<AvailableLocale extends string>(
         disableUseLocaleLangAsFallback: config.disableUseLocaleLangAsFallback ?? false,
         fallbackLocales: config.fallbackLocales ?? ({} as FallbackLocales<AvailableLocale>),
         defaultFallback: config.defaultFallback ?? 'empty-string',
+        escapeParameter: config.escapeParameter ?? false,
     };
 
     const createMessages = <K extends string>(messages: Messages<AvailableLocale, K>) => ({
@@ -65,6 +66,8 @@ export function createIntl<AvailableLocale extends string>(
                 defaultFormats: {
                     number: coreIntl.defaultFormats.number,
                 },
+
+                escapeParameter: intlShapeConfig.escapeParameter,
 
                 allowedLocales: config.allowedLocales,
                 fallbackLocales: config.fallbackLocales ?? ({} as FallbackLocales<AvailableLocale>),
