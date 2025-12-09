@@ -23,6 +23,7 @@ export type DefaultIntlConfig<AvailableLocale extends string> = Pick<
     | 'fallbackLocales'
     | 'defaultFallback'
     | 'disableUseLocaleLangAsFallback'
+    | 'escapeParameter'
 >;
 
 export type IntlConfig<AvailableLocale extends string> = Omit<

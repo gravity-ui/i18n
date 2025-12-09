@@ -17,6 +17,8 @@ export interface ResolvedIntlConfig<TBase, AvailableLocale extends string> {
     formats: CustomFormats;
     defaultFormats: CustomFormats;
 
+    escapeParameter?: boolean;
+
     allowedLocales: AvailableLocale[];
     fallbackLocales: FallbackLocales<AvailableLocale>;
     defaultFallback: DefaultFallback<AvailableLocale>;

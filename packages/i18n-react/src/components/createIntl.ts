@@ -46,6 +46,8 @@ export function createIntl<AvailableLocale extends string>(
             number: coreIntl.defaultFormats.number,
         },
 
+        escapeParameter: config.escapeParameter ?? false,
+
         allowedLocales: config.allowedLocales,
         fallbackLocales:
             config.fallbackLocales ??

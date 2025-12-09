@@ -19,8 +19,12 @@ export function factoryCreateMessageFunctions<AvailableLocale extends string>(
     config: ResolvedIntlConfig<AvailableLocale>,
     intlFormatters: Pick<IntlFormatters<React.ReactNode>, 'formatMessage'>,
 ) {
-    const coreCreateMessageFunctions =
-        coreFactoryCreateMessageFunctions<React.ReactNode>(intlFormatters);
+    const coreCreateMessageFunctions = coreFactoryCreateMessageFunctions<React.ReactNode>(
+        intlFormatters,
+        {
+            escapeParameter: config.escapeParameter,
+        },
+    );
 
     return function createMessageFunctions<
         T extends Record<string, MessageDescriptor>,

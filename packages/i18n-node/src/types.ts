@@ -24,6 +24,7 @@ export type DefaultIntlConfig<AvailableLocale extends string> = Pick<
     | 'fallbackLocales'
     | 'defaultFallback'
     | 'disableUseLocaleLangAsFallback'
+    | 'escapeParameter'
 >;
 
 export type IntlConfig<AvailableLocale extends string> = Omit<
@@ -49,6 +50,7 @@ export interface IntlShape<AvailableLocale extends string>
             | 'disableUseLocaleLangAsFallback'
             | 'fallbackLocales'
             | 'defaultFallback'
+            | 'escapeParameter'
         >
     > {
     createMessages: <K extends string>(
