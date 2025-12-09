@@ -6,6 +6,7 @@ import {MessageWithArgument} from 'components/MessageWithArgument';
 import {MessageWithReactComponents} from 'components/MessageWithReactComponents';
 import {MarkdownMessage} from 'components/MarkdownMessage';
 import {CommonMessage} from 'components/CommonMessage';
+import {EscapedParameters} from 'components/EscapedParameters';
 
 export const MainPage = () => (
     <Flex direction={'column'} gap={10}>
@@ -16,5 +17,6 @@ export const MainPage = () => (
         <MessageWithReactComponents />
         <MarkdownMessage />
         <CommonMessage />
+        <EscapedParameters />
     </Flex>
 );

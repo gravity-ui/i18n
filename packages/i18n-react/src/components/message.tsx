@@ -25,7 +25,7 @@ export interface FormattedMessageProps<
     children?(nodes: React.ReactNode[]): React.ReactNode | null;
     ignoreTag?: IntlMessageFormatOptions['ignoreTag'];
     intlFormatters: Pick<IntlFormatters<React.ReactNode>, 'formatMessage'>;
-    config: Pick<ResolvedIntlConfig<never>, 'textComponent'>;
+    config: Pick<ResolvedIntlConfig<never>, 'textComponent' | 'escapeParameter'>;
 }
 
 function areEqual(prevProps: FormattedMessageProps, nextProps: FormattedMessageProps): boolean {
