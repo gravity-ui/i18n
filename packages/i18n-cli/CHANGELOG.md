@@ -1,3 +1,17 @@
+## 1.2.1 (2025-12-13)
+
+### 🩹 Fixes
+
+- deps in i18n-cli ([aa0bb50](https://github.com/gravity-ui/i18n/commit/aa0bb50))
+
+### 🧱 Updated Dependencies
+
+- Updated @gravity-ui/i18n-types to 1.2.1
+
+### ❤️ Thank You
+
+- Daniil Gaponov
+
 ## 1.2.0 (2025-12-09)
 
 ### 🚀 Features

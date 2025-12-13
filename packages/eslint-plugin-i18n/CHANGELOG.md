@@ -1,3 +1,9 @@
+## 2.3.1 (2025-12-13)
+
+### 🧱 Updated Dependencies
+
+- Updated @gravity-ui/i18n-cli to 1.2.1
+
 ## 2.3.0 (2025-12-09)
 
 ### 🚀 Features
