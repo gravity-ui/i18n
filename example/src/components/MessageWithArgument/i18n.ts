@@ -6,8 +6,6 @@ export const {t, Message} = intl.createMessages({
         en: 'Hello, {name}!',
         'ru-kz': null,
         'en-kz': null,
-        'ru-yateam': null,
-        'en-yateam': null,
         'en-tr': null,
         meta: {
             id: 'components.messageWithArgument:3ikeF',
@@ -18,8 +16,6 @@ export const {t, Message} = intl.createMessages({
         en: 'Message with argument',
         'ru-kz': null,
         'en-kz': null,
-        'ru-yateam': null,
-        'en-yateam': null,
         'en-tr': null,
         meta: {
             id: 'components.messageWithArgument:m8BPG',

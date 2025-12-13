@@ -16,8 +16,6 @@ export const {t, Message} = intl.createMessages({
 }`,
         'ru-kz': null,
         'en-kz': null,
-        'ru-yateam': null,
-        'en-yateam': null,
         'en-tr': null,
         meta: {
             id: 'AboutPage.uEhzUbvdPhfq81YtViTVho',
@@ -28,8 +26,6 @@ export const {t, Message} = intl.createMessages({
         en: 'Plural message, ICU',
         'ru-kz': null,
         'en-kz': null,
-        'ru-yateam': null,
-        'en-yateam': null,
         'en-tr': null,
         meta: {
             id: 'components.pluralMessage:p158D',

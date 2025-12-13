@@ -183,6 +183,9 @@ importers:
       '@types/estree-jsx':
         specifier: ^1.0.5
         version: 1.0.5
+      '@typescript-eslint/utils':
+        specifier: ^8.25.0
+        version: 8.46.0(eslint@9.37.0(jiti@2.6.1))(typescript@5.9.3)
       estree-util-build-jsx:
         specifier: ^3.0.1
         version: 3.0.1
@@ -211,9 +214,6 @@ importers:
       '@types/uuidv4':
         specifier: 2.0.0
         version: 2.0.0
-      '@typescript-eslint/utils':
-        specifier: ^8.25.0
-        version: 8.46.0(eslint@9.37.0(jiti@2.6.1))(typescript@5.9.3)
       eslint:
         specifier: 'catalog:'
         version: 9.37.0(jiti@2.6.1)

@@ -43,14 +43,14 @@
     "@types/jest": "catalog:",
     "@types/node": "^24.7.0",
     "@types/uuidv4": "2.0.0",
-    "@typescript-eslint/utils": "^8.25.0",
     "eslint": "catalog:",
     "jest": "catalog:",
     "ts-jest": "catalog:",
     "typescript": "catalog:"
   },
   "peerDependencies": {
-    "eslint": ">=8.56.0"
+    "eslint": ">=8.56.0",
+    "@typescript-eslint/utils": "^8.25.0"
   },
   "lint-staged": {
     "*.{js,ts}": [

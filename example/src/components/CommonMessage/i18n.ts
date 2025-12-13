@@ -6,8 +6,6 @@ export const {t, Message} = intl.createMessages({
         en: 'Common message',
         'ru-kz': null,
         'en-kz': null,
-        'ru-yateam': null,
-        'en-yateam': null,
         'en-tr': null,
         meta: {
             id: 'components.commonMessage:74WS5',

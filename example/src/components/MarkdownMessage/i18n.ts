@@ -6,8 +6,6 @@ export const {t, Message} = intl.createMessages({
         en: 'Markdown message',
         'ru-kz': null,
         'en-kz': null,
-        'ru-yateam': null,
-        'en-yateam': null,
         'en-tr': null,
         meta: {
             id: 'components.markdownMessage:rH6D7',
@@ -18,8 +16,6 @@ export const {t, Message} = intl.createMessages({
         en: 'Read more in [documentation](#){target=_blank}.',
         'ru-kz': null,
         'en-kz': null,
-        'ru-yateam': null,
-        'en-yateam': null,
         'en-tr': null,
         meta: {
             id: 'components.message:9mmAu',

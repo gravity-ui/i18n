@@ -6,8 +6,6 @@ export const {t: computeT, Message: ComputeMessage} = intl.createMessages({
         en: 'Images',
         'ru-kz': null,
         'en-kz': null,
-        'ru-yateam': null,
-        'en-yateam': null,
         'en-tr': null,
         meta: {
             id: 'compute.images:89iGW',

@@ -34,22 +34,6 @@ export const {t, Message} = intl.createMessages({
             two: '',
             other: '',
         },
-        'ru-yateam': {
-            one: 'one',
-            few: '',
-            many: '',
-            zero: 'zero',
-            two: '',
-            other: '',
-        },
-        'en-yateam': {
-            one: 'one жжуййкйцк',
-            few: '',
-            many: '',
-            zero: 'zero',
-            two: '',
-            other: '',
-        },
         'en-tr': {
             one: 'one',
             few: '',
@@ -68,8 +52,6 @@ export const {t, Message} = intl.createMessages({
         en: 'Plural message, Object',
         'ru-kz': null,
         'en-kz': null,
-        'ru-yateam': null,
-        'en-yateam': null,
         'en-tr': null,
         meta: {
             id: 'components.pluralMessage:4wfnp',
