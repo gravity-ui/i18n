@@ -1,3 +1,17 @@
+## 1.2.3 (2025-12-17)
+
+### 🩹 Fixes
+
+- write disableTypograf on generateTranslations ([a678e4a](https://github.com/gravity-ui/i18n/commit/a678e4a))
+
+### 🧱 Updated Dependencies
+
+- Updated @gravity-ui/i18n-cli to 1.2.3
+
+### ❤️ Thank You
+
+- Daniil Gaponov
+
 ## 1.2.2 (2025-12-13)
 
 ### 🧱 Updated Dependencies
