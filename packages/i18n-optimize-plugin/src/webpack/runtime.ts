@@ -20,7 +20,7 @@ class InitialChunksRuntimeModule extends RuntimeModule {
             for (const chunkGroup of compilation.chunkGroups) {
                 if (chunkGroup.isInitial?.()) {
                     for (const chunk of chunkGroup.chunks || []) {
-                        const match = chunk.name?.match(/i18n\.(.+)\.initial/);
+                        const match = chunk.name?.match(/i18n\.([^.]+)\.?/);
                         if (match && chunk.id) {
                             const locale = match[1]!;
                             if (!requiredChunkIdsByLocale[locale]) {
