@@ -39,7 +39,7 @@ function prettifyMultilineICU(message: string): string {
     }
 }
 
-function generateMessageLiteral(message?: string | null) {
+function generateMessageLiteral(message?: string | null, meta?: MessageMeta) {
     if (message === undefined) {
         return b.identifier('undefined');
     }
@@ -48,7 +48,7 @@ function generateMessageLiteral(message?: string | null) {
         return b.literal(null);
     }
 
-    if (isMessageLikeMultilineICU(message)) {
+    if (!meta?.markdown && isMessageLikeMultilineICU(message)) {
         const prettyICU = '\n' + prettifyMultilineICU(message);
         return b.templateLiteral(
             [b.templateElement({raw: prettyICU, cooked: prettyICU}, true)],
@@ -59,13 +59,13 @@ function generateMessageLiteral(message?: string | null) {
     return b.literal(message);
 }
 
-function generateLegacyPluralObject(value: PluralValue): ObjectExpression {
+function generateLegacyPluralObject(value: PluralValue, meta?: MessageMeta): ObjectExpression {
     return b.objectExpression(
         Object.entries(value).map(([form, formValue]) =>
             b.property(
                 'init',
                 b.identifier(form),
-                generateMessageLiteral(formValue as string | undefined),
+                generateMessageLiteral(formValue as string | undefined, meta),
             ),
         ),
     );
@@ -113,9 +113,9 @@ function generateMessageObject(
                 metaProp = b.property('init', b.literal('meta'), metaObj);
             }
         } else if (isLegacyPlural(val as MessageValue)) {
-            node = generateLegacyPluralObject(val as PluralValue);
+            node = generateLegacyPluralObject(val as PluralValue, message.meta);
         } else if (typeof val === 'string' || val === null) {
-            node = generateMessageLiteral(val);
+            node = generateMessageLiteral(val, message.meta);
         }
 
         if (node) {
