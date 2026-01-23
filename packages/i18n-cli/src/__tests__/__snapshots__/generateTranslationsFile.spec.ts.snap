@@ -102,8 +102,7 @@ this is { count, plural,
 }\`,
     "meta": {
       id: "test-id",
-      description: "proverka",
-      markdown: true
+      description: "proverka"
     }
   }
 });

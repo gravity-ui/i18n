@@ -313,7 +313,6 @@ describe('generateTranslationsFileContent', () => {
                         meta: {
                             id: 'test-id',
                             description: 'proverka',
-                            markdown: true,
                             // eslint-disable-next-line @typescript-eslint/no-explicit-any
                         } as any,
                         en: `this is {count, plural,
