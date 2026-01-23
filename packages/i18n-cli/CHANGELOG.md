@@ -1,3 +1,14 @@
+## 1.2.4 (2026-01-23)
+
+### 🩹 Fixes
+
+- tests ([4d44185](https://github.com/gravity-ui/i18n/commit/4d44185))
+- dont prettify markdown text ([101f86d](https://github.com/gravity-ui/i18n/commit/101f86d))
+
+### ❤️ Thank You
+
+- Daniil Gaponov
+
 ## 1.2.3 (2025-12-17)
 
 ### 🩹 Fixes
