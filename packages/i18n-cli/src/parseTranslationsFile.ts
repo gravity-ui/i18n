@@ -35,18 +35,30 @@ export type ParseTranslationsFileResult = {
     exportName?: string;
 };
 
-function isMessagesCall(node: TSESTree.Node): node is TSESTree.CallExpression & {
-    callee: TSESTree.MemberExpression & {property: TSESTree.Identifier};
-} {
-    return (
-        node.type === AST_NODE_TYPES.CallExpression &&
+function isMessagesCall(node: TSESTree.Node): node is TSESTree.CallExpression {
+    if (node.type !== AST_NODE_TYPES.CallExpression) {
+        return false;
+    }
+
+    // intl.createMessages(...) or intl.declareMessages(...)
+    if (
         node.callee.type === 'MemberExpression' &&
         node.callee.property.type === 'Identifier' &&
         isDeclarationType(node.callee.property.name)
-    );
+    ) {
+        return true;
+    }
+
+    // declareMessages(...) - standalone call
+    if (node.callee.type === 'Identifier' && node.callee.name === 'declareMessages') {
+        return true;
+    }
+
+    return false;
 }
 
 function getMessagesCallType(node: TSESTree.CallExpression): DeclarationType | undefined {
+    // intl.createMessages(...) or intl.declareMessages(...)
     if (
         node.callee.type === 'MemberExpression' &&
         node.callee.property.type === 'Identifier' &&
@@ -54,6 +66,12 @@ function getMessagesCallType(node: TSESTree.CallExpression): DeclarationType | u
     ) {
         return node.callee.property.name;
     }
+
+    // declareMessages(...) - standalone call
+    if (node.callee.type === 'Identifier' && node.callee.name === 'declareMessages') {
+        return 'declareMessages';
+    }
+
     return undefined;
 }
 

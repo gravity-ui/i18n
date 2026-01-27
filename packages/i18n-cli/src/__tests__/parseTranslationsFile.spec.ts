@@ -319,7 +319,7 @@ describe('parseTranslationsFile', () => {
         });
     });
 
-    it('parses declareMessages with export name', async () => {
+    it('parses intl.declareMessages with export name', async () => {
         const result = await parseTranslationsFile({
             filePath: 'i18n.ts',
             content: `
@@ -347,6 +347,53 @@ describe('parseTranslationsFile', () => {
                     },
                     meta: {
                         objectKey: 'hello',
+                    },
+                },
+            ],
+        });
+    });
+
+    it('parses standalone declareMessages call', async () => {
+        const result = await parseTranslationsFile({
+            filePath: 'i18n.ts',
+            content: `
+            import { declareMessages } from "@gravity-ui/i18n-react";
+
+            export const sharedMessages = declareMessages({
+                greeting: {
+                    ru: 'Добро пожаловать',
+                    en: 'Welcome',
+                },
+                farewell: {
+                    ru: 'До свидания',
+                    en: 'Goodbye',
+                },
+            });
+        `,
+        });
+
+        expect(result).toEqual({
+            filePath: 'i18n.ts',
+            exportAliases: {},
+            declarationType: 'declareMessages',
+            exportName: 'sharedMessages',
+            messages: [
+                {
+                    message: {
+                        ru: 'Добро пожаловать',
+                        en: 'Welcome',
+                    },
+                    meta: {
+                        objectKey: 'greeting',
+                    },
+                },
+                {
+                    message: {
+                        ru: 'До свидания',
+                        en: 'Goodbye',
+                    },
+                    meta: {
+                        objectKey: 'farewell',
                     },
                 },
             ],

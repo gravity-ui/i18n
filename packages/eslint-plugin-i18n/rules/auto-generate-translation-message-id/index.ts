@@ -1,5 +1,6 @@
 import {Rule} from 'eslint';
 
+import {getCallExpression} from './handlers/call-expression';
 import {getMemberExpression} from './handlers/member-expression';
 import {BaseRuleOptions, RuleOptions} from './types';
 
@@ -7,6 +8,7 @@ const DEFAULT_MEMBER_EXPRESSIONS: RuleOptions['memberExpressions'] = [
     {member: 'intl', property: 'createMessages'},
     {member: 'intl', property: 'declareMessages'},
 ];
+const DEFAULT_CALL_EXPRESSIONS: RuleOptions['callExpressions'] = ['declareMessages'];
 const DEFAULT_IDENTIFIER_NAME = 'id';
 
 export const rule: Rule.RuleModule = {
@@ -20,6 +22,7 @@ export const rule: Rule.RuleModule = {
                 type: 'object',
                 properties: {
                     memberExpressions: {type: 'array'},
+                    callExpressions: {type: 'array'},
                     idName: {type: 'string'},
                     namespaceMatchers: {type: 'array'},
                 },
@@ -30,6 +33,7 @@ export const rule: Rule.RuleModule = {
     create(context: Rule.RuleContext) {
         const {
             memberExpressions = DEFAULT_MEMBER_EXPRESSIONS,
+            callExpressions = DEFAULT_CALL_EXPRESSIONS,
             idName = DEFAULT_IDENTIFIER_NAME,
             namespaceMatchers,
             generateId,
@@ -56,6 +60,14 @@ export const rule: Rule.RuleModule = {
                       MemberExpression: getMemberExpression({
                           ...baseParameters,
                           memberExpressions,
+                      }),
+                  }
+                : {}),
+            ...(callExpressions?.length
+                ? {
+                      CallExpression: getCallExpression({
+                          ...baseParameters,
+                          callExpressions,
                       }),
                   }
                 : {}),
