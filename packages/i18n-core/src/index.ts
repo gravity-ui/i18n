@@ -19,5 +19,6 @@ export {getIntlFormatters, getFormatters} from './utils/baseTypes';
 
 export {factoryCreateMessageFunctions} from './components/factoryCreateMessageFunctions';
 export {factoryCreateMessagesFunction} from './components/factoryCreateMessagesFunction';
+export {factoryDeclareMessagesFunction} from './components/factoryDeclareMessagesFunction';
 
 export {TECH_LOCALE} from '@gravity-ui/i18n-types';

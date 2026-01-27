@@ -5,6 +5,7 @@ import {BaseRuleOptions, RuleOptions} from './types';
 
 const DEFAULT_MEMBER_EXPRESSIONS: RuleOptions['memberExpressions'] = [
     {member: 'intl', property: 'createMessages'},
+    {member: 'intl', property: 'declareMessages'},
 ];
 const DEFAULT_IDENTIFIER_NAME = 'id';
 

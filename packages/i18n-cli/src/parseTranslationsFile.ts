@@ -26,12 +26,14 @@ export type ParseTranslationsFileResult = {
     exportAliases: ExportAliases;
 };
 
+const MESSAGES_METHOD_NAMES = ['createMessages', 'declareMessages'];
+
 function isCreateMessagesCall(node: TSESTree.Node) {
     return (
         node.type === AST_NODE_TYPES.CallExpression &&
         node.callee.type === 'MemberExpression' &&
         node.callee.property.type === 'Identifier' &&
-        node.callee.property.name === 'createMessages'
+        MESSAGES_METHOD_NAMES.includes(node.callee.property.name)
     );
 }
 
