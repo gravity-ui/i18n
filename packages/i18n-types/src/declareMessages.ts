@@ -1,4 +1,4 @@
-import type {Messages} from './types';
+import type {Message, Messages} from './types';
 
 /**
  * Declares messages without binding to an intl instance.
@@ -16,8 +16,9 @@ import type {Messages} from './types';
  * });
  * ```
  */
-export function declareMessages<AvailableLocale extends string, K extends string>(
-    msgs: Messages<AvailableLocale, K>,
-): Messages<AvailableLocale, K> {
-    return msgs;
+export function declareMessages<
+    AvailableLocale extends string,
+    const M extends Record<string, Message<AvailableLocale>> = Record<string, Message<AvailableLocale>>,
+>(msgs: M): Messages<AvailableLocale, keyof M & string> {
+    return msgs as Messages<AvailableLocale, keyof M & string>;
 }
