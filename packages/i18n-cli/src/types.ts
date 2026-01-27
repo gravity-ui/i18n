@@ -18,3 +18,11 @@ export const isTranslationFunction = (
 ): functionName is TranslationFunction => {
     return functionName === 't' || functionName === 'Message';
 };
+
+export type DeclarationType = 'createMessages' | 'declareMessages';
+
+export const DECLARATION_TYPES: DeclarationType[] = ['createMessages', 'declareMessages'];
+
+export const isDeclarationType = (value: string): value is DeclarationType => {
+    return DECLARATION_TYPES.includes(value as DeclarationType);
+};

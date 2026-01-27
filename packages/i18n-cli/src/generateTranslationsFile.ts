@@ -7,7 +7,7 @@ import {
 } from '@gravity-ui/i18n-types';
 import {writeFile} from 'node:fs/promises';
 import {parse, resolve} from 'node:path';
-import type {MessageWithPlacementMeta, ExportAliases} from './types';
+import type {MessageWithPlacementMeta, ExportAliases, DeclarationType} from './types';
 import {
     createRelativeImport,
     toAbsolutePath,
@@ -28,6 +28,9 @@ export type GenerateTranslationsFileParams = {
     outputPath: string;
     messages: MessageWithPlacementMeta[];
     exportAliases?: ExportAliases;
+    declarationType?: DeclarationType;
+    /** Export variable name for declareMessages (e.g. 'greetingMessages') */
+    exportName?: string;
 };
 
 function prettifyMultilineICU(message: string): string {
@@ -164,6 +167,7 @@ function determineIntlModule(outputPath: string, config: NormalizedProjectConfig
 
 export function generateTranslationsFileContent(params: GenerateTranslationsFileParams): string {
     const config = loadProjectConfig();
+    const declarationType = params.declarationType ?? 'createMessages';
 
     const intlModule = determineIntlModule(params.outputPath, config);
     const intlImportPath = createRelativeImport(
@@ -172,58 +176,64 @@ export function generateTranslationsFileContent(params: GenerateTranslationsFile
         intlModule.alias,
     );
 
-    const {exportAliases} = params;
-    const tExportName = exportAliases?.t || DEFAULT_EXPORT_ALIASES.t;
-    const messageExportName = exportAliases?.Message || DEFAULT_EXPORT_ALIASES.Message;
-
-    const content = generate(
-        b.program(
-            [
-                b.exportNamedDeclaration(
-                    b.variableDeclaration('const', [
-                        b.variableDeclarator(
-                            b.objectPattern(
-                                intlModule === config.serverIntlModule
-                                    ? [
-                                          b.property(
-                                              'init',
-                                              b.identifier('messages'),
-                                              b.identifier('messages'),
-                                              false,
-                                              true,
-                                          ) as AssignmentProperty,
-                                      ]
-                                    : [
-                                          b.property(
-                                              'init',
-                                              b.identifier(DEFAULT_EXPORT_ALIASES.t),
-                                              b.identifier(tExportName),
-                                              false,
-                                              tExportName === DEFAULT_EXPORT_ALIASES.t,
-                                          ) as AssignmentProperty,
-                                          b.property(
-                                              'init',
-                                              b.identifier(DEFAULT_EXPORT_ALIASES.Message),
-                                              b.identifier(messageExportName),
-                                              false,
-                                              messageExportName === DEFAULT_EXPORT_ALIASES.Message,
-                                          ) as AssignmentProperty,
-                                      ],
-                            ),
-                            b.callExpression(
-                                b.memberExpression(
-                                    b.identifier('intl'),
-                                    b.identifier('createMessages'),
-                                ),
-                                [generateMessagesObject(params.messages, config.allowedLocales)],
-                            ),
-                        ),
-                    ]),
-                ),
-            ],
-            'module',
-        ),
+    const messagesObject = generateMessagesObject(params.messages, config.allowedLocales);
+    const methodCall = b.callExpression(
+        b.memberExpression(b.identifier('intl'), b.identifier(declarationType)),
+        [messagesObject],
     );
+
+    let declaration;
+
+    if (declarationType === 'declareMessages') {
+        // export const exportName = intl.declareMessages({...});
+        const varName = params.exportName || 'messages';
+        declaration = b.exportNamedDeclaration(
+            b.variableDeclaration('const', [
+                b.variableDeclarator(b.identifier(varName), methodCall),
+            ]),
+        );
+    } else {
+        // const {t, Message} = intl.createMessages({...}); or const {messages} = intl.createMessages({...});
+        const {exportAliases} = params;
+        const tExportName = exportAliases?.t || DEFAULT_EXPORT_ALIASES.t;
+        const messageExportName = exportAliases?.Message || DEFAULT_EXPORT_ALIASES.Message;
+
+        const destructuredProps =
+            intlModule === config.serverIntlModule
+                ? [
+                      b.property(
+                          'init',
+                          b.identifier('messages'),
+                          b.identifier('messages'),
+                          false,
+                          true,
+                      ) as AssignmentProperty,
+                  ]
+                : [
+                      b.property(
+                          'init',
+                          b.identifier(DEFAULT_EXPORT_ALIASES.t),
+                          b.identifier(tExportName),
+                          false,
+                          tExportName === DEFAULT_EXPORT_ALIASES.t,
+                      ) as AssignmentProperty,
+                      b.property(
+                          'init',
+                          b.identifier(DEFAULT_EXPORT_ALIASES.Message),
+                          b.identifier(messageExportName),
+                          false,
+                          messageExportName === DEFAULT_EXPORT_ALIASES.Message,
+                      ) as AssignmentProperty,
+                  ];
+
+        declaration = b.exportNamedDeclaration(
+            b.variableDeclaration('const', [
+                b.variableDeclarator(b.objectPattern(destructuredProps), methodCall),
+            ]),
+        );
+    }
+
+    const content = generate(b.program([declaration], 'module'));
 
     return `import {intl} from "${intlImportPath}";\n\n${content}`;
 }
