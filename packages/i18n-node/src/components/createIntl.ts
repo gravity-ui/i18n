@@ -25,7 +25,7 @@ export function createIntl<AvailableLocale extends string>(
 ): IntlShape<AvailableLocale> {
     const intlShapeConfig: Omit<
         IntlShape<AvailableLocale>,
-        'getLocaleInstance' | 'createMessages' | 'declareMessages'
+        'getLocaleInstance' | 'createMessages'
     > = {
         allowedLocales: config.allowedLocales,
         disableUseLocaleLangAsFallback: config.disableUseLocaleLangAsFallback ?? false,
@@ -37,10 +37,6 @@ export function createIntl<AvailableLocale extends string>(
     const createMessages = <K extends string>(messages: Messages<AvailableLocale, K>) => ({
         messages,
     });
-
-    const declareMessages = <K extends string>(
-        messages: Messages<AvailableLocale, K>,
-    ): Messages<AvailableLocale, K> => messages;
 
     const getLocaleInstance = memoize(
         (locale: AvailableLocale | string): IntlShapeWithLocale<AvailableLocale> => {
@@ -108,6 +104,5 @@ export function createIntl<AvailableLocale extends string>(
         ...intlShapeConfig,
         getLocaleInstance,
         createMessages,
-        declareMessages,
     };
 }

@@ -14,7 +14,6 @@ import {createIntl as coreCreateIntl, createIntlCache} from 'react-intl';
 import type {IntlConfig, IntlShape, ResolvedIntlConfig} from '../types';
 
 import {factoryCreateMessagesFunction} from './factoryCreateMessagesFunction';
-import {factoryDeclareMessagesFunction} from './factoryDeclareMessagesFunction';
 import {factoryUseMessagesFunction} from './factoryUseMessagesFunction';
 
 export function createIntl<AvailableLocale extends string>(
@@ -74,8 +73,6 @@ export function createIntl<AvailableLocale extends string>(
         formatMessage: coreIntl.formatMessage,
     });
 
-    const declareMessages = factoryDeclareMessagesFunction<AvailableLocale>();
-
     const useMessages = factoryUseMessagesFunction(resolvedIntlConfig, {
         formatMessage: coreIntl.formatMessage,
     });
@@ -103,7 +100,6 @@ export function createIntl<AvailableLocale extends string>(
         ...intlFormatters,
         formatters,
         createMessages,
-        declareMessages,
         useMessages,
         setLocale,
     };

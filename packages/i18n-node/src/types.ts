@@ -58,8 +58,5 @@ export interface IntlShape<AvailableLocale extends string>
     ) => {
         messages: Messages<AvailableLocale, K>;
     };
-    declareMessages: <K extends string>(
-        messages: Messages<AvailableLocale, K>,
-    ) => Messages<AvailableLocale, K>;
     getLocaleInstance: (locale: AvailableLocale | string) => IntlShapeWithLocale<AvailableLocale>;
 }
