@@ -11,7 +11,6 @@ import {
     ExportAliases,
     isTranslationFunction,
     DeclarationType,
-    isDeclarationType,
 } from './types';
 import {MODULE_NAME, removeStartNewLineFromICU} from './shared';
 import {simpleTraverse} from '@typescript-eslint/typescript-estree';
@@ -31,8 +30,6 @@ export type ParseTranslationsFileResult = {
     filePath: string;
     exportAliases: ExportAliases;
     declarationType: DeclarationType;
-    /** Export variable name for declareMessages (e.g. 'greetingMessages') */
-    exportName?: string;
 };
 
 function isMessagesCall(node: TSESTree.Node): node is TSESTree.CallExpression {
@@ -40,11 +37,11 @@ function isMessagesCall(node: TSESTree.Node): node is TSESTree.CallExpression {
         return false;
     }
 
-    // intl.createMessages(...) or intl.declareMessages(...)
+    // intl.createMessages(...)
     if (
         node.callee.type === 'MemberExpression' &&
         node.callee.property.type === 'Identifier' &&
-        isDeclarationType(node.callee.property.name)
+        node.callee.property.name === 'createMessages'
     ) {
         return true;
     }
@@ -58,13 +55,13 @@ function isMessagesCall(node: TSESTree.Node): node is TSESTree.CallExpression {
 }
 
 function getMessagesCallType(node: TSESTree.CallExpression): DeclarationType | undefined {
-    // intl.createMessages(...) or intl.declareMessages(...)
+    // intl.createMessages(...)
     if (
         node.callee.type === 'MemberExpression' &&
         node.callee.property.type === 'Identifier' &&
-        isDeclarationType(node.callee.property.name)
+        node.callee.property.name === 'createMessages'
     ) {
-        return node.callee.property.name;
+        return 'createMessages';
     }
 
     // declareMessages(...) - standalone call
@@ -74,6 +71,7 @@ function getMessagesCallType(node: TSESTree.CallExpression): DeclarationType | u
 
     return undefined;
 }
+
 
 function parseStringValue(node: TSESTree.Node): string {
     if (node.type === 'Identifier') {
@@ -284,7 +282,6 @@ export async function parseTranslationsFile(
     let messages: MessageWithPlacementMeta[] = [];
     const exportAliases: ExportAliases = {};
     let declarationType: DeclarationType = 'createMessages';
-    let exportName: string | undefined;
 
     const ast = await parseToAst({
         filename: args.filePath,
@@ -305,12 +302,12 @@ export async function parseTranslationsFile(
                         declarationType = callType;
                     }
 
-                    // For declareMessages with Identifier: export const msgs = intl.declareMessages(...)
+                    // For declareMessages with Identifier: export const msgs = declareMessages(...)
                     if (
                         callType === 'declareMessages' &&
                         node.id.type === AST_NODE_TYPES.Identifier
                     ) {
-                        exportName = node.id.name;
+                        exportAliases.default = node.id.name;
                     }
 
                     // For createMessages with ObjectPattern: const {t, Message} = intl.createMessages(...)
@@ -356,6 +353,5 @@ export async function parseTranslationsFile(
         messages,
         exportAliases,
         declarationType,
-        exportName,
     };
 }

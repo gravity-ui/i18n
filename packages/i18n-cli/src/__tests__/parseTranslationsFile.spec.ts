@@ -24,7 +24,6 @@ describe('parseTranslationsFile', () => {
             filePath: 'i18n.ts',
             exportAliases: {},
             declarationType: 'createMessages',
-            exportName: undefined,
             messages: [
                 {
                     message: {
@@ -68,7 +67,6 @@ describe('parseTranslationsFile', () => {
             filePath: 'i18n.ts',
             exportAliases: {},
             declarationType: 'createMessages',
-            exportName: undefined,
             messages: [
                 {
                     message: {
@@ -113,7 +111,6 @@ describe('parseTranslationsFile', () => {
             filePath: 'i18n.ts',
             exportAliases: {},
             declarationType: 'createMessages',
-            exportName: undefined,
             messages: [
                 {
                     message: {
@@ -195,7 +192,6 @@ describe('parseTranslationsFile', () => {
             filePath: 'i18n.ts',
             exportAliases: {},
             declarationType: 'createMessages',
-            exportName: undefined,
             messages: [
                 {
                     message: {
@@ -256,7 +252,6 @@ describe('parseTranslationsFile', () => {
             filePath: 'i18n.ts',
             exportAliases: {},
             declarationType: 'createMessages',
-            exportName: undefined,
             messages: [
                 {
                     message: {
@@ -297,7 +292,6 @@ describe('parseTranslationsFile', () => {
         expect(result).toEqual({
             filePath: 'i18n.ts',
             declarationType: 'createMessages',
-            exportName: undefined,
             messages: [
                 {
                     message: {
@@ -316,40 +310,6 @@ describe('parseTranslationsFile', () => {
                 t: 'commonT',
                 Message: 'CommonMessage',
             },
-        });
-    });
-
-    it('parses intl.declareMessages with export name', async () => {
-        const result = await parseTranslationsFile({
-            filePath: 'i18n.ts',
-            content: `
-            import { intl } from "@shared/i18n";
-
-            export const greetingMessages = intl.declareMessages({
-                hello: {
-                    ru: 'Привет',
-                    en: 'Hello',
-                },
-            });
-        `,
-        });
-
-        expect(result).toEqual({
-            filePath: 'i18n.ts',
-            exportAliases: {},
-            declarationType: 'declareMessages',
-            exportName: 'greetingMessages',
-            messages: [
-                {
-                    message: {
-                        ru: 'Привет',
-                        en: 'Hello',
-                    },
-                    meta: {
-                        objectKey: 'hello',
-                    },
-                },
-            ],
         });
     });
 
@@ -374,9 +334,8 @@ describe('parseTranslationsFile', () => {
 
         expect(result).toEqual({
             filePath: 'i18n.ts',
-            exportAliases: {},
+            exportAliases: {default: 'sharedMessages'},
             declarationType: 'declareMessages',
-            exportName: 'sharedMessages',
             messages: [
                 {
                     message: {

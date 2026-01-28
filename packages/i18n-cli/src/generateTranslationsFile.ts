@@ -29,8 +29,6 @@ export type GenerateTranslationsFileParams = {
     messages: MessageWithPlacementMeta[];
     exportAliases?: ExportAliases;
     declarationType?: DeclarationType;
-    /** Export variable name for declareMessages (e.g. 'greetingMessages') */
-    exportName?: string;
 };
 
 function prettifyMultilineICU(message: string): string {
@@ -169,31 +167,36 @@ export function generateTranslationsFileContent(params: GenerateTranslationsFile
     const config = loadProjectConfig();
     const declarationType = params.declarationType ?? 'createMessages';
 
-    const intlModule = determineIntlModule(params.outputPath, config);
-    const intlImportPath = createRelativeImport(
-        intlModule.path,
-        params.outputPath,
-        intlModule.alias,
-    );
-
     const messagesObject = generateMessagesObject(params.messages, config.allowedLocales);
-    const methodCall = b.callExpression(
-        b.memberExpression(b.identifier('intl'), b.identifier(declarationType)),
-        [messagesObject],
-    );
 
     let declaration;
+    let importStatement: string;
 
     if (declarationType === 'declareMessages') {
-        // export const exportName = intl.declareMessages({...});
-        const varName = params.exportName || 'messages';
+        // Standalone declareMessages: import from @gravity-ui/i18n-types
+        const methodCall = b.callExpression(b.identifier('declareMessages'), [messagesObject]);
+        importStatement = `import {declareMessages} from '@gravity-ui/i18n-types';`;
+        const varName = params.exportAliases?.default || 'messages';
         declaration = b.exportNamedDeclaration(
             b.variableDeclaration('const', [
                 b.variableDeclarator(b.identifier(varName), methodCall),
             ]),
         );
     } else {
-        // const {t, Message} = intl.createMessages({...}); or const {messages} = intl.createMessages({...});
+        // intl.createMessages: const {t, Message} = intl.createMessages({...});
+        const intlModule = determineIntlModule(params.outputPath, config);
+        const intlImportPath = createRelativeImport(
+            intlModule.path,
+            params.outputPath,
+            intlModule.alias,
+        );
+        importStatement = `import {intl} from "${intlImportPath}";`;
+
+        const methodCall = b.callExpression(
+            b.memberExpression(b.identifier('intl'), b.identifier('createMessages')),
+            [messagesObject],
+        );
+
         const {exportAliases} = params;
         const tExportName = exportAliases?.t || DEFAULT_EXPORT_ALIASES.t;
         const messageExportName = exportAliases?.Message || DEFAULT_EXPORT_ALIASES.Message;
@@ -235,7 +238,7 @@ export function generateTranslationsFileContent(params: GenerateTranslationsFile
 
     const content = generate(b.program([declaration], 'module'));
 
-    return `import {intl} from "${intlImportPath}";\n\n${content}`;
+    return `${importStatement}\n\n${content}`;
 }
 
 function generateOutputFilename(outputPath: string) {

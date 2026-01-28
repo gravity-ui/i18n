@@ -9,14 +9,14 @@ export type MessageWithPlacementMeta = {
     meta: MessagePlacementMeta;
 };
 
-export type TranslationFunction = 't' | 'Message';
+export type TranslationFunction = 't' | 'Message' | 'default';
 
 export type ExportAliases = Partial<Record<TranslationFunction, string>>;
 
 export const isTranslationFunction = (
     functionName: string,
 ): functionName is TranslationFunction => {
-    return functionName === 't' || functionName === 'Message';
+    return functionName === 't' || functionName === 'Message' || functionName === 'default';
 };
 
 export type DeclarationType = 'createMessages' | 'declareMessages';

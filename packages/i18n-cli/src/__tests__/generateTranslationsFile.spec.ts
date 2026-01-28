@@ -450,4 +450,51 @@ describe('generateTranslationsFileContent', () => {
 
         expect(result).toMatchSnapshot();
     });
+
+    it('generate standalone declareMessages', async () => {
+        jest.mocked(loadProjectConfig).mockReturnValue({
+            allowedLocales: ['ru', 'en'],
+            clientIntlModule: {
+                path: 'src/ui/shared/i18n.ts',
+                alias: '@shared/i18n',
+            },
+            serverIntlModule: {
+                path: 'src/server/utils/i18n.ts',
+            },
+        });
+
+        const result = generateTranslationsFileContent({
+            outputPath: 'src/shared/messages/greeting.i18n.ts',
+            declarationType: 'declareMessages',
+            exportAliases: {
+                default: 'greetingMessages',
+            },
+            messages: [
+                {
+                    message: {
+                        ru: 'Привет',
+                        en: 'Hello',
+                    },
+                    meta: {
+                        objectKey: 'hello',
+                    },
+                },
+                {
+                    message: {
+                        ru: 'До свидания',
+                        en: 'Goodbye',
+                        meta: {
+                            id: 'greeting.goodbye',
+                        },
+                        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+                    } as any,
+                    meta: {
+                        objectKey: 'goodbye',
+                    },
+                },
+            ],
+        });
+
+        expect(result).toMatchSnapshot();
+    });
 });

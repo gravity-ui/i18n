@@ -7,6 +7,7 @@ export {
     generateTranslationsFile,
     generateTranslationsFileContent,
 } from './generateTranslationsFile';
+export type {GenerateTranslationsFileParams} from './generateTranslationsFile';
 
 export {parseProjectTranslations} from './parseProjectTranslations';
 
