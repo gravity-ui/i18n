@@ -1,8 +1,11 @@
 export {isLegacyPlural, pluralForms} from './utils';
 export {convertLegacyPluralToICU} from './plurals';
 export {TECH_LOCALE} from './constants';
+export {declareMessages} from './declareMessages';
 
 export type {
+    CustomTypeOptions,
+    AllowedLocales,
     MultiLocaleMessage,
     Message,
     Messages,

@@ -23,6 +23,7 @@ describe('parseTranslationsFile', () => {
         expect(result).toEqual({
             filePath: 'i18n.ts',
             exportAliases: {},
+            declarationType: 'createMessages',
             messages: [
                 {
                     message: {
@@ -65,6 +66,7 @@ describe('parseTranslationsFile', () => {
         expect(result).toEqual({
             filePath: 'i18n.ts',
             exportAliases: {},
+            declarationType: 'createMessages',
             messages: [
                 {
                     message: {
@@ -108,6 +110,7 @@ describe('parseTranslationsFile', () => {
         expect(result).toEqual({
             filePath: 'i18n.ts',
             exportAliases: {},
+            declarationType: 'createMessages',
             messages: [
                 {
                     message: {
@@ -188,6 +191,7 @@ describe('parseTranslationsFile', () => {
         expect(result).toEqual({
             filePath: 'i18n.ts',
             exportAliases: {},
+            declarationType: 'createMessages',
             messages: [
                 {
                     message: {
@@ -247,6 +251,7 @@ describe('parseTranslationsFile', () => {
         expect(result).toEqual({
             filePath: 'i18n.ts',
             exportAliases: {},
+            declarationType: 'createMessages',
             messages: [
                 {
                     message: {
@@ -286,6 +291,7 @@ describe('parseTranslationsFile', () => {
 
         expect(result).toEqual({
             filePath: 'i18n.ts',
+            declarationType: 'createMessages',
             messages: [
                 {
                     message: {
@@ -304,6 +310,52 @@ describe('parseTranslationsFile', () => {
                 t: 'commonT',
                 Message: 'CommonMessage',
             },
+        });
+    });
+
+    it('parses standalone declareMessages call', async () => {
+        const result = await parseTranslationsFile({
+            filePath: 'i18n.ts',
+            content: `
+            import { declareMessages } from "@gravity-ui/i18n-react";
+
+            export const sharedMessages = declareMessages({
+                greeting: {
+                    ru: 'Добро пожаловать',
+                    en: 'Welcome',
+                },
+                farewell: {
+                    ru: 'До свидания',
+                    en: 'Goodbye',
+                },
+            });
+        `,
+        });
+
+        expect(result).toEqual({
+            filePath: 'i18n.ts',
+            exportAliases: {default: 'sharedMessages'},
+            declarationType: 'declareMessages',
+            messages: [
+                {
+                    message: {
+                        ru: 'Добро пожаловать',
+                        en: 'Welcome',
+                    },
+                    meta: {
+                        objectKey: 'greeting',
+                    },
+                },
+                {
+                    message: {
+                        ru: 'До свидания',
+                        en: 'Goodbye',
+                    },
+                    meta: {
+                        objectKey: 'farewell',
+                    },
+                },
+            ],
         });
     });
 });

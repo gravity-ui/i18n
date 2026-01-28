@@ -128,6 +128,25 @@ export const {t, Message} = intl.createMessages({
 "
 `;
 
+exports[`generateTranslationsFileContent generate standalone declareMessages 1`] = `
+"import {declareMessages} from '@gravity-ui/i18n-types';
+
+export const greetingMessages = declareMessages({
+  "goodbye": {
+    "ru": "До свидания",
+    "en": "Goodbye",
+    "meta": {
+      id: "greeting.goodbye"
+    }
+  },
+  "hello": {
+    "ru": "Привет",
+    "en": "Hello"
+  }
+});
+"
+`;
+
 exports[`generateTranslationsFileContent generate translations for all locales 1`] = `
 "import {intl} from "./i18n";
 

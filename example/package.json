@@ -26,6 +26,7 @@
     "@gravity-ui/eslint-plugin-i18n": "workspace:*",
     "@gravity-ui/i18n-cli": "workspace:*",
     "@gravity-ui/i18n-optimize-plugin": "workspace:*",
+    "@gravity-ui/i18n-types": "workspace:*",
     "eslint": "catalog:",
     "eslint-config": "workspace:*",
     "globals": "^15.9.0",
