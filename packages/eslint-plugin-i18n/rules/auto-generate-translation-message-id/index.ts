@@ -1,12 +1,10 @@
 import {Rule} from 'eslint';
 
-import {getCallExpression} from './handlers/call-expression';
-import {getMemberExpression} from './handlers/member-expression';
+import {getMessagesExpression} from './handlers/messages-expression';
 import {BaseRuleOptions, RuleOptions} from './types';
 
 const DEFAULT_MEMBER_EXPRESSIONS: RuleOptions['memberExpressions'] = [
     {member: 'intl', property: 'createMessages'},
-    {member: 'intl', property: 'declareMessages'},
 ];
 const DEFAULT_CALL_EXPRESSIONS: RuleOptions['callExpressions'] = ['declareMessages'];
 const DEFAULT_IDENTIFIER_NAME = 'id';
@@ -54,23 +52,15 @@ export const rule: Rule.RuleModule = {
             invalidCharsReplacer,
         };
 
+        const handler = getMessagesExpression({
+            ...baseParameters,
+            memberExpressions: memberExpressions ?? [],
+            callExpressions: callExpressions ?? [],
+        });
+
         return {
-            ...(memberExpressions?.length
-                ? {
-                      MemberExpression: getMemberExpression({
-                          ...baseParameters,
-                          memberExpressions,
-                      }),
-                  }
-                : {}),
-            ...(callExpressions?.length
-                ? {
-                      CallExpression: getCallExpression({
-                          ...baseParameters,
-                          callExpressions,
-                      }),
-                  }
-                : {}),
+            ...(memberExpressions?.length ? {MemberExpression: handler} : {}),
+            ...(callExpressions?.length ? {CallExpression: handler} : {}),
         };
     },
 };

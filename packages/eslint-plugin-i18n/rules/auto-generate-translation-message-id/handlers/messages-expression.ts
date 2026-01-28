@@ -1,5 +1,5 @@
 import {Rule} from 'eslint';
-import {CallExpression, Identifier, Literal} from 'estree-jsx';
+import {CallExpression, Identifier, Literal, MemberExpression} from 'estree-jsx';
 
 import {getLiteralString} from '../ast-helpers';
 import {BaseRuleOptions} from '../types';
@@ -8,35 +8,68 @@ import {checkId} from '../utils/check-id';
 import {clearSpaceCharacters} from '../utils/clear-space-characters';
 import {getObjectProperty} from '../utils/get-object-property';
 
-type GetCallExpressionProps = BaseHandler &
+type GetMessagesExpressionProps = BaseHandler &
     BaseRuleOptions & {
+        memberExpressions: Array<{member: string; property: string}>;
         callExpressions: string[];
     };
 
 type CallExpressionNode = CallExpression & Rule.NodeParentExtension;
+type MemberExpressionNode = MemberExpression & Rule.NodeParentExtension;
 
 const OBJECT_REGEXP = /\{[^}]*\}/;
 
-export const getCallExpression = ({
+export const getMessagesExpression = ({
     context,
     idName,
+    memberExpressions,
     callExpressions,
     ...rest
-}: GetCallExpressionProps) => {
+}: GetMessagesExpressionProps) => {
     const sourceCode = context.getSourceCode();
 
-    return (node: CallExpressionNode) => {
-        if (node.callee.type !== 'Identifier') {
+    return (node: CallExpressionNode | MemberExpressionNode) => {
+        let messages;
+
+        if (node.type === 'CallExpression') {
+            // Standalone call: declareMessages({...})
+            if (node.callee.type !== 'Identifier') {
+                return;
+            }
+
+            const calleeName = clearSpaceCharacters(sourceCode.getText(node.callee));
+
+            if (!callExpressions.includes(calleeName)) {
+                return;
+            }
+
+            messages = node.arguments?.[0];
+        } else if (node.type === 'MemberExpression') {
+            // Member expression: intl.createMessages({...})
+            if (!node.object || !node.property || node.parent?.type !== 'CallExpression') {
+                return;
+            }
+
+            const memberText = clearSpaceCharacters(sourceCode.getText(node.object));
+
+            if (
+                !memberExpressions.some(({member, property}) => {
+                    if (memberText !== member) {
+                        return false;
+                    }
+
+                    const propertyText = clearSpaceCharacters(sourceCode.getText(node.property));
+
+                    return propertyText === property;
+                })
+            ) {
+                return;
+            }
+
+            messages = node.parent.arguments?.[0];
+        } else {
             return;
         }
-
-        const calleeName = clearSpaceCharacters(sourceCode.getText(node.callee));
-
-        if (!callExpressions.includes(calleeName)) {
-            return;
-        }
-
-        const [messages] = node.arguments ?? [];
 
         if (!messages || messages.type !== 'ObjectExpression') {
             return;
