@@ -1,3 +1,18 @@
+## 1.4.0 (2026-02-02)
+
+### 🚀 Features
+
+- declare messages ([#67](https://github.com/gravity-ui/i18n/pull/67))
+
+### 🧱 Updated Dependencies
+
+- Updated @gravity-ui/i18n-types to 1.3.0
+- Updated @gravity-ui/i18n-core to 1.4.0
+
+### ❤️ Thank You
+
+- dgaponov
+
 ## 1.3.2 (2025-12-13)
 
 ### 🧱 Updated Dependencies
