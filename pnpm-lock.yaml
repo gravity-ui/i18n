@@ -93,6 +93,9 @@ importers:
       '@gravity-ui/i18n-optimize-plugin':
         specifier: workspace:*
         version: link:../packages/i18n-optimize-plugin
+      '@gravity-ui/i18n-types':
+        specifier: workspace:*
+        version: link:../packages/i18n-types
       '@gravity-ui/uikit':
         specifier: ^7.11.0
         version: 7.23.0(@types/react@19.2.7)(react-dom@19.2.1(react@19.2.1))(react@19.2.1)

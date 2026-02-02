@@ -95,6 +95,7 @@ export function createIntl<AvailableLocale extends string>(
         ...intlFormatters,
         formatters,
         createMessages,
+        useMessages: createMessages,
         setLocale,
     };
 }

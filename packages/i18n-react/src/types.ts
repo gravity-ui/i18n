@@ -41,5 +41,6 @@ export interface IntlShape<AvailableLocale extends string>
         IntlFormatters {
     formatters: Formatters;
     createMessages: ReturnType<typeof factoryCreateMessagesFunction<AvailableLocale>>;
+    useMessages: ReturnType<typeof factoryCreateMessagesFunction<AvailableLocale>>;
     setLocale: (locale: AvailableLocale | string) => void;
 }

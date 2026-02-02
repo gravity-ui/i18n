@@ -11,7 +11,7 @@ const DEFAULT_ROOT_PATHS = ['src'];
 async function resolveTranslationFiles(rootPaths: string[] = DEFAULT_ROOT_PATHS) {
     const findTranslationFiles = async (rootPath: string) => {
         const {stdout} = await execAsync(
-            `find ${rootPath} -type f -name "*${TRANSLATIONS_FILE_POSTFIX}" -exec grep -l "createMessages" {} +`,
+            `find ${rootPath} -type f -name "*${TRANSLATIONS_FILE_POSTFIX}" -exec grep -lE "(createMessages|declareMessages)" {} +`,
             {
                 cwd: appRootPath,
                 maxBuffer: FIND_EXEC_BUFFER_SIZE,

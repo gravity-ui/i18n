@@ -57,6 +57,19 @@ export const {t: commonT, Message: CommonMessage} = intl.createMessages({
     },
 })`;
 
+const SIMPLE_MESSAGE_WITH_DECLARE = `
+import {declareMessages} from '@gravity-ui/i18n-types';
+
+export const {t} = declareMessages({
+    normalMessage: {
+        ru: 'русский',
+        en: 'english',
+        meta: {
+            id: '123456',
+        },
+    },
+})`;
+
 describe('transformFileWithBabel', () => {
     it('remove meta from messages', async () => {
         const result = await transformFileWithBabel(SIMPLE_MESSAGE);
@@ -85,6 +98,11 @@ describe('transformFileWithBabel', () => {
             mode: 'only-translations',
             allowedLocales: [TECH_LOCALE],
         });
+        expect(result.code).toMatchSnapshot();
+    });
+
+    it('transform declare messages', async () => {
+        const result = await transformFileWithBabel(SIMPLE_MESSAGE_WITH_DECLARE);
         expect(result.code).toMatchSnapshot();
     });
 });

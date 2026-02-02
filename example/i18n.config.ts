@@ -1,6 +1,6 @@
 import {defineConfig} from '@gravity-ui/i18n-cli/config';
 
-export default defineConfig({
+const config = defineConfig({
     allowedLocales: ['ru', 'en', 'ru-kz', 'en-kz', 'en-tr'] as const,
     fallbackLocales: {
         'ru-kz': 'ru',
@@ -14,3 +14,7 @@ export default defineConfig({
         alias: '@shared/i18n',
     },
 });
+
+export type AllowedLocales = (typeof config.allowedLocales)[number];
+
+export default config;

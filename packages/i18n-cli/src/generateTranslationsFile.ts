@@ -7,7 +7,7 @@ import {
 } from '@gravity-ui/i18n-types';
 import {writeFile} from 'node:fs/promises';
 import {parse, resolve} from 'node:path';
-import type {MessageWithPlacementMeta, ExportAliases} from './types';
+import type {MessageWithPlacementMeta, ExportAliases, DeclarationType} from './types';
 import {
     createRelativeImport,
     toAbsolutePath,
@@ -28,6 +28,7 @@ export type GenerateTranslationsFileParams = {
     outputPath: string;
     messages: MessageWithPlacementMeta[];
     exportAliases?: ExportAliases;
+    declarationType?: DeclarationType;
 };
 
 function prettifyMultilineICU(message: string): string {
@@ -164,68 +165,80 @@ function determineIntlModule(outputPath: string, config: NormalizedProjectConfig
 
 export function generateTranslationsFileContent(params: GenerateTranslationsFileParams): string {
     const config = loadProjectConfig();
+    const declarationType = params.declarationType ?? 'createMessages';
 
-    const intlModule = determineIntlModule(params.outputPath, config);
-    const intlImportPath = createRelativeImport(
-        intlModule.path,
-        params.outputPath,
-        intlModule.alias,
-    );
+    const messagesObject = generateMessagesObject(params.messages, config.allowedLocales);
 
-    const {exportAliases} = params;
-    const tExportName = exportAliases?.t || DEFAULT_EXPORT_ALIASES.t;
-    const messageExportName = exportAliases?.Message || DEFAULT_EXPORT_ALIASES.Message;
+    let declaration;
+    let importStatement: string;
 
-    const content = generate(
-        b.program(
-            [
-                b.exportNamedDeclaration(
-                    b.variableDeclaration('const', [
-                        b.variableDeclarator(
-                            b.objectPattern(
-                                intlModule === config.serverIntlModule
-                                    ? [
-                                          b.property(
-                                              'init',
-                                              b.identifier('messages'),
-                                              b.identifier('messages'),
-                                              false,
-                                              true,
-                                          ) as AssignmentProperty,
-                                      ]
-                                    : [
-                                          b.property(
-                                              'init',
-                                              b.identifier(DEFAULT_EXPORT_ALIASES.t),
-                                              b.identifier(tExportName),
-                                              false,
-                                              tExportName === DEFAULT_EXPORT_ALIASES.t,
-                                          ) as AssignmentProperty,
-                                          b.property(
-                                              'init',
-                                              b.identifier(DEFAULT_EXPORT_ALIASES.Message),
-                                              b.identifier(messageExportName),
-                                              false,
-                                              messageExportName === DEFAULT_EXPORT_ALIASES.Message,
-                                          ) as AssignmentProperty,
-                                      ],
-                            ),
-                            b.callExpression(
-                                b.memberExpression(
-                                    b.identifier('intl'),
-                                    b.identifier('createMessages'),
-                                ),
-                                [generateMessagesObject(params.messages, config.allowedLocales)],
-                            ),
-                        ),
-                    ]),
-                ),
-            ],
-            'module',
-        ),
-    );
+    if (declarationType === 'declareMessages') {
+        // Standalone declareMessages: import from @gravity-ui/i18n-types
+        const methodCall = b.callExpression(b.identifier('declareMessages'), [messagesObject]);
+        importStatement = `import {declareMessages} from '@gravity-ui/i18n-types';`;
+        const varName = params.exportAliases?.default || 'messages';
+        declaration = b.exportNamedDeclaration(
+            b.variableDeclaration('const', [
+                b.variableDeclarator(b.identifier(varName), methodCall),
+            ]),
+        );
+    } else {
+        // intl.createMessages: const {t, Message} = intl.createMessages({...});
+        const intlModule = determineIntlModule(params.outputPath, config);
+        const intlImportPath = createRelativeImport(
+            intlModule.path,
+            params.outputPath,
+            intlModule.alias,
+        );
+        importStatement = `import {intl} from "${intlImportPath}";`;
 
-    return `import {intl} from "${intlImportPath}";\n\n${content}`;
+        const methodCall = b.callExpression(
+            b.memberExpression(b.identifier('intl'), b.identifier('createMessages')),
+            [messagesObject],
+        );
+
+        const {exportAliases} = params;
+        const tExportName = exportAliases?.t || DEFAULT_EXPORT_ALIASES.t;
+        const messageExportName = exportAliases?.Message || DEFAULT_EXPORT_ALIASES.Message;
+
+        const destructuredProps =
+            intlModule === config.serverIntlModule
+                ? [
+                      b.property(
+                          'init',
+                          b.identifier('messages'),
+                          b.identifier('messages'),
+                          false,
+                          true,
+                      ) as AssignmentProperty,
+                  ]
+                : [
+                      b.property(
+                          'init',
+                          b.identifier(DEFAULT_EXPORT_ALIASES.t),
+                          b.identifier(tExportName),
+                          false,
+                          tExportName === DEFAULT_EXPORT_ALIASES.t,
+                      ) as AssignmentProperty,
+                      b.property(
+                          'init',
+                          b.identifier(DEFAULT_EXPORT_ALIASES.Message),
+                          b.identifier(messageExportName),
+                          false,
+                          messageExportName === DEFAULT_EXPORT_ALIASES.Message,
+                      ) as AssignmentProperty,
+                  ];
+
+        declaration = b.exportNamedDeclaration(
+            b.variableDeclaration('const', [
+                b.variableDeclarator(b.objectPattern(destructuredProps), methodCall),
+            ]),
+        );
+    }
+
+    const content = generate(b.program([declaration], 'module'));
+
+    return `${importStatement}\n\n${content}`;
 }
 
 function generateOutputFilename(outputPath: string) {

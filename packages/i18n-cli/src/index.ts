@@ -1,4 +1,4 @@
-export type {MessagePlacementMeta, MessageWithPlacementMeta} from './types';
+export type {MessagePlacementMeta, MessageWithPlacementMeta, DeclarationType} from './types';
 
 export {parseTranslationsFile} from './parseTranslationsFile';
 export type {ParseTranslationsFileArgs, ParseTranslationsFileResult} from './parseTranslationsFile';
@@ -7,6 +7,7 @@ export {
     generateTranslationsFile,
     generateTranslationsFileContent,
 } from './generateTranslationsFile';
+export type {GenerateTranslationsFileParams} from './generateTranslationsFile';
 
 export {parseProjectTranslations} from './parseProjectTranslations';
 

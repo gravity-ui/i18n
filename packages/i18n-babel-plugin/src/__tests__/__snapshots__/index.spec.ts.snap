@@ -385,6 +385,226 @@ export const {
 });"
 `;
 
+exports[`transformations declareMessages compile messages to AST 1`] = `
+"export const messages = {
+  normalMessage: {
+    "ru": [{
+      type: 0,
+      value: "\\u0440\\u0443\\u0441\\u0441\\u043A\\u0438\\u0439"
+    }],
+    "en": [{
+      type: 0,
+      value: "english"
+    }],
+    "en-kz": []
+  },
+  countOffices: {
+    "en": [{
+      type: 6,
+      value: "count",
+      options: {
+        "=0": {
+          value: [{
+            type: 0,
+            value: "We don't have offices"
+          }]
+        },
+        "=1": {
+          value: [{
+            type: 0,
+            value: "We have only one office"
+          }]
+        },
+        other: {
+          value: [{
+            type: 0,
+            value: "We have "
+          }, {
+            type: 7
+          }, {
+            type: 0,
+            value: " offices"
+          }]
+        }
+      },
+      offset: 0,
+      pluralType: "cardinal"
+    }],
+    "en-kz": [],
+    "ru": [{
+      type: 6,
+      value: "count",
+      options: {
+        "=0": {
+          value: [{
+            type: 0,
+            value: "\\u0423 \\u043D\\u0430\\u0441 \\u043D\\u0435\\u0442 \\u043E\\u0444\\u0438\\u0441\\u043E\\u0432"
+          }]
+        },
+        "=1": {
+          value: [{
+            type: 0,
+            value: "\\u0423 \\u043D\\u0430\\u0441 \\u0432\\u0441\\u0435\\u0433\\u043E \\u043E\\u0434\\u0438\\u043D \\u043E\\u0444\\u0438\\u0441"
+          }]
+        },
+        other: {
+          value: [{
+            type: 0,
+            value: "\\u0423 \\u043D\\u0430\\u0441 "
+          }, {
+            type: 7
+          }, {
+            type: 0,
+            value: " \\u043E\\u0444\\u0438\\u0441\\u043E\\u0432"
+          }]
+        }
+      },
+      offset: 0,
+      pluralType: "cardinal"
+    }],
+    "ru-kz": []
+  },
+  oldPlural: {
+    "ru": [{
+      type: 6,
+      value: "count",
+      options: {
+        one: {
+          value: [{
+            type: 7
+          }, {
+            type: 0,
+            value: " \\u043F\\u0440\\u043E\\u0435\\u043A\\u0442"
+          }]
+        },
+        few: {
+          value: [{
+            type: 7
+          }, {
+            type: 0,
+            value: " \\u043F\\u0440\\u043E\\u0435\\u043A\\u0442\\u0430"
+          }]
+        },
+        many: {
+          value: [{
+            type: 7
+          }, {
+            type: 0,
+            value: " \\u043F\\u0440\\u043E\\u0435\\u043A\\u0442\\u043E\\u0432"
+          }]
+        },
+        "=0": {
+          value: [{
+            type: 0,
+            value: "\\u043D\\u043E\\u043B\\u044C \\u043F\\u0440\\u043E\\u0435\\u043A\\u0442\\u043E\\u0432"
+          }]
+        },
+        two: {
+          value: []
+        },
+        other: {
+          value: [{
+            type: 7
+          }, {
+            type: 0,
+            value: " \\u043F\\u0440\\u043E\\u0435\\u043A\\u0442\\u043E\\u0432"
+          }]
+        }
+      },
+      offset: 0,
+      pluralType: "cardinal"
+    }],
+    "en": [{
+      type: 6,
+      value: "count",
+      options: {
+        one: {
+          value: [{
+            type: 0,
+            value: "one"
+          }]
+        },
+        few: {
+          value: [{
+            type: 0,
+            value: "few"
+          }]
+        },
+        many: {
+          value: []
+        },
+        "=0": {
+          value: [{
+            type: 0,
+            value: "zero"
+          }]
+        },
+        two: {
+          value: []
+        },
+        other: {
+          value: [{
+            type: 0,
+            value: "few"
+          }]
+        }
+      },
+      offset: 0,
+      pluralType: "cardinal"
+    }]
+  }
+};"
+`;
+
+exports[`transformations declareMessages only translations mode 1`] = `
+"export default {
+  normalMessage: {
+    "ru": "\\u0440\\u0443\\u0441\\u0441\\u043A\\u0438\\u0439",
+    "en": "english",
+    "en-kz": "",
+    "ru-kz": null,
+    "ru-yateam": null,
+    "en-yateam": null
+  },
+  countOffices: {
+    "en": "{count, plural, =0 {We don''t have offices} =1 {We have only one office} other {We have # offices}}",
+    "en-kz": "",
+    "ru": "{count, plural, =0 {\\u0423 \\u043D\\u0430\\u0441 \\u043D\\u0435\\u0442 \\u043E\\u0444\\u0438\\u0441\\u043E\\u0432} =1 {\\u0423 \\u043D\\u0430\\u0441 \\u0432\\u0441\\u0435\\u0433\\u043E \\u043E\\u0434\\u0438\\u043D \\u043E\\u0444\\u0438\\u0441} other {\\u0423 \\u043D\\u0430\\u0441 # \\u043E\\u0444\\u0438\\u0441\\u043E\\u0432}}",
+    "ru-kz": "",
+    "ru-yateam": null,
+    "en-yateam": null
+  },
+  oldPlural: {
+    "ru": "{count, plural, one {# \\u043F\\u0440\\u043E\\u0435\\u043A\\u0442} few {# \\u043F\\u0440\\u043E\\u0435\\u043A\\u0442\\u0430} many {# \\u043F\\u0440\\u043E\\u0435\\u043A\\u0442\\u043E\\u0432} =0 {\\u043D\\u043E\\u043B\\u044C \\u043F\\u0440\\u043E\\u0435\\u043A\\u0442\\u043E\\u0432} two {} other {# \\u043F\\u0440\\u043E\\u0435\\u043A\\u0442\\u043E\\u0432}}",
+    "en": "{count, plural, one {one} few {few} many {} =0 {zero} two {} other {few}}",
+    "en-kz": null,
+    "ru-kz": null,
+    "ru-yateam": null,
+    "en-yateam": null
+  }
+};"
+`;
+
+exports[`transformations declareMessages remove meta from messages 1`] = `
+"export const messages = {
+  normalMessage: {
+    "ru": "\\u0440\\u0443\\u0441\\u0441\\u043A\\u0438\\u0439",
+    "en": "english",
+    "en-kz": ""
+  },
+  countOffices: {
+    "en": "{count, plural, =0 {We don''t have offices} =1 {We have only one office} other {We have # offices}}",
+    "en-kz": "",
+    "ru": "{count, plural, =0 {\\u0423 \\u043D\\u0430\\u0441 \\u043D\\u0435\\u0442 \\u043E\\u0444\\u0438\\u0441\\u043E\\u0432} =1 {\\u0423 \\u043D\\u0430\\u0441 \\u0432\\u0441\\u0435\\u0433\\u043E \\u043E\\u0434\\u0438\\u043D \\u043E\\u0444\\u0438\\u0441} other {\\u0423 \\u043D\\u0430\\u0441 # \\u043E\\u0444\\u0438\\u0441\\u043E\\u0432}}",
+    "ru-kz": ""
+  },
+  oldPlural: {
+    "ru": "{count, plural, one {# \\u043F\\u0440\\u043E\\u0435\\u043A\\u0442} few {# \\u043F\\u0440\\u043E\\u0435\\u043A\\u0442\\u0430} many {# \\u043F\\u0440\\u043E\\u0435\\u043A\\u0442\\u043E\\u0432} =0 {\\u043D\\u043E\\u043B\\u044C \\u043F\\u0440\\u043E\\u0435\\u043A\\u0442\\u043E\\u0432} two {} other {# \\u043F\\u0440\\u043E\\u0435\\u043A\\u0442\\u043E\\u0432}}",
+    "en": "{count, plural, one {one} few {few} many {} =0 {zero} two {} other {few}}"
+  }
+};"
+`;
+
 exports[`transformations disable typograf for one key 1`] = `
 "import { intl } from './intl';
 export const {

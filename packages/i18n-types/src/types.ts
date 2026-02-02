@@ -1,3 +1,26 @@
+/**
+ * Configuration interface for module augmentation.
+ * Users can augment this to set their allowed locales globally.
+ *
+ * @example
+ * ```typescript
+ * declare module '@gravity-ui/i18n-types' {
+ *     interface CustomTypeOptions {
+ *         allowedLocales: 'ru' | 'en';
+ *     }
+ * }
+ * ```
+ */
+// eslint-disable-next-line @typescript-eslint/no-empty-object-type
+export interface CustomTypeOptions {}
+
+/**
+ * Extracts allowedLocales from CustomTypeOptions if defined, otherwise defaults to string.
+ */
+export type AllowedLocales = CustomTypeOptions extends {allowedLocales: infer L extends string}
+    ? L
+    : string;
+
 export type MessageMeta = {
     /** Ключ для Танкера */
     id?: string;

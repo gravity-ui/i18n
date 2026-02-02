@@ -6,7 +6,12 @@ import {
     type PluralForm,
     isLegacyPlural,
 } from '@gravity-ui/i18n-types';
-import {MessageWithPlacementMeta, ExportAliases, isTranslationFunction} from './types';
+import {
+    MessageWithPlacementMeta,
+    ExportAliases,
+    isTranslationFunction,
+    DeclarationType,
+} from './types';
 import {MODULE_NAME, removeStartNewLineFromICU} from './shared';
 import {simpleTraverse} from '@typescript-eslint/typescript-estree';
 import {AST_NODE_TYPES, TSESTree} from '@typescript-eslint/types';
@@ -24,15 +29,47 @@ export type ParseTranslationsFileResult = {
     messages: MessageWithPlacementMeta[];
     filePath: string;
     exportAliases: ExportAliases;
+    declarationType: DeclarationType;
 };
 
-function isCreateMessagesCall(node: TSESTree.Node) {
-    return (
-        node.type === AST_NODE_TYPES.CallExpression &&
+function isMessagesCall(node: TSESTree.Node): node is TSESTree.CallExpression {
+    if (node.type !== AST_NODE_TYPES.CallExpression) {
+        return false;
+    }
+
+    // intl.createMessages(...)
+    if (
         node.callee.type === 'MemberExpression' &&
         node.callee.property.type === 'Identifier' &&
         node.callee.property.name === 'createMessages'
-    );
+    ) {
+        return true;
+    }
+
+    // declareMessages(...) - standalone call
+    if (node.callee.type === 'Identifier' && node.callee.name === 'declareMessages') {
+        return true;
+    }
+
+    return false;
+}
+
+function getMessagesCallType(node: TSESTree.CallExpression): DeclarationType | undefined {
+    // intl.createMessages(...)
+    if (
+        node.callee.type === 'MemberExpression' &&
+        node.callee.property.type === 'Identifier' &&
+        node.callee.property.name === 'createMessages'
+    ) {
+        return 'createMessages';
+    }
+
+    // declareMessages(...) - standalone call
+    if (node.callee.type === 'Identifier' && node.callee.name === 'declareMessages') {
+        return 'declareMessages';
+    }
+
+    return undefined;
 }
 
 function parseStringValue(node: TSESTree.Node): string {
@@ -243,6 +280,7 @@ export async function parseTranslationsFile(
 ): Promise<ParseTranslationsFileResult> {
     let messages: MessageWithPlacementMeta[] = [];
     const exportAliases: ExportAliases = {};
+    let declarationType: DeclarationType = 'createMessages';
 
     const ast = await parseToAst({
         filename: args.filePath,
@@ -254,36 +292,47 @@ export async function parseTranslationsFile(
             VariableDeclarator: (node) => {
                 if (
                     node.type === AST_NODE_TYPES.VariableDeclarator &&
-                    node.id.type === AST_NODE_TYPES.ObjectPattern &&
                     node.init &&
                     node.init.type === AST_NODE_TYPES.CallExpression &&
-                    isCreateMessagesCall(node.init)
+                    isMessagesCall(node.init)
                 ) {
-                    node.id.properties.forEach((prop) => {
-                        if (
-                            prop.type === AST_NODE_TYPES.Property &&
-                            prop.key.type === AST_NODE_TYPES.Identifier
-                        ) {
-                            const originalName = prop.key.name;
+                    const callType = getMessagesCallType(node.init);
+                    if (callType) {
+                        declarationType = callType;
+                    }
 
+                    // For declareMessages with Identifier: export const msgs = declareMessages(...)
+                    if (
+                        callType === 'declareMessages' &&
+                        node.id.type === AST_NODE_TYPES.Identifier
+                    ) {
+                        exportAliases.default = node.id.name;
+                    }
+
+                    // For createMessages with ObjectPattern: const {t, Message} = intl.createMessages(...)
+                    if (node.id.type === AST_NODE_TYPES.ObjectPattern) {
+                        node.id.properties.forEach((prop) => {
                             if (
-                                prop.computed === false &&
-                                prop.value.type === AST_NODE_TYPES.Identifier &&
-                                originalName !== prop.value.name &&
-                                isTranslationFunction(originalName)
+                                prop.type === AST_NODE_TYPES.Property &&
+                                prop.key.type === AST_NODE_TYPES.Identifier
                             ) {
-                                exportAliases[originalName] = prop.value.name;
+                                const originalName = prop.key.name;
+
+                                if (
+                                    prop.computed === false &&
+                                    prop.value.type === AST_NODE_TYPES.Identifier &&
+                                    originalName !== prop.value.name &&
+                                    isTranslationFunction(originalName)
+                                ) {
+                                    exportAliases[originalName] = prop.value.name;
+                                }
                             }
-                        }
-                    });
+                        });
+                    }
                 }
             },
             CallExpression: (node) => {
-                if (
-                    node &&
-                    node.type === AST_NODE_TYPES.CallExpression &&
-                    isCreateMessagesCall(node)
-                ) {
+                if (node && node.type === AST_NODE_TYPES.CallExpression && isMessagesCall(node)) {
                     const arg = node.arguments[0];
 
                     if (!arg || arg?.type !== 'ObjectExpression') {
@@ -302,5 +351,6 @@ export async function parseTranslationsFile(
         filePath: args.filePath,
         messages,
         exportAliases,
+        declarationType,
     };
 }

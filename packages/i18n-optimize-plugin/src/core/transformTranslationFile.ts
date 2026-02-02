@@ -10,6 +10,7 @@ import {LANGUAGE_VARIABLE_NAME_ENV_KEY, LANGUAGES_DIR_PREFIX} from './constants.
 import type {OptimizeLocaleChunks} from '../types.js';
 
 const CREATE_MESSAGES_FUNCTION = 'intl.createMessages';
+const DECLARE_MESSAGES_FUNCTION = 'declareMessages';
 const EXPORT_CONST_NAME = 'export const {';
 
 async function createFile(filePath: string, content = '') {
@@ -45,16 +46,21 @@ export function includeDynamicImportToTranslationsFile(
     const s = new MagicString(code);
 
     const createMessagesIndex = code.indexOf(CREATE_MESSAGES_FUNCTION);
+    const declareMessagesIndex = code.indexOf(DECLARE_MESSAGES_FUNCTION);
     const exportConstIndex = code.indexOf(EXPORT_CONST_NAME);
 
-    if (createMessagesIndex !== -1 && exportConstIndex !== -1) {
+    if ((createMessagesIndex !== -1 || declareMessagesIndex !== -1) && exportConstIndex !== -1) {
         s.prependLeft(
             exportConstIndex,
-            `const langs = require.context("./${languagesDirName}/", false, /\\/.*\\.ts$/);\nconst messages = langs("./" + ${LANGUAGE_VARIABLE_NAME_ENV_KEY} + ".ts").default;\n`,
+            `const langs = require.context("./${languagesDirName}/", false, /\\/.*\\.ts$/);\nconst langMessages = langs("./" + ${LANGUAGE_VARIABLE_NAME_ENV_KEY} + ".ts").default;\n`,
         );
 
-        const messagesArgumentIndex = createMessagesIndex + CREATE_MESSAGES_FUNCTION.length + 1;
-        s.overwrite(messagesArgumentIndex, code.length, 'messages);\n');
+        const messagesArgumentIndex =
+            createMessagesIndex !== -1
+                ? createMessagesIndex + CREATE_MESSAGES_FUNCTION.length + 1
+                : declareMessagesIndex + DECLARE_MESSAGES_FUNCTION.length + 1;
+
+        s.overwrite(messagesArgumentIndex, code.length, 'langMessages);\n');
     }
 
     return {

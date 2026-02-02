@@ -50,4 +50,18 @@ describe('transformations', () => {
     it('TECH target locale with ids', () => {
         runTestWithSnap('i18n', 'target-locale-tech');
     });
+
+    describe('declareMessages', () => {
+        it('remove meta from messages', () => {
+            runTestWithSnap('declare-messages-i18n');
+        });
+
+        it('only translations mode', () => {
+            runTestWithSnap('declare-messages-i18n', 'only-translations');
+        });
+
+        it('compile messages to AST', () => {
+            runTestWithSnap('declare-messages-i18n', 'compile-to-ast');
+        });
+    });
 });

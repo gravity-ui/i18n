@@ -50,6 +50,10 @@ function isCreateMessagesCall(node: Node): node is MemberExpression {
     );
 }
 
+function isDeclareMessagesCall(node: Node): node is types.Identifier {
+    return types.isIdentifier(node) && node.name === 'declareMessages';
+}
+
 function isMetaProperty(path: NodePath): path is NodePath<ObjectProperty> {
     if (!path.isObjectProperty()) {
         return false;
@@ -301,6 +305,26 @@ export const createTranslationsFileVisitor = (
         ImportDeclaration(importPath) {
             if (mode === 'only-translations') {
                 importPath.remove();
+                return;
+            }
+
+            // Remove declareMessages import from @gravity-ui/i18n-types
+            const source = importPath.node.source.value;
+            if (source === '@gravity-ui/i18n-types') {
+                const specifiers = importPath.node.specifiers.filter(
+                    (s) =>
+                        !(
+                            types.isImportSpecifier(s) &&
+                            types.isIdentifier(s.imported) &&
+                            s.imported.name === 'declareMessages'
+                        ),
+                );
+
+                if (specifiers.length === 0) {
+                    importPath.remove();
+                } else {
+                    importPath.node.specifiers = specifiers;
+                }
             }
         },
 
@@ -314,30 +338,41 @@ export const createTranslationsFileVisitor = (
 
                 const init = varDecl.get('init');
 
-                if (init.isCallExpression() && isCreateMessagesCall(init.node.callee)) {
-                    const messagesObjectExpression = init.get('arguments')[0];
+                if (!init.isCallExpression()) {
+                    return;
+                }
 
-                    if (
-                        !messagesObjectExpression ||
-                        !messagesObjectExpression.isObjectExpression()
-                    ) {
-                        throw init.buildCodeFrameError('ObjectExpression expected here');
-                    }
+                const isDeclareMessages = isDeclareMessagesCall(init.node.callee);
+                const isCreateMessages = isCreateMessagesCall(init.node.callee);
 
-                    optimizeCreateMessages(init, {
-                        typografConfig,
-                        compileMessageToAst: options.compileMessageToAst,
-                        fallbackLocales: options.fallbackLocales,
-                        allowedLocales,
-                        mode,
-                    });
+                if (!isDeclareMessages && !isCreateMessages) {
+                    return;
+                }
 
-                    if (options.mode === 'only-translations') {
-                        const messagesObject = messagesObjectExpression.node;
-                        const exportDefault = types.exportDefaultDeclaration(messagesObject);
-                        exportPath.replaceWith(exportDefault);
-                        return;
-                    }
+                const messagesObjectExpression = init.get('arguments')[0];
+
+                if (!messagesObjectExpression || !messagesObjectExpression.isObjectExpression()) {
+                    throw init.buildCodeFrameError('ObjectExpression expected here');
+                }
+
+                optimizeCreateMessages(init, {
+                    typografConfig,
+                    compileMessageToAst: options.compileMessageToAst,
+                    fallbackLocales: options.fallbackLocales,
+                    allowedLocales,
+                    mode,
+                });
+
+                // Remove declareMessages wrapper, keep just the object
+                if (isDeclareMessages) {
+                    init.replaceWith(messagesObjectExpression.node);
+                }
+
+                if (options.mode === 'only-translations') {
+                    const messagesObject = messagesObjectExpression.node;
+                    const exportDefault = types.exportDefaultDeclaration(messagesObject);
+                    exportPath.replaceWith(exportDefault);
+                    return;
                 }
             }
         },
