@@ -7,7 +7,7 @@ const {t} = intl.useMessages(otherMessages);
 export const DeclaredMessages = () => {
     return (
         <>
-            <ExampleSection label="Declared messages">{t('other')}</ExampleSection>
+            <ExampleSection label="Declared messages">{t('sharedTitle')}</ExampleSection>
         </>
     );
 };

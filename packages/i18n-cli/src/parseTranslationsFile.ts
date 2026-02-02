@@ -72,7 +72,6 @@ function getMessagesCallType(node: TSESTree.CallExpression): DeclarationType | u
     return undefined;
 }
 
-
 function parseStringValue(node: TSESTree.Node): string {
     if (node.type === 'Identifier') {
         return node.name;

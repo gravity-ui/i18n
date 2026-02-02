@@ -8,7 +8,6 @@ import type {
 import type {ResolvedIntlConfig as ReactResolvedIntlConfig} from 'react-intl';
 
 import type {factoryCreateMessagesFunction} from './components/factoryCreateMessagesFunction';
-import type {factoryUseMessagesFunction} from './components/factoryUseMessagesFunction';
 
 export interface ResolvedIntlConfig<AvailableLocale extends string>
     extends CoreResolvedIntlConfig<React.ReactNode, AvailableLocale> {
@@ -42,6 +41,6 @@ export interface IntlShape<AvailableLocale extends string>
         IntlFormatters {
     formatters: Formatters;
     createMessages: ReturnType<typeof factoryCreateMessagesFunction<AvailableLocale>>;
-    useMessages: ReturnType<typeof factoryUseMessagesFunction<AvailableLocale>>;
+    useMessages: ReturnType<typeof factoryCreateMessagesFunction<AvailableLocale>>;
     setLocale: (locale: AvailableLocale | string) => void;
 }

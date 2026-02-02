@@ -14,7 +14,7 @@ function isTranslationsFile(filePath: string) {
 }
 
 function hasCodeCreateMessagesCall(code: string) {
-    return code.includes('createMessages');
+    return code.includes('createMessages') || code.includes('declareMessages');
 }
 
 export const unpluginFactory: UnpluginFactory<Options | undefined> = (options, meta) => {
@@ -55,7 +55,7 @@ export const unpluginFactory: UnpluginFactory<Options | undefined> = (options, m
         },
 
         transform(code, id) {
-            // Исключаем случайно попавшие файлы, в которых нет вызова createMessages
+            // Исключаем случайно попавшие файлы, в которых нет вызова createMessages или declareMessages
             if (!hasCodeCreateMessagesCall(code)) {
                 return code;
             }

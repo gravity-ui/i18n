@@ -351,10 +351,7 @@ export const createTranslationsFileVisitor = (
 
                 const messagesObjectExpression = init.get('arguments')[0];
 
-                if (
-                    !messagesObjectExpression ||
-                    !messagesObjectExpression.isObjectExpression()
-                ) {
+                if (!messagesObjectExpression || !messagesObjectExpression.isObjectExpression()) {
                     throw init.buildCodeFrameError('ObjectExpression expected here');
                 }
 
