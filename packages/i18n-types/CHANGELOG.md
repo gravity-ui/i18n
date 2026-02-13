@@ -1,3 +1,7 @@
+## 1.3.1 (2026-02-13)
+
+This was a version bump only for @gravity-ui/i18n-types to align it with other projects, there were no code changes.
+
 ## 1.3.0 (2026-02-02)
 
 ### 🚀 Features

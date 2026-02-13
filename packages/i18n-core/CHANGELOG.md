@@ -1,3 +1,17 @@
+## 1.4.1 (2026-02-13)
+
+### 🩹 Fixes
+
+- correct peer dependencies ([78cc192](https://github.com/gravity-ui/i18n/commit/78cc192))
+
+### 🧱 Updated Dependencies
+
+- Updated @gravity-ui/i18n-types to 1.3.1
+
+### ❤️ Thank You
+
+- Daniil Gaponov
+
 ## 1.4.0 (2026-02-02)
 
 ### 🧱 Updated Dependencies
