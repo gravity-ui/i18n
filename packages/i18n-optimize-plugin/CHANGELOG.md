@@ -1,3 +1,10 @@
+## 1.3.2 (2026-02-13)
+
+### 🧱 Updated Dependencies
+
+- Updated @gravity-ui/i18n-babel-plugin to 1.3.2
+- Updated @gravity-ui/i18n-cli to 1.3.2
+
 ## 1.3.1 (2026-02-13)
 
 ### 🧱 Updated Dependencies

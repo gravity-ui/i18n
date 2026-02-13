@@ -1,3 +1,13 @@
+## 1.3.2 (2026-02-13)
+
+### 🩹 Fixes
+
+- trigger release ([5857655](https://github.com/gravity-ui/i18n/commit/5857655))
+
+### ❤️ Thank You
+
+- Daniil Gaponov
+
 ## 1.3.1 (2026-02-13)
 
 This was a version bump only for @gravity-ui/i18n-types to align it with other projects, there were no code changes.

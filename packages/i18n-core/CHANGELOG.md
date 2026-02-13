@@ -1,3 +1,9 @@
+## 1.4.2 (2026-02-13)
+
+### 🧱 Updated Dependencies
+
+- Updated @gravity-ui/i18n-types to 1.3.2
+
 ## 1.4.1 (2026-02-13)
 
 ### 🩹 Fixes
