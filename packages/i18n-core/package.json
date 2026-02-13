@@ -29,17 +29,19 @@
   ],
   "dependencies": {
     "@formatjs/fast-memoize": "^2.2.7",
-    "@formatjs/intl": "catalog:",
-    "intl-messageformat": "catalog:",
     "@gravity-ui/i18n-types": "workspace:*"
   },
   "devDependencies": {
     "eslint-config": "workspace:*",
+    "@formatjs/intl": "catalog:",
     "@types/jest": "catalog:",
     "jest": "catalog:",
     "ts-jest": "catalog:",
     "typescript": "catalog:",
     "eslint": "catalog:"
+  },
+  "peerDependencies": {
+    "@formatjs/intl": "^3.1.8"
   },
   "engines": {
     "node": ">= 18"
