@@ -30,18 +30,16 @@
   ],
   "dependencies": {
     "@gravity-ui/i18n-types": "workspace:*",
-    "@gravity-ui/i18n-core": "workspace:*"
+    "@gravity-ui/i18n-core": "workspace:*",
+    "@formatjs/intl": "catalog:",
+    "intl-messageformat": "catalog:"
   },
   "devDependencies": {
     "eslint-config": "workspace:*",
-    "intl-messageformat": "catalog:",
     "@types/jest": "catalog:",
     "eslint": "catalog:",
     "jest": "catalog:",
     "ts-jest": "catalog:",
     "typescript": "catalog:"
-  },
-  "peerDependencies": {
-    "intl-messageformat": "^10.7.0"
   }
 }
