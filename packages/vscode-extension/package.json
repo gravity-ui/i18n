@@ -30,7 +30,6 @@
                     "command": "I18nInitKeys.I18nInitKeys",
                     "group": "navigation",
                     "when": "editorLangId =~ /(javascript|typescript|json)/",
-                    "alt": "I18nInitKeys.I18nInitKeys",
                     "title": "I18N"
                 }
             ],
@@ -53,9 +52,7 @@
         "build": "vsce package --no-dependencies --baseContentUrl=https://github.com/gravity-ui/i18n/packages/vscode-extension --allow-missing-repository --skip-license",
         "typecheck": "tsc --noEmit"
     },
-    "dependencies": {
-        "tslib": "catalog:"
-    },
+    "dependencies": {},
     "devDependencies": {
         "@types/vscode": "^1.96.0",
         "@types/mocha": "^10.0.10",
