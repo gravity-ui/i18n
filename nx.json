@@ -12,6 +12,11 @@
       "tag": true,
       "commit": true
     },
+    "git": {
+      "push": false,
+      "tag": true,
+      "commit": true
+    },
     "projectsRelationship": "independent"
   },
   "tasksRunnerOptions": {
