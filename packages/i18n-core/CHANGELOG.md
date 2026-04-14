@@ -1,3 +1,13 @@
+## 1.6.0 (2026-04-14)
+
+### 🚀 Features
+
+- added key fallback for unknown keys ([8dfb259](https://github.com/gravity-ui/i18n/commit/8dfb259))
+
+### ❤️ Thank You
+
+- olaslo
+
 ## 1.5.0 (2026-03-16)
 
 ### 🧱 Updated Dependencies

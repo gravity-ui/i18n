@@ -1,3 +1,9 @@
+## 1.5.1 (2026-04-14)
+
+### 🧱 Updated Dependencies
+
+- Updated @gravity-ui/i18n-core to 1.6.0
+
 ## 1.5.0 (2026-03-16)
 
 ### 🧱 Updated Dependencies
