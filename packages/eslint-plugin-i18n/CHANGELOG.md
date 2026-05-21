@@ -1,3 +1,13 @@
+## 2.6.0 (2026-05-21)
+
+### 🚀 Features
+
+- bump eslint library ([#77](https://github.com/gravity-ui/i18n/pull/77))
+
+### ❤️ Thank You
+
+- dgaponov
+
 ## 2.5.1 (2026-04-04)
 
 ### 🧱 Updated Dependencies
