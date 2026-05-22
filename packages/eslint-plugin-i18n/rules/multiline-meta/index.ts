@@ -1,4 +1,4 @@
-import type {Rule, SourceCode} from 'eslint';
+import type {Rule} from 'eslint';
 import type {CallExpression, ObjectExpression, Property} from 'estree';
 
 import {
@@ -10,33 +10,15 @@ import {
     isCreateMessagesCall,
     type I18nCreateMessagesFilenamesOptions,
 } from '../shared/create-messages-call';
+import {
+    buildMultilineObject,
+    detectIndentStep,
+    getIndentBeforeIndex,
+    isObjectMultilineFormatted,
+} from '../shared/multiline-message-body';
 
 const MESSAGE =
     'In i18n.ts createMessages definitions, meta must be written as a multiline object ({ with line breaks }), not inlined as meta: { id: ... }.';
-
-function getIndentBeforeIndex(sourceCode: SourceCode, index: number): string {
-    const text = sourceCode.text;
-    const lineStart = text.lastIndexOf('\n', index - 1) + 1;
-    return text.slice(lineStart, index);
-}
-
-function getSiblingIndentStep(
-    sourceCode: SourceCode,
-    messageOuterProp: Property,
-    messageObject: ObjectExpression,
-): string {
-    const firstSibling = messageObject.properties.find((p) => p.type === 'Property');
-    if (!firstSibling || firstSibling.range === undefined || messageOuterProp.range === undefined) {
-        return '    ';
-    }
-    const outer = getIndentBeforeIndex(sourceCode, messageOuterProp.range[0]);
-    const inner = getIndentBeforeIndex(sourceCode, firstSibling.range[0]);
-    if (inner.startsWith(outer)) {
-        const step = inner.slice(outer.length);
-        return step.length > 0 ? step : '    ';
-    }
-    return '    ';
-}
 
 function isMetaPropertyKey(key: Property['key']): boolean {
     if (key.type === 'Identifier') {
@@ -50,41 +32,6 @@ function isMetaPropertyKey(key: Property['key']): boolean {
 
 function metaObjectHasUnsupportedFeatures(objectExpr: ObjectExpression): boolean {
     return objectExpr.properties.some((p) => p.type !== 'Property');
-}
-
-/** Inner text of `{…}` excludes outer braces — must contain a newline to count as multiline. */
-function isInlineMetaObjectBraceBody(
-    sourceCode: SourceCode,
-    objectExpr: ObjectExpression,
-): boolean {
-    const text = sourceCode.getText(objectExpr);
-    // minimal `{` … `}`
-    if (!text.startsWith('{') || !text.endsWith('}')) {
-        return false;
-    }
-    const inner = text.slice(1, -1);
-    return !inner.includes('\n');
-}
-
-function formatMetaReplacement(
-    sourceCode: SourceCode,
-    metaObject: ObjectExpression,
-    metaProp: Property,
-    messageOuterProp: Property,
-    messageBody: ObjectExpression,
-): string {
-    const props = metaObject.properties.filter((p): p is Property => p.type === 'Property');
-
-    const baseIndent = metaProp.range ? getIndentBeforeIndex(sourceCode, metaProp.range[0]) : '';
-    const step = getSiblingIndentStep(sourceCode, messageOuterProp, messageBody);
-    const innerIndent = `${baseIndent}${step}`;
-
-    if (props.length === 0) {
-        return `{\n${baseIndent}}`;
-    }
-
-    const lines = props.map((p) => `${innerIndent}${sourceCode.getText(p)},`);
-    return `{\n${lines.join('\n')}\n${baseIndent}}`;
 }
 
 export const rule: Rule.RuleModule = {
@@ -159,7 +106,7 @@ export const rule: Rule.RuleModule = {
                         continue;
                     }
 
-                    if (!isInlineMetaObjectBraceBody(sourceCode, metaValue)) {
+                    if (isObjectMultilineFormatted(sourceCode, metaValue)) {
                         continue;
                     }
 
@@ -171,13 +118,53 @@ export const rule: Rule.RuleModule = {
                         node: metaValue,
                         messageId: 'inlineMeta',
                         fix(fixer) {
-                            const replacement = formatMetaReplacement(
+                            // When the enclosing message body itself is not yet
+                            // multiline (e.g. one-liner from auto-id injection or
+                            // hand-written compact form), reformat the *body* first.
+                            // The next ESLint fix pass will then re-enter this rule
+                            // with a well-formatted body and produce a multiline meta.
+                            if (!isObjectMultilineFormatted(sourceCode, messageBody)) {
+                                if (
+                                    messageBody.range === undefined ||
+                                    messageEntry.range === undefined
+                                ) {
+                                    return null;
+                                }
+
+                                const bodyBaseIndent = getIndentBeforeIndex(
+                                    sourceCode,
+                                    messageEntry.range[0],
+                                );
+                                const step = detectIndentStep(sourceCode, bodyBaseIndent);
+                                const bodyReplacement = buildMultilineObject({
+                                    sourceCode,
+                                    obj: messageBody,
+                                    baseIndent: bodyBaseIndent,
+                                    step,
+                                });
+
+                                if (bodyReplacement === null) {
+                                    return null;
+                                }
+
+                                return fixer.replaceTextRange(messageBody.range, bodyReplacement);
+                            }
+
+                            const baseIndent = field.range
+                                ? getIndentBeforeIndex(sourceCode, field.range[0])
+                                : '';
+                            const step = detectIndentStep(sourceCode, baseIndent);
+                            const replacement = buildMultilineObject({
                                 sourceCode,
-                                metaValue,
-                                field,
-                                messageEntry,
-                                messageBody,
-                            );
+                                obj: metaValue,
+                                baseIndent,
+                                step,
+                            });
+
+                            if (replacement === null) {
+                                return null;
+                            }
+
                             return fixer.replaceTextRange(metaValue.range!, replacement);
                         },
                     });

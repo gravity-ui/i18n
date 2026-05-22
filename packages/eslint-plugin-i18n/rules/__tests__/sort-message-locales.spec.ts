@@ -439,5 +439,56 @@ intl.createMessages({
 });
 `,
         },
+        {
+            name: 'one-line body with wrong order — normalize + sort in single fix',
+            code: `
+intl.createMessages({
+    key: {meta: {id: 'x'}, ru: null, en: 'Hello'},
+});
+`,
+            filename: I18N_FILE,
+            options: defaultOptions,
+            errors: [{messageId: 'wrongKeyOrder'}],
+            output: `
+intl.createMessages({
+    key: {
+        ru: null,
+        en: 'Hello',
+        meta: {id: 'x'},
+    },
+});
+`,
+        },
+        {
+            name: 'mixed-format body after auto-id injection — normalize + sort',
+            code: `
+intl.createMessages({
+    key: {meta:{id:'x'},
+        ru: '',
+        en: '',
+    },
+});
+`,
+            filename: I18N_FILE,
+            options: defaultOptions,
+            errors: [{messageId: 'wrongKeyOrder'}],
+            output: `
+intl.createMessages({
+    key: {
+        ru: '',
+        en: '',
+        meta:{id:'x'},
+    },
+});
+`,
+        },
+        {
+            name: 'one-line body using tab indentation — detect tab step',
+            code: '\nintl.createMessages({\n\tkey: {meta: {id: 1}, ru: null, en: 1},\n});\n',
+            filename: I18N_FILE,
+            options: defaultOptions,
+            errors: [{messageId: 'wrongKeyOrder'}],
+            output: '\nintl.createMessages({\n\tkey: {\n\t\tru: null,\n\t\ten: 1,\n\t\tmeta: {id: 1},\n\t},\n});\n',
+        },
     ],
 });

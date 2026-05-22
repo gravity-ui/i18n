@@ -10,6 +10,12 @@ import {
     isCreateMessagesCall,
     type I18nCreateMessagesFilenamesOptions,
 } from '../shared/create-messages-call';
+import {
+    buildMultilineObject,
+    detectIndentStep,
+    getIndentBeforeIndex,
+    isObjectMultilineFormatted,
+} from '../shared/multiline-message-body';
 
 type SortMessageLocalesOptions = I18nCreateMessagesFilenamesOptions & {
     localesOrder?: string[];
@@ -231,6 +237,35 @@ export const rule: Rule.RuleModule = {
                         const lastToken = sourceCode.getLastToken(value);
                         if (!lastToken || lastToken.value !== '}') {
                             return null;
+                        }
+
+                        // When the message body is not properly multiline (single-line,
+                        // mixed-format after auto-id injection, irregular indentation),
+                        // normalize the entire body to multiline *and* apply the desired
+                        // order in one fix. Subsequent passes can then operate on a
+                        // canonical layout.
+                        if (
+                            value.range !== undefined &&
+                            !isObjectMultilineFormatted(sourceCode, value)
+                        ) {
+                            const baseIndent =
+                                translation.range !== undefined
+                                    ? getIndentBeforeIndex(sourceCode, translation.range[0])
+                                    : '';
+                            const step = detectIndentStep(sourceCode, baseIndent);
+                            const replacement = buildMultilineObject({
+                                sourceCode,
+                                obj: value,
+                                baseIndent,
+                                step,
+                                desiredOrder: desired,
+                            });
+
+                            if (replacement === null) {
+                                return null;
+                            }
+
+                            return fixer.replaceTextRange(value.range, replacement);
                         }
 
                         const afterLast = sourceCode.text.slice(last.range[1], lastToken.range[0]);
