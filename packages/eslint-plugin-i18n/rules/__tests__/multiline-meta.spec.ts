@@ -219,5 +219,79 @@ intl.createMessages({
 });
 `,
         },
+        {
+            name: 'one-line body with inline meta — first pass normalizes body, meta stays inline',
+            code: `
+intl.createMessages({
+    key: {meta: {id: 'x'}, ru: null, en: 'Hello'},
+});
+`,
+            filename: I18N_FILE,
+            options: defaultOptions,
+            errors: [{messageId: 'inlineMeta'}],
+            // Body is normalized first; the resulting (still inline) meta will be
+            // turned multiline on the next ESLint fix pass.
+            output: `
+intl.createMessages({
+    key: {
+        meta: {id: 'x'},
+        ru: null,
+        en: 'Hello',
+    },
+});
+`,
+        },
+        {
+            name: 'mixed-format meta (first prop inline with brace) — reflow to clean multiline',
+            code: `
+intl.createMessages({
+    key: {
+        ru: '',
+        en: '',
+        meta: {id: 'a',
+            markdown: true,
+        },
+    },
+});
+`,
+            filename: I18N_FILE,
+            options: defaultOptions,
+            errors: [{messageId: 'inlineMeta'}],
+            output: `
+intl.createMessages({
+    key: {
+        ru: '',
+        en: '',
+        meta: {
+            id: 'a',
+            markdown: true,
+        },
+    },
+});
+`,
+        },
+        {
+            name: 'mixed-format body after auto-id injection — body normalized first',
+            code: `
+intl.createMessages({
+    key: {meta:{id:'x'},
+        ru: '',
+        en: '',
+    },
+});
+`,
+            filename: I18N_FILE,
+            options: defaultOptions,
+            errors: [{messageId: 'inlineMeta'}],
+            output: `
+intl.createMessages({
+    key: {
+        meta:{id:'x'},
+        ru: '',
+        en: '',
+    },
+});
+`,
+        },
     ],
 });
