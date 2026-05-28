@@ -1,6 +1,10 @@
-# This workflow creates a release branch with version bumps and changelogs,
-# pushes tags, creates GitHub releases, and opens a PR to merge back into main.
-# After the PR is merged, run publish.yml to publish packages to npm.
+# Runs `nx release` directly on main: bumps versions, writes changelogs,
+# commits, tags, pushes commits+tags to origin, and creates GitHub releases.
+# Publishing to npm happens in publish.yml, which is triggered by the push
+# this workflow makes to main.
+#
+# This matches the canonical Nx Release flow for independent versioning:
+# https://nx.dev/recipes/nx-release/publish-in-ci-cd
 
 name: Release
 
@@ -13,7 +17,6 @@ jobs:
     runs-on: ubuntu-latest
     permissions:
       contents: write
-      pull-requests: write
       id-token: write
     steps:
       - name: Checkout
@@ -48,68 +51,16 @@ jobs:
           git config --local user.email "111915794+gravity-ui-bot@users.noreply.github.com"
           git config --local user.name "gravity-ui-bot"
 
-          # Save tags before release to detect new ones later
-          git tag -l > /tmp/tags-before.txt
+          # Use the App token for pushes so the resulting push to main can
+          # trigger publish.yml (the default GITHUB_TOKEN does not trigger
+          # downstream workflows).
+          git remote set-url origin "https://x-access-token:${GH_TOKEN}@github.com/${{ github.repository }}.git"
 
-          # nx release will version, changelog, commit, and tag locally (no push)
+          # nx.json has git.push=true and git.tag=true, so this single command
+          # versions, changelogs, commits, tags, pushes commits+tags, and
+          # creates GitHub releases. Publishing to npm is skipped — that runs
+          # in publish.yml after this push lands on main.
           pnpm exec nx release --skip-publish --verbose
         env:
           GITHUB_TOKEN: ${{ steps.generate-token.outputs.token }}
-          GH_TOKEN: ${{ steps.generate-token.outputs.token }}
-
-      - name: Check for changes
-        id: check-changes
-        run: |
-          if git diff --quiet HEAD origin/main; then
-            echo "has_changes=false" >> $GITHUB_OUTPUT
-          else
-            echo "has_changes=true" >> $GITHUB_OUTPUT
-          fi
-
-      - name: Create release branch and PR
-        if: steps.check-changes.outputs.has_changes == 'true'
-        run: |
-          BRANCH="release/$(date +%Y-%m-%d-%H%M%S)"
-          git checkout -b "$BRANCH"
-
-          # Configure git to use token for push
-          git remote set-url origin "https://x-access-token:${GH_TOKEN}@github.com/${{ github.repository }}.git"
-
-          # Push the release branch with tags
-          git push origin "$BRANCH" --follow-tags
-
-          # Create PR
-          gh pr create \
-            --title "chore(release): publish" \
-            --body "$(cat <<'EOF'
-          ## Release
-
-          This PR was automatically created by the release workflow.
-          It contains version bumps, changelog updates, and release tags.
-
-          **After merging, run the Publish workflow to publish packages to npm.**
-          EOF
-          )" \
-            --label "release" \
-            --base main \
-            --head "$BRANCH"
-        env:
-          GH_TOKEN: ${{ steps.generate-token.outputs.token }}
-
-      - name: Create GitHub releases for new tags
-        if: steps.check-changes.outputs.has_changes == 'true'
-        run: |
-          # Find new tags created by nx release
-          git tag -l > /tmp/tags-after.txt
-          NEW_TAGS=$(comm -13 /tmp/tags-before.txt /tmp/tags-after.txt)
-
-          for TAG in $NEW_TAGS; do
-            echo "Creating GitHub release for $TAG"
-            # Extract changelog entry for this version from the tag's package
-            gh release create "$TAG" \
-              --title "$TAG" \
-              --generate-notes \
-              --target "$(git rev-parse HEAD)" || echo "Warning: failed to create release for $TAG"
-          done
-        env:
           GH_TOKEN: ${{ steps.generate-token.outputs.token }}

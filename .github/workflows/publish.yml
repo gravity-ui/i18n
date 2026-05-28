@@ -1,11 +1,12 @@
-# This workflow is used to publish the packages to npm.
-# It runs automatically after a release PR is merged, or can be triggered manually.
+# Publishes packages to npm after a release commit lands on main.
+# The release commit (and its tags + GitHub releases) is created by
+# release.yml. Triggering is filtered on the release commit message so that
+# regular pushes to main do not republish.
 
 name: Publish
 
 on:
-  pull_request:
-    types: [closed]
+  push:
     branches: [main]
   workflow_dispatch:
 
@@ -14,10 +15,11 @@ jobs:
     name: Publish
     if: >-
       github.event_name == 'workflow_dispatch' ||
-      (github.event.pull_request.merged == true &&
-       contains(github.event.pull_request.labels.*.name, 'release'))
+      startsWith(github.event.head_commit.message, 'chore(release): publish')
     runs-on: ubuntu-latest
-    permissions: write-all
+    permissions:
+      contents: read
+      id-token: write
 
     timeout-minutes: 10
     steps:
