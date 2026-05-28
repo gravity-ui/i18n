@@ -1,3 +1,13 @@
+## 2.6.1 (2026-05-28)
+
+### 🩹 Fixes
+
+- i18n formating after using multiline-meta and sort-message-locales plugins ([a725744](https://github.com/gravity-ui/i18n/commit/a725744))
+
+### ❤️ Thank You
+
+- Kirill Kharitonov
+
 ## 2.6.0 (2026-05-21)
 
 ### 🚀 Features
