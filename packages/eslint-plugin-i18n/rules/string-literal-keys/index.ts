@@ -1,5 +1,5 @@
 import {createSourceVisitors} from '@gravity-ui/i18n-cli';
-import {ESLintUtils} from '@typescript-eslint/utils';
+import {ESLintUtils, TSESTree} from '@typescript-eslint/utils';
 
 const MESSAGE = 'Key in i18n call must be String Literal';
 
@@ -39,7 +39,10 @@ export const rule = ESLintUtils.RuleCreator.withoutDocs({
                 if (idNode.type !== 'Literal') {
                     context.report({
                         messageId: 'stringLiteralOnly',
-                        node: idNode,
+                        // `idNode` is typed against @gravity-ui/i18n-cli's own (older) copy of
+                        // @typescript-eslint/utils, which is a structurally-compatible but
+                        // nominally distinct AST node type from this package's copy.
+                        node: idNode as unknown as TSESTree.Node,
                     });
                 }
             },
@@ -47,12 +50,15 @@ export const rule = ESLintUtils.RuleCreator.withoutDocs({
                 if (idAttr.value && idAttr.value.type !== 'Literal') {
                     context.report({
                         messageId: 'stringLiteralOnly',
-                        node: idAttr,
+                        // same cross-version node-type bridge as above
+                        node: idAttr as unknown as TSESTree.Node,
                     });
                 }
             },
         });
 
-        return i18nCallVisitors;
+        // createSourceVisitors is typed against i18n-cli's older @typescript-eslint/utils copy;
+        // bridge the RuleListener type identity to this package's copy
+        return i18nCallVisitors as unknown as ESLintUtils.RuleListener;
     },
 });

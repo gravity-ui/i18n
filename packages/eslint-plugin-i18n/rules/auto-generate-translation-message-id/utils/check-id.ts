@@ -29,7 +29,7 @@ export const checkId = ({
     invalidCharsReplacer,
     validateId = false,
 }: Omit<CheckIdProps, 'idName'>) => {
-    const filename = context.getFilename();
+    const filename = context.filename;
 
     if (typeof generateId === 'function') {
         checkGenerateId({

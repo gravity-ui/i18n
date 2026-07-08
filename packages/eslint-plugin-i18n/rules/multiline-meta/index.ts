@@ -64,13 +64,13 @@ export const rule: Rule.RuleModule = {
         const filenameMatcher = options.filenameMatcher ?? DEFAULT_FILENAME_MATCHER;
         const matchesFilename = createFilenamePredicate(filenameMatcher);
 
-        const filename = context.getFilename();
+        const filename = context.filename;
 
         if (!matchesFilename(filename)) {
             return {};
         }
 
-        const sourceCode = context.getSourceCode();
+        const sourceCode = context.sourceCode;
 
         function visitCreateMessagesCall(node: CallExpression) {
             if (!isCreateMessagesCall(node, sourceCode, memberExpressions, callExpressions)) {

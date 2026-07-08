@@ -26,7 +26,7 @@ export const getMessagesExpression = ({
     callExpressions,
     ...rest
 }: GetMessagesExpressionProps) => {
-    const sourceCode = context.getSourceCode();
+    const sourceCode = context.sourceCode;
 
     return (node: CallExpressionNode | MemberExpressionNode) => {
         let messages;

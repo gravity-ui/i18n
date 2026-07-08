@@ -24,7 +24,7 @@ describe('checkId', () => {
     let defaultCheckIdParams: Omit<CheckIdProps, 'idName' | 'defaultMessageName'>;
 
     beforeEach(() => {
-        contextMock = {getFilename: jest.fn(() => 'test-file.js')} as unknown as Rule.RuleContext;
+        contextMock = {filename: 'test-file.js'} as unknown as Rule.RuleContext;
         nodeMock = {} as Node;
         reportLackIdMock = jest.fn();
         reportMaxValidLengthExceededMock = jest.fn();
