@@ -18,7 +18,6 @@ export const rule: Rule.RuleModule = {
         type: 'problem',
         docs: {
             description: 'Prevent importing i18n.ts files from other nesting levels',
-            category: 'Best Practices',
             url: '/docs/rules/restrict-i18n-imports.md',
             recommended: false,
         },
@@ -65,7 +64,7 @@ export const rule: Rule.RuleModule = {
 
                 if (exclusions.filePathsMatchers) {
                     let filePath = importPath;
-                    const filename = context.getFilename();
+                    const filename = context.filename;
                     if (importPath.startsWith('.')) {
                         filePath = path.resolve(path.dirname(filename), importPath);
                     }

@@ -184,13 +184,13 @@ export const rule: Rule.RuleModule = {
         const matchesFilename = createFilenamePredicate(filenameMatcher);
         const messageText = buildOrderMessage(localesOrder);
 
-        const filename = context.getFilename();
+        const filename = context.filename;
 
         if (!matchesFilename(filename)) {
             return {};
         }
 
-        const sourceCode = context.getSourceCode();
+        const sourceCode = context.sourceCode;
 
         function visitCreateMessagesCall(node: CallExpression) {
             if (!isCreateMessagesCall(node, sourceCode, memberExpressions, callExpressions)) {
