@@ -2,13 +2,13 @@
 
 Библиотека **i18n-node** - это решение для интернационализации (i18n), разработанное для упрощения процесса добавления многоязычной поддержки в приложения Node. Разработан на базе **[i18n-core](../i18n-core/)**.
 
-## Использование
-
-### Установка
+## Install
 
 ```bash
 npm install @gravity-ui/i18n-node
 ```
+
+## Usage
 
 ### Инициализация инстанса интернационализации
 
@@ -138,6 +138,32 @@ const instance = intl.getLocaleInstance('en')
 Для удобства работы рекомендуется использовать существующие eslint правила из пакета [eslint-plugin-i18n](../eslint-plugin-i18n/README.md):
 - [auto-generate-translation-message-id](../eslint-plugin-i18n/docs/rules/auto-generate-translation-message-id.md) - авто-генерация `id` для создаваемых переводов. Только для проектов, использующих интеграцию с танкером или другим хранилищем переводов.
 - [restrict-i18n-imports](../eslint-plugin-i18n/docs/rules/restrict-i18n-imports.md) - правило запрещает импорт переводов из `i18n.ts` файлов, расположенных на другом уровне вложенности (кроме исключений).Правило позволяет сохранять принятый подход к хранению ключей - рядом с местом использования.
+
+## License
+
+Distributed under the MIT License. See [LICENSE](../../LICENSE) for details.
+
+## For AI agents
+
+The Node.js internationalization layer for Gravity UI services, built on i18n-core with ICU MessageFormat — reach for it to translate server-side strings (errors, logs, API responses) without pulling React into the bundle.
+
+### When to use
+
+- Translating server/Node strings with ICU MessageSyntax (`{count}` plurals, select) on the backend.
+- Per-request locale via cached locale instances (`intl.getLocaleInstance(locale)`).
+- Bundling only the used translation keys via the companion babel/optimize plugins.
+
+### When not to use
+
+- In a React client app, use [`@gravity-ui/i18n-react`](../i18n-react) — it provides the React `t()`/`<Message>` bindings; this package is server-oriented.
+- For raw keyset translation without ICU MessageFormat, the core [`@gravity-ui/i18n`](../i18n) is lighter.
+
+### Common pitfalls
+
+- **Importing `createIntl` from `@gravity-ui/i18n-react` by mistake** — on the server import from `@gravity-ui/i18n-node` to avoid bundling React.
+- **Hallucinating `<Message>` on the server** — there is no rich-text component here; use the `t()` function for plain-text translations only.
+- **Forgetting `getLocaleInstance`** — translations are resolved per locale instance; call `instance.useMessages(messages)` to obtain the bound `t()` for that locale.
+- **Markdown keys without a build plugin** — markdown in keys stays raw unless `i18n-babel-plugin` (Babel) or `i18n-optimize-plugin` (Webpack/Rspack) transforms it at build time.
 
 
 
