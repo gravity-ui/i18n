@@ -14,7 +14,8 @@
     "dist"
   ],
   "scripts": {
-    "build": "pnpm run build:clean && pnpm run build:compile",
+    "build": "pnpm run build:clean && pnpm run build:compile && pnpm run build:docs",
+    "build:docs": "node scripts/build-docs.mjs",
     "build:compile": "tsc -p tsconfig.json && tsc -p tsconfig.cjs.json",
     "build:clean": "rm -rf dist",
     "lint": "eslint .",
@@ -35,6 +36,7 @@
     "react-intl": "^7.1.14"
   },
   "devDependencies": {
+    "@gravity-ui/readme-validator": "catalog:",
     "eslint-config": "workspace:*",
     "@types/react": "catalog:",
     "@types/jest": "catalog:",

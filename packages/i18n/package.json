@@ -11,7 +11,8 @@
     "url": "https://github.com/gravity-ui/i18n.git"
   },
   "scripts": {
-    "build": "npm run build:clean && npm run build:compile",
+    "build": "npm run build:clean && npm run build:compile && npm run build:docs",
+    "build:docs": "node scripts/build-docs.mjs",
     "build:compile": "tsc -p tsconfig.json && tsc -p tsconfig.cjs.json",
     "build:clean": "rm -rf build",
     "lint": "eslint src/*",
@@ -30,6 +31,7 @@
     "@commitlint/cli": "18.2.0",
     "@commitlint/config-conventional": "18.1.0",
     "@gravity-ui/prettier-config": "^1.1.0",
+    "@gravity-ui/readme-validator": "catalog:",
     "@gravity-ui/tsconfig": "^1.0.0",
     "@types/jest": "catalog:",
     "eslint": "catalog:",

@@ -4,17 +4,19 @@
 
 Utilities in the I18N package are designed for internationalization of Gravity UI services.
 
-### Install
+## Install
 
-`npm install --save @gravity-ui/i18n`
+```shell
+npm install --save @gravity-ui/i18n
+```
 
-### API
+## API
 
-#### constructor(options)
+### constructor(options)
 
 Accepts `options` object with optional `logger` that would be used for logging library warnings.
 
-##### logger
+#### logger
 
 Logger should have explicit `log` method with following signature:
 
@@ -24,9 +26,9 @@ Logger should have explicit `log` method with following signature:
    * `logger` - where to log library messages
    * `extra` - additional options object, with a single `type` string, that is always `i18n`
 
-### Use examples
+## Usage
 
-#### `keysets/en.json`
+### `keysets/en.json`
 
 ```json
 {
@@ -359,3 +361,33 @@ You can do that by passing the result type to I18NFn. However, with large file s
 
 They can be typed, we'll appreciate if you help implementing it. The case is that other methods are used in 1% of cases.
 
+## License
+
+Distributed under the MIT License. See [LICENSE](../../LICENSE) for details.
+
+## For AI agents
+
+The core internationalization engine for Gravity UI services — register translation keysets, switch language, and translate keys with templating, CLDR pluralization, and nesting — reach for it on the server or in non-React clients when you need raw ICU-free keyset translation without a framework binding.
+
+### When to use
+
+- Translating UI/service strings on the server (Node) or in vanilla JS where React hooks are not available.
+- CLDR pluralization (`Intl.PluralRules`) and `{{variable}}` templating from JSON keysets.
+- Typed translation calls via `I18NFn<typeof Keysets>` for compile-time key checking.
+
+### When not to use
+
+- In a React app, use [`@gravity-ui/i18n-react`](../i18n-react) — it provides the React bindings and hooks on top of this core.
+- On the server with ICU Message Syntax requirements, use [`@gravity-ui/i18n-node`](../i18n-node), which adds the server-side ICU layer.
+
+### Common pitfalls
+
+- **Hallucinating a default export** — the class is a named export: `const {I18N} = require('@gravity-ui/i18n'); new I18N()`.
+- **Calling `i18n('key')` before `setLang` / `registerKeysets`** — keys resolve to themselves or empty until keysets for the active language are registered.
+- **Confusing keyset vs key** — the call signature is `i18n(keyset, key[, params])`, not a single flat key; `keyset('key')` is a bound shorthand.
+- **Old plural array format** — arrays of 4 values are deprecated; use the CLDR object form (`one`/`other`/`zero`/...), removed in v2.
+
+
+## Documentation for AI agents
+
+Agent-readable documentation for the installed version is located in `node_modules/@gravity-ui/i18n/build/docs/INDEX.md`.
