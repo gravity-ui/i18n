@@ -167,3 +167,7 @@ The Node.js internationalization layer for Gravity UI services, built on i18n-co
 
 
 
+
+## Documentation for AI agents
+
+Agent-readable documentation for the installed version is located in `node_modules/@gravity-ui/i18n-node/dist/docs/INDEX.md`.

@@ -387,3 +387,7 @@ The core internationalization engine for Gravity UI services — register transl
 - **Confusing keyset vs key** — the call signature is `i18n(keyset, key[, params])`, not a single flat key; `keyset('key')` is a bound shorthand.
 - **Old plural array format** — arrays of 4 values are deprecated; use the CLDR object form (`one`/`other`/`zero`/...), removed in v2.
 
+
+## Documentation for AI agents
+
+Agent-readable documentation for the installed version is located in `node_modules/@gravity-ui/i18n/build/docs/INDEX.md`.

@@ -209,3 +209,7 @@ The React internationalization layer for Gravity UI apps, built on i18n-core wit
 - **Using `t()` for rich text with HTML** — `t()` returns plain text and strips tags; use the `<Message>` component with `values={{tag: chunks => ...}}` for rich text.
 - **Markdown in keys without a build plugin** — markdown keys render as raw text unless `i18n-babel-plugin` (Babel) or `i18n-optimize-plugin` (Webpack/Rspack) is enabled in the build.
 - **Forgetting `allowedLocales`** — every declared translation must include a value for each locale in `allowedLocales`, or the build/typecheck fails.
+
+## Documentation for AI agents
+
+Agent-readable documentation for the installed version is located in `node_modules/@gravity-ui/i18n-react/dist/docs/INDEX.md`.

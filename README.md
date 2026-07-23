@@ -95,3 +95,7 @@ A monorepo of Gravity UI internationalization packages — the core engine, Reac
 - **Mixing `i18n` (core, no React) and `i18n-react`** — choose by runtime: core for non-React, `i18n-react` for React clients, `i18n-node` for Node.
 - **Skipping the build plugin** — markdown translation keys stay raw unless the babel/optimize plugin transforms them at build time.
 - **Using pnpm commands without nx** — package scripts are orchestrated through `nx` (`pnpm nx <target> <pkg>`), not direct per-package `npm run`.
+
+## Documentation for AI agents
+
+Agent-readable documentation for the installed version is located in each package's `node_modules/@gravity-ui/<package>/<build|dist>/docs/INDEX.md` (e.g. `node_modules/@gravity-ui/i18n/build/docs/INDEX.md`).
