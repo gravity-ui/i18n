@@ -1,4 +1,6 @@
-import {escapeRegExp} from 'lodash-es';
+function escapeRegExp(value: string) {
+    return value.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+}
 
 export const LANGUAGES_DIR_PREFIX = '.compiled-locales';
 export const LANGUAGES_DIR_EXPRESSION = new RegExp(

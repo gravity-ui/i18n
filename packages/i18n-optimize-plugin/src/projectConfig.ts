@@ -1,4 +1,4 @@
-import {loadProjectConfig, normalizeProjectConfig} from '@gravity-ui/i18n-cli';
+import {loadProjectConfig, normalizeProjectConfig} from '@gravity-ui/i18n-cli/load-config';
 import type {Options} from './types.js';
 
 /**

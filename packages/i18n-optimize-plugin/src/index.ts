@@ -1,9 +1,7 @@
 import type {UnpluginInstance, UnpluginFactory} from 'unplugin';
 import {createUnplugin} from 'unplugin';
 import type {Options} from './types.js';
-import {transformTranslationFile} from './core/transformTranslationFile.js';
-import {resolveProjectConfig} from './projectConfig.js';
-import {TECH_LOCALE} from '@gravity-ui/i18n-babel-plugin';
+import {TECH_LOCALE} from '@gravity-ui/i18n-types';
 
 const MESSAGE_FORMAT_PARSER_ALIAS = {
     '@formatjs/icu-messageformat-parser': '@formatjs/icu-messageformat-parser/no-parser',
@@ -17,9 +15,14 @@ function hasCodeCreateMessagesCall(code: string) {
     return code.includes('createMessages') || code.includes('declareMessages');
 }
 
-export const unpluginFactory: UnpluginFactory<Options | undefined> = (options, meta) => {
-    const {allowedLocales, fallbackLocales} = resolveProjectConfig(options?.config);
+async function loadProjectConfigLazily(config: Options['config']) {
+    // Поиск конфига тянет за собой typescript-загрузчик, поэтому импортируем его лениво
+    const {resolveProjectConfig} = await import('./projectConfig.js');
 
+    return resolveProjectConfig(config);
+}
+
+export const unpluginFactory: UnpluginFactory<Options | undefined> = (options, meta) => {
     let optimizeLocaleChunks = options?.optimizeLocaleChunks;
 
     if (optimizeLocaleChunks) {
@@ -39,10 +42,20 @@ export const unpluginFactory: UnpluginFactory<Options | undefined> = (options, m
         }
     }
 
-    const locales =
-        typeof optimizeLocaleChunks === 'object' && 'generateTechLocale' in optimizeLocaleChunks
-            ? [...allowedLocales, TECH_LOCALE]
-            : allowedLocales;
+    let projectConfig: ReturnType<typeof loadProjectConfigLazily> | undefined;
+
+    const getLocales = async () => {
+        projectConfig = projectConfig ?? loadProjectConfigLazily(options?.config);
+
+        const {allowedLocales, fallbackLocales} = await projectConfig;
+
+        const locales =
+            typeof optimizeLocaleChunks === 'object' && 'generateTechLocale' in optimizeLocaleChunks
+                ? [...allowedLocales, TECH_LOCALE]
+                : allowedLocales;
+
+        return {locales, fallbackLocales};
+    };
 
     return {
         name: 'i18n-optimize-plugin',
@@ -54,11 +67,17 @@ export const unpluginFactory: UnpluginFactory<Options | undefined> = (options, m
             return isTranslationsFile(id);
         },
 
-        transform(code, id) {
+        async transform(code, id) {
             // Исключаем случайно попавшие файлы, в которых нет вызова createMessages или declareMessages
             if (!hasCodeCreateMessagesCall(code)) {
                 return code;
             }
+
+            // Babel и парсеры переводов нужны только здесь, поэтому не грузим их при старте сборки
+            const [{transformTranslationFile}, {locales, fallbackLocales}] = await Promise.all([
+                import('./core/transformTranslationFile.js'),
+                getLocales(),
+            ]);
 
             return transformTranslationFile(code, id, {
                 typograf: options?.typograph,
