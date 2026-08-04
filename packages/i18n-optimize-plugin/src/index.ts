@@ -2,7 +2,7 @@ import type {UnpluginInstance, UnpluginFactory} from 'unplugin';
 import {createUnplugin} from 'unplugin';
 import type {Options} from './types.js';
 import {transformTranslationFile} from './core/transformTranslationFile.js';
-import {loadProjectConfig} from '@gravity-ui/i18n-cli';
+import {resolveProjectConfig} from './projectConfig.js';
 import {TECH_LOCALE} from '@gravity-ui/i18n-babel-plugin';
 
 const MESSAGE_FORMAT_PARSER_ALIAS = {
@@ -18,7 +18,7 @@ function hasCodeCreateMessagesCall(code: string) {
 }
 
 export const unpluginFactory: UnpluginFactory<Options | undefined> = (options, meta) => {
-    const {allowedLocales, fallbackLocales} = loadProjectConfig();
+    const {allowedLocales, fallbackLocales} = resolveProjectConfig(options?.config);
 
     let optimizeLocaleChunks = options?.optimizeLocaleChunks;
 
