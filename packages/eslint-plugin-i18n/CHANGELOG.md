@@ -1,3 +1,22 @@
+# 3.0.0 (2026-08-05)
+
+### 🚀 Features
+
+- ⚠️  **eslint-plugin-i18n:** support ESLint 10 (v3.0.0) ([#81](https://github.com/gravity-ui/i18n/pull/81))
+
+### 🩹 Fixes
+
+- i18n formating after using multiline-meta and sort-message-locales plugins ([a725744](https://github.com/gravity-ui/i18n/commit/a725744))
+
+### ⚠️  Breaking Changes
+
+- **eslint-plugin-i18n:** minimum supported ESLint is now 9 (ESLint 8 dropped).
+
+### ❤️ Thank You
+
+- Kirill Kharitonov
+- Konstantin Mamaev @MrMeison
+
 ## 2.6.1 (2026-05-28)
 
 ### 🩹 Fixes
