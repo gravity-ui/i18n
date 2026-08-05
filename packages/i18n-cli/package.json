@@ -22,6 +22,12 @@
       "require": "./dist/config/index.js",
       "default": "./dist/config/index.js"
     },
+    "./load-config": {
+      "types": "./dist/config/loadProjectConfig.d.ts",
+      "import": "./dist/config/loadProjectConfig.mjs",
+      "require": "./dist/config/loadProjectConfig.js",
+      "default": "./dist/config/loadProjectConfig.js"
+    },
     "./dist/*": {
       "types": "./dist/*.d.ts"
     }
@@ -30,6 +36,9 @@
     "*": {
       "config": [
         "dist/config/index.d.ts"
+      ],
+      "load-config": [
+        "dist/config/loadProjectConfig.d.ts"
       ]
     }
   },

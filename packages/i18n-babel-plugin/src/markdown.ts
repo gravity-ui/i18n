@@ -1,7 +1,43 @@
-import transform from '@diplodoc/transform';
-import code from '@diplodoc/transform/lib/plugins/code';
-import sup from '@diplodoc/transform/lib/plugins/sup';
-import {MarkdownItPluginCb, StateCore} from '@diplodoc/transform/lib/typings';
+import type transform from '@diplodoc/transform';
+import type code from '@diplodoc/transform/lib/plugins/code';
+import type sup from '@diplodoc/transform/lib/plugins/sup';
+import type {MarkdownItPluginCb, StateCore} from '@diplodoc/transform/lib/typings';
+
+type MarkdownTransform = {
+    transform: typeof transform;
+    code: typeof code;
+    sup: typeof sup;
+};
+
+let markdownTransform: MarkdownTransform | undefined;
+
+function interopDefault<T>(required: unknown): T {
+    const requiredModule = required as {__esModule?: boolean; default?: T};
+
+    return requiredModule?.__esModule && requiredModule.default
+        ? requiredModule.default
+        : (required as T);
+}
+
+/**
+ * Загружает `@diplodoc/transform` при первом сообщении с `meta.markdown`.
+ *
+ * Пакет весит около сотни миллисекунд на старте, а markdown в переводах есть далеко не
+ * у всех проектов, поэтому не тянем его вместе с самим babel-плагином.
+ */
+function getMarkdownTransform(): MarkdownTransform {
+    if (!markdownTransform) {
+        /* eslint-disable @typescript-eslint/no-require-imports */
+        markdownTransform = {
+            transform: interopDefault<typeof transform>(require('@diplodoc/transform')),
+            code: interopDefault<typeof code>(require('@diplodoc/transform/lib/plugins/code')),
+            sup: interopDefault<typeof sup>(require('@diplodoc/transform/lib/plugins/sup')),
+        };
+        /* eslint-enable @typescript-eslint/no-require-imports */
+    }
+
+    return markdownTransform;
+}
 
 // Используется чтобы сохранить параметры в ссылке
 function transformUrl(href: string) {
@@ -50,6 +86,8 @@ const linksPlugin: MarkdownItPluginCb = (md) => {
 };
 
 export function transformMarkdownToHTML(message: string) {
+    const {transform, code, sup} = getMarkdownTransform();
+
     const result = transform(message, {
         plugins: [sup, code, linksPlugin],
     }).result.html;

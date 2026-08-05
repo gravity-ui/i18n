@@ -7,13 +7,16 @@ import {
 } from './core/constants.js';
 import {LanguageRuntimePlugin} from './webpack/runtime.js';
 import {applySplitChunks, createI18nChunkExpression} from './webpack/chunks.js';
-import {loadProjectConfig} from '@gravity-ui/i18n-cli';
+import {resolveProjectConfig} from './projectConfig.js';
 import WebpackAssetsManifest from 'webpack-assets-manifest';
-import {TECH_LOCALE} from '@gravity-ui/i18n-babel-plugin';
+import {TECH_LOCALE} from '@gravity-ui/i18n-types';
 import {DEFAULT_ASSETS_MANIFEST_FILE_NAME} from './constants.js';
 
-const createAssetsManifestPlugins = (options?: OptimizeLocaleChunks) => {
-    const {allowedLocales} = loadProjectConfig();
+const createAssetsManifestPlugins = (
+    options?: OptimizeLocaleChunks,
+    config?: Options['config'],
+) => {
+    const {allowedLocales} = resolveProjectConfig(config);
 
     let assetsManifestFileName = DEFAULT_ASSETS_MANIFEST_FILE_NAME;
     let locales = allowedLocales;
@@ -80,7 +83,7 @@ function applyI18nOptimizePlugin(originalConfig: Configuration, options?: Option
                           [LANGUAGE_VARIABLE_NAME_ENV_KEY]: runtimeLanguageVariableName,
                       }),
                       new LanguageRuntimePlugin(runtimeLanguageVariableName),
-                      ...createAssetsManifestPlugins(optimizeLocaleChunks),
+                      ...createAssetsManifestPlugins(optimizeLocaleChunks, options?.config),
                   ]
                 : []),
             I18nPlugin.webpack(options),

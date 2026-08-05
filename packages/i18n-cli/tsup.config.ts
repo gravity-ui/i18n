@@ -2,7 +2,12 @@
 import {defineConfig} from 'tsup';
 
 export default defineConfig({
-    entry: ['src/index.ts', 'src/cli/run.ts', 'src/config/index.ts'],
+    entry: [
+        'src/index.ts',
+        'src/cli/run.ts',
+        'src/config/index.ts',
+        'src/config/loadProjectConfig.ts',
+    ],
     format: ['cjs', 'esm'],
     dts: true,
     splitting: false,

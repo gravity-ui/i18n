@@ -1,4 +1,5 @@
 import type {TypografConfig} from '@gravity-ui/i18n-babel-plugin';
+import type {ProjectConfig} from '@gravity-ui/i18n-cli/config';
 
 interface CommonOptimizeLocaleChunks {
     /**
@@ -47,6 +48,14 @@ interface CustomOptimizeLocaleChunks extends CommonOptimizeLocaleChunks {
 export type OptimizeLocaleChunks = boolean | BaseOptimizeLocaleChunks | CustomOptimizeLocaleChunks;
 
 export interface Options {
+    /**
+     * Конфигурация проекта: объект — используется как есть, строка — путь до файла конфига.
+     * По умолчанию `i18n.config.ts` ищется от текущей рабочей директории до корня репозитория.
+     *
+     * Стоит задать явно, если сборка запускается из директории, из которой конфиг не находится,
+     * либо чтобы не платить за его поиск.
+     */
+    config?: ProjectConfig | string;
     /**
      * Конфигурация для типографа.
      * По умолчанию включен (true).

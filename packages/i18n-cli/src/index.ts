@@ -13,8 +13,8 @@ export {parseProjectTranslations} from './parseProjectTranslations';
 
 export {defineConfig} from './config/defineConfig';
 export type {ProjectConfig} from './config/types';
-export type {NormalizedProjectConfig} from './config/loadProjectConfig';
-export {loadProjectConfig} from './config/loadProjectConfig';
+export type {LoadProjectConfigOptions, NormalizedProjectConfig} from './config/loadProjectConfig';
+export {loadProjectConfig, normalizeProjectConfig} from './config/loadProjectConfig';
 
 export {createSourceVisitors} from './parsing';
 

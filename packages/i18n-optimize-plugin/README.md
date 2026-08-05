@@ -62,6 +62,30 @@ export default defineConfig({
 
 ## Settings
 
+### config
+
+Project config with the locales the plugin optimizes translations for.
+
+By default `i18n.config.ts` is searched for from the current working directory up to the repository
+or workspace root. Pass this option to point the plugin at the config explicitly — either as an
+object or as a path to the config file:
+
+```ts
+import i18nConfig from './i18n.config';
+
+applyI18nOptimizePlugin(webpackConfig, {
+    config: i18nConfig,
+})
+```
+
+```ts
+applyI18nOptimizePlugin(webpackConfig, {
+    config: require.resolve('./i18n.config.ts'),
+})
+```
+
+Passing the config as an object also skips the config lookup entirely.
+
 ### typograf
 
 Allows configuring [typograf rules](https://github.com/typograf/typograf/blob/dev/docs/RULES.ru.md).

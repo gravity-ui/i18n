@@ -1,3 +1,5 @@
+import {existsSync, readFileSync} from 'node:fs';
+import {dirname, resolve} from 'node:path';
 import {cosmiconfigSync} from 'cosmiconfig';
 import {TypeScriptLoaderSync} from 'cosmiconfig-typescript-loader';
 import {log, MODULE_NAME} from '../shared';
@@ -13,7 +15,12 @@ type RequiredConfigOption = 'clientIntlModule' | 'serverIntlModule';
 export type NormalizedProjectConfig = Omit<ProjectConfig, RequiredConfigOption> &
     Required<Pick<ProjectConfig, RequiredConfigOption>>;
 
-function normalizeProjectConfig(projectConfig?: ProjectConfig): NormalizedProjectConfig {
+/**
+ * Подставляет дефолты в конфиг проекта: локали, пути до intl-модулей и матчеры серверных путей.
+ * Экспортируется, чтобы конфиг, переданный в обход поиска по файловой системе, получал те же
+ * значения по умолчанию, что и найденный на диске.
+ */
+export function normalizeProjectConfig(projectConfig?: ProjectConfig): NormalizedProjectConfig {
     const clientIntlModule = projectConfig?.clientIntlModule;
     const serverIntlModule = projectConfig?.serverIntlModule;
 
@@ -35,30 +42,130 @@ function normalizeProjectConfig(projectConfig?: ProjectConfig): NormalizedProjec
 // Порядок влияет на приоритеты
 const DEFAULT_SEARCH_PLACES = ['i18n.config.ts', 'i18n.config.js'];
 
-let cachedProjectConfig: NormalizedProjectConfig | undefined;
+/**
+ * Файлы, по которым определяется корень репозитория или воркспейса.
+ * Проверяются снизу вверх, побеждает ближайший к стартовой директории — так поиск
+ * не выходит за пределы репозитория.
+ */
+const WORKSPACE_ROOT_MARKERS = [
+    'pnpm-workspace.yaml',
+    'pnpm-lock.yaml',
+    'package-lock.json',
+    'yarn.lock',
+    'bun.lockb',
+    'deno.lock',
+    'lerna.json',
+    'nx.json',
+    'turbo.json',
+    '.git',
+];
 
-export const loadProjectConfig = (searchPlaces?: string[]): NormalizedProjectConfig => {
+function hasWorkspacesField(dir: string) {
+    try {
+        const packageJson = JSON.parse(readFileSync(resolve(dir, 'package.json'), 'utf-8'));
+        return Boolean(packageJson.workspaces);
+    } catch (_err) {
+        return false;
+    }
+}
+
+/**
+ * Ищет корень репозитория или воркспейса, поднимаясь вверх от `from`.
+ *
+ * Нужен как граница поиска конфига: в монорепозиториях сборка запускается из директории
+ * пакета (`apps/<app>`), а `i18n.config.ts` лежит в корне. Без этого поиск ограничен
+ * стартовой директорией и корневой конфиг не находится.
+ *
+ * @returns путь до корня либо `undefined`, если ни одного маркера вверх по дереву нет
+ */
+function findWorkspaceRoot(from: string): string | undefined {
+    let current = from;
+
+    for (;;) {
+        const isRoot =
+            WORKSPACE_ROOT_MARKERS.some((marker) => existsSync(resolve(current, marker))) ||
+            hasWorkspacesField(current);
+
+        if (isRoot) {
+            return current;
+        }
+
+        const parent = dirname(current);
+
+        if (parent === current) {
+            return undefined;
+        }
+
+        current = parent;
+    }
+}
+
+export type LoadProjectConfigOptions = {
+    /**
+     * Имена файлов конфига в порядке приоритета.
+     * По умолчанию `['i18n.config.ts', 'i18n.config.js']`.
+     */
+    searchPlaces?: string[];
+
+    /**
+     * Директория, с которой начинается поиск вверх по дереву.
+     * По умолчанию `process.cwd()`.
+     */
+    cwd?: string;
+
+    /**
+     * Директория, на которой поиск останавливается.
+     * По умолчанию — корень репозитория или воркспейса, а если маркеров корня нет — `cwd`.
+     */
+    stopDir?: string;
+
+    /**
+     * Путь до конкретного файла конфига. Если задан, поиск не выполняется.
+     */
+    configPath?: string;
+};
+
+const configCache = new Map<string, NormalizedProjectConfig>();
+
+export const loadProjectConfig = (
+    options?: string[] | LoadProjectConfigOptions,
+): NormalizedProjectConfig => {
+    const {
+        searchPlaces = DEFAULT_SEARCH_PLACES,
+        cwd = process.cwd(),
+        stopDir,
+        configPath,
+    } = Array.isArray(options) ? {searchPlaces: options} : (options ?? {});
+
+    const searchFrom = resolve(cwd);
+    const resolvedStopDir = stopDir ?? findWorkspaceRoot(searchFrom) ?? searchFrom;
+    const cacheKey = JSON.stringify([configPath, searchFrom, resolvedStopDir, searchPlaces]);
+
+    const cachedProjectConfig = configCache.get(cacheKey);
+
     if (cachedProjectConfig) {
         return cachedProjectConfig;
     }
 
     const explorer = cosmiconfigSync(MODULE_NAME, {
         cache: false,
-        stopDir: searchPlaces ? undefined : process.cwd(),
-        searchPlaces: searchPlaces ?? DEFAULT_SEARCH_PLACES,
+        stopDir: resolvedStopDir,
+        searchPlaces,
         loaders: {
             '.ts': TypeScriptLoaderSync(),
         },
     });
 
-    const cfg = explorer.search();
+    const cfg = configPath ? explorer.load(configPath) : explorer.search(searchFrom);
 
     if (!cfg) {
-        log('i18n config not found. Using default values');
+        log(
+            `i18n config (${searchPlaces.join(', ')}) not found in "${searchFrom}" up to "${resolvedStopDir}". Using default values`,
+        );
     }
 
-    const config = cfg?.config as ProjectConfig | undefined;
+    const config = normalizeProjectConfig(cfg?.config as ProjectConfig | undefined);
 
-    cachedProjectConfig = normalizeProjectConfig(config);
-    return cachedProjectConfig;
+    configCache.set(cacheKey, config);
+    return config;
 };
