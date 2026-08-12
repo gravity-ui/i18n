@@ -51,6 +51,20 @@ describe('transformations', () => {
         runTestWithSnap('i18n', 'target-locale-tech');
     });
 
+    describe('custom translations file name', () => {
+        it('does not transform custom named file by default', () => {
+            runTestWithSnap('custom-name-keysets');
+        });
+
+        it('transforms custom named file by string matcher', () => {
+            runTestWithSnap('custom-name-keysets', 'custom-filename');
+        });
+
+        it('transforms custom named file by regexp matcher', () => {
+            runTestWithSnap('custom-name-keysets', 'custom-filename-regexp');
+        });
+    });
+
     describe('declareMessages', () => {
         it('remove meta from messages', () => {
             runTestWithSnap('declare-messages-i18n');

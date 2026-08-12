@@ -1,0 +1,11 @@
+{
+  "presets": ["@babel/preset-typescript"],
+  "plugins": [
+    ["../../../dist/index.js", {
+      "root": "src/__tests__/__fixtures__",
+      "filenameMatcher": [
+        {"type": "regexp", "pattern": "custom-name-[^/]+\\.ts$"}
+      ]
+    }]
+  ]
+}

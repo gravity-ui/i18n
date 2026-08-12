@@ -3,14 +3,13 @@ import {resolve as pathResolve} from 'node:path';
 import {declare} from '@babel/helper-plugin-utils';
 import {PluginContext, PluginOptions} from './types';
 import {createTranslationsFileVisitor} from './translations-file';
-
-function isTranslationsFile(filePath: string) {
-    return filePath.endsWith('i18n.ts');
-}
+import {createTranslationsFilePredicate} from './filename-matcher';
 
 // @ts-expect-error declare написан так, что не получается валидно расширить тип PluginObj
 export const i18nPlugin = declare<PluginOptions, PluginObj<PluginContext>>((api, options) => {
     api.assertVersion(7);
+
+    const isTranslationsFile = createTranslationsFilePredicate(options.filenameMatcher);
 
     return {
         name: 'i18n-babel-plugin',

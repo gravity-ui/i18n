@@ -2,14 +2,11 @@ import type {UnpluginInstance, UnpluginFactory} from 'unplugin';
 import {createUnplugin} from 'unplugin';
 import type {Options} from './types.js';
 import {TECH_LOCALE} from '@gravity-ui/i18n-types';
+import {createTranslationsFilePredicate} from '@gravity-ui/i18n-babel-plugin/filename-matcher';
 
 const MESSAGE_FORMAT_PARSER_ALIAS = {
     '@formatjs/icu-messageformat-parser': '@formatjs/icu-messageformat-parser/no-parser',
 };
-
-function isTranslationsFile(filePath: string) {
-    return filePath.endsWith('i18n.ts');
-}
 
 function hasCodeCreateMessagesCall(code: string) {
     return code.includes('createMessages') || code.includes('declareMessages');
@@ -23,6 +20,8 @@ async function loadProjectConfigLazily(config: Options['config']) {
 }
 
 export const unpluginFactory: UnpluginFactory<Options | undefined> = (options, meta) => {
+    const isTranslationsFile = createTranslationsFilePredicate(options?.filenameMatcher);
+
     let optimizeLocaleChunks = options?.optimizeLocaleChunks;
 
     if (optimizeLocaleChunks) {
