@@ -5,7 +5,7 @@ Plugin for optimizing translation file delivery. Can be used with webpack, rspac
 
 Under the hood, uses [`i18n-babel-plugin`](../i18n-babel-plugin/README.md).
 
-*Transforms `i18n.ts` files:*
+*Transforms `i18n.ts` files (other names can be configured via [`filenameMatcher`](#filenamematcher)):*
 
 - Removes meta from messages (id, description, etc.)
 - Converts markdown to html (when `meta.markdown === true`)
@@ -85,6 +85,33 @@ applyI18nOptimizePlugin(webpackConfig, {
 ```
 
 Passing the config as an object also skips the config lookup entirely.
+
+### filenameMatcher
+
+Allows processing translation files with custom names. Mirrors the
+[`filenameMatcher` option of `i18n-babel-plugin`](../i18n-babel-plugin/README.md#filenamematcher).
+
+Type: `FilenameMatcher | FilenameMatcher[]`, where `FilenameMatcher` is:
+
+- `string` — compared with the end of the file path, so `i18n.ts` matches both `Component/i18n.ts` and `Component/component.i18n.ts`;
+- `RegExp` — tested against the normalized path (`\` → `/`);
+- `{type: 'regexp', pattern: string, flags?: string}` — the same regexp in a serializable form.
+
+Default: `'i18n.ts'`.
+
+```ts
+applyI18nOptimizePlugin(webpackConfig, {
+    filenameMatcher: ['i18n.ts', 'keysets.ts'],
+})
+```
+
+```ts
+applyI18nOptimizePlugin(webpackConfig, {
+    filenameMatcher: /\.translations\.tsx?$/,
+})
+```
+
+Files that match are still skipped if they contain no `createMessages` or `declareMessages` call.
 
 ### typograf
 

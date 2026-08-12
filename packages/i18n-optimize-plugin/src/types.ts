@@ -1,4 +1,4 @@
-import type {TypografConfig} from '@gravity-ui/i18n-babel-plugin';
+import type {FilenameMatcher, TypografConfig} from '@gravity-ui/i18n-babel-plugin';
 import type {ProjectConfig} from '@gravity-ui/i18n-cli/config';
 
 interface CommonOptimizeLocaleChunks {
@@ -56,6 +56,15 @@ export interface Options {
      * либо чтобы не платить за его поиск.
      */
     config?: ProjectConfig | string;
+    /**
+     * Позволяет обрабатывать файлы с переводами с кастомными названиями.
+     *
+     * Строка сравнивается с концом пути, `RegExp` (либо его сериализуемая форма
+     * `{type: 'regexp', pattern, flags}`) проверяется на нормализованном пути.
+     *
+     * По умолчанию используется `'i18n.ts'`.
+     */
+    filenameMatcher?: FilenameMatcher | FilenameMatcher[];
     /**
      * Конфигурация для типографа.
      * По умолчанию включен (true).

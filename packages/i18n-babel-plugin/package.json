@@ -8,6 +8,17 @@
   },
   "main": "./dist/index.js",
   "typings": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "default": "./dist/index.js"
+    },
+    "./filename-matcher": {
+      "types": "./dist/filename-matcher.d.ts",
+      "default": "./dist/filename-matcher.js"
+    },
+    "./package.json": "./package.json"
+  },
   "scripts": {
     "build": "pnpm run build:clean && pnpm run build:compile",
     "build:compile": "tsc -p tsconfig.json",

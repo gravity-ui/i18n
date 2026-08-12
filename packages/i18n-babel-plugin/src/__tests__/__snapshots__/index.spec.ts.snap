@@ -385,6 +385,48 @@ export const {
 });"
 `;
 
+exports[`transformations custom translations file name does not transform custom named file by default 1`] = `
+"import { intl } from './intl';
+export const {
+  t
+} = intl.createMessages({
+  normalMessage: {
+    ru: 'русский',
+    en: 'english',
+    'en-kz': '',
+    meta: {
+      id: '123456'
+    }
+  }
+});"
+`;
+
+exports[`transformations custom translations file name transforms custom named file by regexp matcher 1`] = `
+"import { intl } from './intl';
+export const {
+  t
+} = intl.createMessages({
+  normalMessage: {
+    "ru": "\\u0440\\u0443\\u0441\\u0441\\u043A\\u0438\\u0439",
+    "en": "english",
+    "en-kz": ""
+  }
+});"
+`;
+
+exports[`transformations custom translations file name transforms custom named file by string matcher 1`] = `
+"import { intl } from './intl';
+export const {
+  t
+} = intl.createMessages({
+  normalMessage: {
+    "ru": "\\u0440\\u0443\\u0441\\u0441\\u043A\\u0438\\u0439",
+    "en": "english",
+    "en-kz": ""
+  }
+});"
+`;
+
 exports[`transformations declareMessages compile messages to AST 1`] = `
 "export const messages = {
   normalMessage: {
