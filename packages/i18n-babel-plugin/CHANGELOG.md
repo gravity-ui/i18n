@@ -1,3 +1,13 @@
+## 1.5.0 (2026-08-12)
+
+### 🚀 Features
+
+- enable custom filenames via filenameMatcher option ([#84](https://github.com/gravity-ui/i18n/pull/84))
+
+### ❤️ Thank You
+
+- Denis Vershkov
+
 ## 1.4.0 (2026-03-16)
 
 ### 🧱 Updated Dependencies

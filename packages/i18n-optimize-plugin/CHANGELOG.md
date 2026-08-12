@@ -1,3 +1,17 @@
+## 1.5.0 (2026-08-12)
+
+### 🚀 Features
+
+- enable custom filenames via filenameMatcher option ([#84](https://github.com/gravity-ui/i18n/pull/84))
+
+### 🧱 Updated Dependencies
+
+- Updated @gravity-ui/i18n-babel-plugin to 1.5.0
+
+### ❤️ Thank You
+
+- Denis Vershkov
+
 ## 1.4.1 (2026-04-04)
 
 ### 🧱 Updated Dependencies
