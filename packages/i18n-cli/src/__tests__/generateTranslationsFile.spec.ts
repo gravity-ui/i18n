@@ -216,6 +216,44 @@ describe('generateTranslationsFileContent', () => {
         expect(result).toMatchSnapshot();
     });
 
+    it('skip plural forms without value', async () => {
+        jest.mocked(loadProjectConfig).mockReturnValue({
+            allowedLocales: ['ru', 'en'],
+            clientIntlModule: {
+                path: 'src/ui/shared/i18n.ts',
+                alias: '@shared/i18n',
+            },
+            serverIntlModule: {
+                path: 'src/server/utils/i18n.ts',
+            },
+        });
+
+        const {messages} = await parseTranslationsFile({
+            filePath: 'src/ui/units/compute/pages/MainPage/i18n.ts',
+            content: `
+            import { intl } from "@shared/i18n";
+
+            export const {t, Message} = intl.createMessages({
+                replacedValues: {
+                    ru: {
+                        one: 'Заменено {count} значение',
+                        few: 'Заменено {count} значения',
+                        many: 'Заменено {count} значений',
+                    },
+                },
+            });
+        `,
+        });
+
+        const result = generateTranslationsFileContent({
+            outputPath: 'src/ui/units/compute/pages/MainPage',
+            messages,
+        });
+
+        expect(result).not.toContain('undefined');
+        expect(result).toMatchSnapshot();
+    });
+
     it('generate message meta', async () => {
         jest.mocked(loadProjectConfig).mockReturnValue({
             allowedLocales: ['ru', 'en'],

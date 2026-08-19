@@ -116,11 +116,8 @@ export const {t, Message} = intl.createMessages({
   "countOffices": {
     "ru": null,
     "en": {
-      few: undefined,
-      many: undefined,
       one: "one",
       other: "other",
-      two: undefined,
       zero: "zero"
     }
   }
@@ -200,6 +197,22 @@ export const {t, Message} = intl.createMessages({
   "pageTitle": {
     "ru": "О нас",
     "en": "About us"
+  }
+});
+"
+`;
+
+exports[`generateTranslationsFileContent skip plural forms without value 1`] = `
+"import {intl} from "@shared/i18n";
+
+export const {t, Message} = intl.createMessages({
+  "replacedValues": {
+    "ru": {
+      one: "Заменено {count} значение",
+      few: "Заменено {count} значения",
+      many: "Заменено {count} значений"
+    },
+    "en": null
   }
 });
 "
