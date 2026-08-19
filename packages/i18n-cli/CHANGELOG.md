@@ -1,3 +1,13 @@
+## 1.4.2 (2026-08-19)
+
+### 🩹 Fixes
+
+- **i18n-cli:** skip undefined plural forms in generated translations ([#85](https://github.com/gravity-ui/i18n/pull/85))
+
+### ❤️ Thank You
+
+- Konstantin Mamaev @MrMeison
+
 ## 1.4.1 (2026-04-04)
 
 ### 🩹 Fixes
