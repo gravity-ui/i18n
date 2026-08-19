@@ -62,13 +62,15 @@ function generateMessageLiteral(message?: string | null, meta?: MessageMeta) {
 
 function generateLegacyPluralObject(value: PluralValue, meta?: MessageMeta): ObjectExpression {
     return b.objectExpression(
-        Object.entries(value).map(([form, formValue]) =>
-            b.property(
-                'init',
-                b.identifier(form),
-                generateMessageLiteral(formValue as string | undefined, meta),
+        Object.entries(value)
+            .filter(([, formValue]) => formValue !== undefined)
+            .map(([form, formValue]) =>
+                b.property(
+                    'init',
+                    b.identifier(form),
+                    generateMessageLiteral(formValue as string | undefined, meta),
+                ),
             ),
-        ),
     );
 }
 
