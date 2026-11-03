@@ -43,6 +43,7 @@
     "@types/jest": "catalog:",
     "@types/node": "^24.7.0",
     "@types/uuidv4": "2.0.0",
+    "@typescript-eslint/parser": "^8.63.0",
     "@typescript-eslint/utils": "^8.63.0",
     "eslint": "^10.0.0",
     "jest": "catalog:",

@@ -54,6 +54,28 @@ function isMessagesCall(node: TSESTree.Node): node is TSESTree.CallExpression {
     return false;
 }
 
+/** Collects renamed translation functions from `const {t: i18n, Message} = ...`. */
+export function getExportAliasesFromPattern(pattern: TSESTree.ObjectPattern): ExportAliases {
+    const exportAliases: ExportAliases = {};
+
+    pattern.properties.forEach((prop) => {
+        if (prop.type === AST_NODE_TYPES.Property && prop.key.type === AST_NODE_TYPES.Identifier) {
+            const originalName = prop.key.name;
+
+            if (
+                prop.computed === false &&
+                prop.value.type === AST_NODE_TYPES.Identifier &&
+                originalName !== prop.value.name &&
+                isTranslationFunction(originalName)
+            ) {
+                exportAliases[originalName] = prop.value.name;
+            }
+        }
+    });
+
+    return exportAliases;
+}
+
 function getMessagesCallType(node: TSESTree.CallExpression): DeclarationType | undefined {
     // intl.createMessages(...)
     if (
@@ -311,23 +333,7 @@ export async function parseTranslationsFile(
 
                     // For createMessages with ObjectPattern: const {t, Message} = intl.createMessages(...)
                     if (node.id.type === AST_NODE_TYPES.ObjectPattern) {
-                        node.id.properties.forEach((prop) => {
-                            if (
-                                prop.type === AST_NODE_TYPES.Property &&
-                                prop.key.type === AST_NODE_TYPES.Identifier
-                            ) {
-                                const originalName = prop.key.name;
-
-                                if (
-                                    prop.computed === false &&
-                                    prop.value.type === AST_NODE_TYPES.Identifier &&
-                                    originalName !== prop.value.name &&
-                                    isTranslationFunction(originalName)
-                                ) {
-                                    exportAliases[originalName] = prop.value.name;
-                                }
-                            }
-                        });
+                        Object.assign(exportAliases, getExportAliasesFromPattern(node.id));
                     }
                 }
             },
