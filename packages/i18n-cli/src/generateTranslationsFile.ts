@@ -138,7 +138,7 @@ function generateMessageObject(
     return b.objectExpression(sortedProps);
 }
 
-function generateMessagesObject(
+export function generateMessagesObject(
     messages: MessageWithPlacementMeta[],
     allowedLocales: string[],
 ): ObjectExpression {
