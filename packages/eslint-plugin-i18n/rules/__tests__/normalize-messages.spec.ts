@@ -89,7 +89,7 @@ export const {t} = intl.createMessages({
 });
 `,
             output: `
-export const {t} = intl.createMessages({
+export const {t, Message} = intl.createMessages({
     a: {
         ru: 'а',
         en: 'a',
@@ -104,7 +104,7 @@ export const {t} = intl.createMessages({
 `,
             filename: I18N_FILE,
             options,
-            errors: [{messageId: 'notNormalized'}],
+            errors: [{messageId: 'wrongExportPattern'}, {messageId: 'notNormalized'}],
         },
         {
             name: 'normalizes meta, plural forms and values',
@@ -199,6 +199,103 @@ intl.createMessages({
             filename: I18N_FILE,
             options,
             errors: [{messageId: 'cannotNormalize'}],
+        },
+    ],
+});
+
+const NORMALIZED_MESSAGES = `{
+    a: {
+        ru: 'а',
+        en: 'a',
+        meta: {id: 'k.a'},
+    },
+}`;
+
+// Types of the parser are exposed via `exports` only, which `moduleResolution: node` can't see
+// eslint-disable-next-line @typescript-eslint/no-require-imports
+const tsParser: Linter.Parser = require('@typescript-eslint/parser');
+const tsRuleTester = new RuleTester({languageOptions: {parser: tsParser}});
+
+tsRuleTester.run('normalize-messages (export pattern, typescript parser)', rule, {
+    valid: [
+        {
+            name: 'client module exports t and Message',
+            code: `export const {t, Message} = intl.createMessages(${NORMALIZED_MESSAGES});`,
+            filename: I18N_FILE,
+            options,
+        },
+        {
+            name: 'aliases are kept',
+            code: `export const {t: i18n, Message: I18nMessage} = intl.createMessages(${NORMALIZED_MESSAGES});`,
+            filename: I18N_FILE,
+            options,
+        },
+        {
+            name: 'server module exports messages',
+            code: `export const {messages} = intl.createMessages(${NORMALIZED_MESSAGES});`,
+            filename: '/project/src/server/utils/foo/i18n.ts',
+            options,
+        },
+        {
+            name: 'declareMessages is not checked',
+            code: `export const messages = declareMessages(${NORMALIZED_MESSAGES});`,
+            filename: I18N_FILE,
+            options,
+        },
+        {
+            name: 'typescript syntax in the file',
+            code: `import type {Foo} from './foo';\nexport const {t, Message} = intl.createMessages(${NORMALIZED_MESSAGES} as const);`,
+            filename: I18N_FILE,
+            options,
+        },
+    ],
+    invalid: [
+        {
+            name: 'adds missing Message',
+            code: `export const {t} = intl.createMessages(${NORMALIZED_MESSAGES});`,
+            output: `export const {t, Message} = intl.createMessages(${NORMALIZED_MESSAGES});`,
+            filename: I18N_FILE,
+            options,
+            errors: [{messageId: 'wrongExportPattern', data: {expected: '{t, Message}'}}],
+        },
+        {
+            name: 'keeps aliases, fixes order and drops unknown names',
+            code: `export const {Message, t: i18n, keyset} = intl.createMessages(${NORMALIZED_MESSAGES});`,
+            output: `export const {t: i18n, Message} = intl.createMessages(${NORMALIZED_MESSAGES});`,
+            filename: I18N_FILE,
+            options,
+            errors: [{messageId: 'wrongExportPattern'}],
+        },
+        {
+            name: 'server module exports only messages',
+            code: `export const {t, Message} = intl.createMessages(${NORMALIZED_MESSAGES});`,
+            output: `export const {messages} = intl.createMessages(${NORMALIZED_MESSAGES});`,
+            filename: '/project/src/server/utils/foo/i18n.ts',
+            options,
+            errors: [{messageId: 'wrongExportPattern', data: {expected: '{messages}'}}],
+        },
+        {
+            name: 'reports without fix when the pattern has a type annotation',
+            code: `export const {t}: Foo = intl.createMessages(${NORMALIZED_MESSAGES});`,
+            output: null,
+            filename: I18N_FILE,
+            options,
+            errors: [{messageId: 'wrongExportPattern'}],
+        },
+        {
+            name: 'messages are normalized with the typescript parser too',
+            code: `export const {t, Message} = intl.createMessages({b: {en: 'b', ru: 'б', meta: {id: 'k.b'}}, a: {ru: 'а', en: 'a', meta: {id: 'k.a'}}});`,
+            output: `export const {t, Message} = intl.createMessages({
+    a: {ru: 'а', en: 'a', meta: {id: 'k.a'}},
+    b: {
+        ru: 'б',
+        en: 'b',
+        meta: {id: 'k.b'}
+    }
+});`,
+            filename: I18N_FILE,
+            options,
+            errors: [{messageId: 'notNormalized'}],
         },
     ],
 });

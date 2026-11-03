@@ -1,12 +1,17 @@
 export type {MessagePlacementMeta, MessageWithPlacementMeta, DeclarationType} from './types';
 
-export {parseTranslationsFile, getMessagesFromObjectExpression} from './parseTranslationsFile';
+export {
+    parseTranslationsFile,
+    getMessagesFromObjectExpression,
+    getExportAliasesFromPattern,
+} from './parseTranslationsFile';
 export type {ParseTranslationsFileArgs, ParseTranslationsFileResult} from './parseTranslationsFile';
 
 export {
     generateTranslationsFile,
     generateTranslationsFileContent,
     generateMessagesObject,
+    generateMessagesExportPattern,
 } from './generateTranslationsFile';
 export type {GenerateTranslationsFileParams} from './generateTranslationsFile';
 
