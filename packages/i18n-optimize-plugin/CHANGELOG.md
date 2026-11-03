@@ -1,3 +1,9 @@
+## 1.5.2 (2026-11-03)
+
+### 🧱 Updated Dependencies
+
+- Updated @gravity-ui/i18n-cli to 1.5.0
+
 ## 1.5.1 (2026-08-19)
 
 ### 🧱 Updated Dependencies

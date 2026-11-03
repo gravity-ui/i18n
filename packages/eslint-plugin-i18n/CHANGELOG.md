@@ -1,3 +1,17 @@
+## 3.1.0 (2026-11-03)
+
+### 🚀 Features
+
+- **eslint-plugin-i18n:** add normalize-messages rule ([#86](https://github.com/gravity-ui/i18n/pull/86))
+
+### 🧱 Updated Dependencies
+
+- Updated @gravity-ui/i18n-cli to 1.5.0
+
+### ❤️ Thank You
+
+- dgaponov
+
 ## 3.0.1 (2026-08-19)
 
 ### 🧱 Updated Dependencies
