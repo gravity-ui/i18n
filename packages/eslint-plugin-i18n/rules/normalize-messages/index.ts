@@ -1,11 +1,13 @@
 import {
     type MessageWithPlacementMeta,
+    generateMessagesExportPattern,
     generateMessagesObject,
+    getExportAliasesFromPattern,
     getMessagesFromObjectExpression,
     loadProjectConfig,
 } from '@gravity-ui/i18n-cli';
 import type {Rule, SourceCode} from 'eslint';
-import type {CallExpression, Node, ObjectExpression, Property} from 'estree';
+import type {CallExpression, Node, ObjectExpression, ObjectPattern, Property} from 'estree';
 
 import {
     DEFAULT_CALL_EXPRESSIONS,
@@ -23,6 +25,7 @@ type NormalizeMessagesOptions = I18nCreateMessagesFilenamesOptions & {
 };
 
 type ParseObjectExpression = Parameters<typeof getMessagesFromObjectExpression>[0];
+type ParseObjectPattern = Parameters<typeof getExportAliasesFromPattern>[0];
 
 const IDENTIFIER_RE = /^[A-Za-z_$][\w$]*$/;
 
@@ -197,6 +200,21 @@ function detectTrailingComma(sourceCode: SourceCode, node: ObjectExpression): st
     return sourceCode.text.slice(lastProp.range[1], closeToken.range[0]).includes(',') ? ',' : '';
 }
 
+function getPatternEntries(pattern: ObjectPattern): string[] | null {
+    const entries: string[] = [];
+
+    for (const prop of pattern.properties) {
+        if (prop.type !== 'Property' || prop.computed || prop.value.type !== 'Identifier') {
+            return null;
+        }
+
+        const key = getKeyName(prop.key);
+        entries.push(key === prop.value.name ? key : `${key}: ${prop.value.name}`);
+    }
+
+    return entries;
+}
+
 function getLineIndent(sourceCode: SourceCode, index: number): string {
     const lineStart = sourceCode.text.lastIndexOf('\n', index - 1) + 1;
 
@@ -216,6 +234,7 @@ export const rule: Rule.RuleModule = {
             notNormalized:
                 'i18n messages are not normalized: keys must be sorted, each message must contain exactly the allowed locales ({{locales}}) followed by meta.',
             cannotNormalize: 'i18n messages cannot be normalized: {{error}}',
+            wrongExportPattern: 'createMessages result must be destructured as {{expected}}.',
         },
         schema: [
             {
@@ -249,11 +268,63 @@ export const rule: Rule.RuleModule = {
         }
 
         const sourceCode = context.sourceCode;
+        const getConfig = () => loadProjectConfig({cwd: context.cwd});
 
-        function visitCreateMessagesCall(node: CallExpression) {
+        /** `const {t} = intl.createMessages(...)` → `const {t, Message} = ...`, as the generator writes it. */
+        function checkExportPattern(node: CallExpression & Rule.NodeParentExtension) {
+            const declarator = node.parent;
+
+            if (
+                declarator.type !== 'VariableDeclarator' ||
+                declarator.init !== node ||
+                declarator.id.type !== 'ObjectPattern' ||
+                node.callee.type !== 'MemberExpression' ||
+                node.callee.computed ||
+                getKeyName(node.callee.property as Property['key']) !== 'createMessages'
+            ) {
+                return;
+            }
+
+            const pattern = declarator.id;
+            const expected = getPatternEntries(
+                generateMessagesExportPattern(
+                    context.filename,
+                    getConfig(),
+                    getExportAliasesFromPattern(pattern as unknown as ParseObjectPattern),
+                ),
+            );
+            const actual = getPatternEntries(pattern);
+
+            if (!expected || (actual && actual.join(',') === expected.join(','))) {
+                return;
+            }
+
+            const expectedText = `{${expected.join(', ')}}`;
+
+            context.report({
+                node: pattern,
+                messageId: 'wrongExportPattern',
+                data: {expected: expectedText},
+                fix(fixer) {
+                    // Keep type annotations and comments intact
+                    if (
+                        (pattern as {typeAnnotation?: unknown}).typeAnnotation ||
+                        sourceCode.getCommentsInside(pattern).length
+                    ) {
+                        return null;
+                    }
+
+                    return fixer.replaceText(pattern, expectedText);
+                },
+            });
+        }
+
+        function visitCreateMessagesCall(node: CallExpression & Rule.NodeParentExtension) {
             if (!isCreateMessagesCall(node, sourceCode, memberExpressions, callExpressions)) {
                 return;
             }
+
+            checkExportPattern(node);
 
             const messagesNode = node.arguments[0];
             if (messagesNode?.type !== 'ObjectExpression') {
@@ -275,8 +346,7 @@ export const rule: Rule.RuleModule = {
                 return;
             }
 
-            const allowedLocales =
-                options.allowedLocales ?? loadProjectConfig({cwd: context.cwd}).allowedLocales;
+            const allowedLocales = options.allowedLocales ?? getConfig().allowedLocales;
             const expected = generateMessagesObject(
                 collapseEmptyPlurals(messages),
                 allowedLocales,

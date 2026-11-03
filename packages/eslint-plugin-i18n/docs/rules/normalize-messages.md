@@ -1,6 +1,6 @@
 # normalize-messages
 
-In files matched by `filenameMatcher`, enforces that messages inside `createMessages` / `declareMessages` are in the canonical form that `@gravity-ui/i18n-cli` generates for translation files. The rule auto-fixes the messages object.
+In files matched by `filenameMatcher`, enforces that messages inside `createMessages` / `declareMessages` are in the canonical form that `@gravity-ui/i18n-cli` generates for translation files. The rule auto-fixes the messages object and the exported names.
 
 The rule reuses the `@gravity-ui/i18n-cli` parser and generator, so the expected result is exactly what the generator produces:
 
@@ -8,7 +8,10 @@ The rule reuses the `@gravity-ui/i18n-cli` parser and generator, so the expected
 - every message contains exactly the locales from `allowedLocales`, in that order: missing locales are added as `null`, locales outside the list are removed, `undefined` becomes `null`;
 - `meta` goes last and contains only `id`, `description` (when not empty), `markdown` and `disableTypograf`, in that order;
 - plural forms are ordered `one`, `few`, `many`, `zero`, `two`, `other`; a plural value with all forms empty becomes `''`;
-- multiline ICU messages (unless `meta.markdown` is `true`) are printed as template literals prettified by `format-message-print`.
+- multiline ICU messages (unless `meta.markdown` is `true`) are printed as template literals prettified by `format-message-print`;
+- the result of `intl.createMessages` is destructured as `{t, Message}` (renamed exports like `{t: i18n}` are kept), or as `{messages}` for files matched by `serverIntlModule.pathMatchers` from the project config. The pattern is reported without an auto-fix when it has a type annotation.
+
+The import of `intl` and `declareMessages` declarations are not checked.
 
 Quote style, key notation (`ru` vs `'ru'`) and other formatting are not checked — leave them to your formatter. Values that already match are kept as written.
 

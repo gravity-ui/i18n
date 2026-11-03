@@ -18,7 +18,7 @@ import {
 } from './shared';
 import {builders as b} from 'estree-toolkit';
 import {generate} from 'astring';
-import {AssignmentProperty, ObjectExpression, Property} from 'estree';
+import {AssignmentProperty, ObjectExpression, ObjectPattern, Property} from 'estree';
 import parseIcuMessage from 'format-message-parse';
 import createPrettyIcuMessage from 'format-message-print';
 import {loadProjectConfig, NormalizedProjectConfig} from './config/loadProjectConfig';
@@ -165,6 +165,48 @@ function determineIntlModule(outputPath: string, config: NormalizedProjectConfig
         : config.clientIntlModule;
 }
 
+/**
+ * Builds the destructuring pattern for `intl.createMessages` result:
+ * `{messages}` for the server intl module, `{t, Message}` (keeping aliases) for the client one.
+ */
+export function generateMessagesExportPattern(
+    outputPath: string,
+    config: NormalizedProjectConfig,
+    exportAliases?: ExportAliases,
+): ObjectPattern {
+    if (determineIntlModule(outputPath, config) === config.serverIntlModule) {
+        return b.objectPattern([
+            b.property(
+                'init',
+                b.identifier('messages'),
+                b.identifier('messages'),
+                false,
+                true,
+            ) as AssignmentProperty,
+        ]);
+    }
+
+    const tExportName = exportAliases?.t || DEFAULT_EXPORT_ALIASES.t;
+    const messageExportName = exportAliases?.Message || DEFAULT_EXPORT_ALIASES.Message;
+
+    return b.objectPattern([
+        b.property(
+            'init',
+            b.identifier(DEFAULT_EXPORT_ALIASES.t),
+            b.identifier(tExportName),
+            false,
+            tExportName === DEFAULT_EXPORT_ALIASES.t,
+        ) as AssignmentProperty,
+        b.property(
+            'init',
+            b.identifier(DEFAULT_EXPORT_ALIASES.Message),
+            b.identifier(messageExportName),
+            false,
+            messageExportName === DEFAULT_EXPORT_ALIASES.Message,
+        ) as AssignmentProperty,
+    ]);
+}
+
 export function generateTranslationsFileContent(params: GenerateTranslationsFileParams): string {
     const config = loadProjectConfig();
     const declarationType = params.declarationType ?? 'createMessages';
@@ -199,41 +241,12 @@ export function generateTranslationsFileContent(params: GenerateTranslationsFile
             [messagesObject],
         );
 
-        const {exportAliases} = params;
-        const tExportName = exportAliases?.t || DEFAULT_EXPORT_ALIASES.t;
-        const messageExportName = exportAliases?.Message || DEFAULT_EXPORT_ALIASES.Message;
-
-        const destructuredProps =
-            intlModule === config.serverIntlModule
-                ? [
-                      b.property(
-                          'init',
-                          b.identifier('messages'),
-                          b.identifier('messages'),
-                          false,
-                          true,
-                      ) as AssignmentProperty,
-                  ]
-                : [
-                      b.property(
-                          'init',
-                          b.identifier(DEFAULT_EXPORT_ALIASES.t),
-                          b.identifier(tExportName),
-                          false,
-                          tExportName === DEFAULT_EXPORT_ALIASES.t,
-                      ) as AssignmentProperty,
-                      b.property(
-                          'init',
-                          b.identifier(DEFAULT_EXPORT_ALIASES.Message),
-                          b.identifier(messageExportName),
-                          false,
-                          messageExportName === DEFAULT_EXPORT_ALIASES.Message,
-                      ) as AssignmentProperty,
-                  ];
-
         declaration = b.exportNamedDeclaration(
             b.variableDeclaration('const', [
-                b.variableDeclarator(b.objectPattern(destructuredProps), methodCall),
+                b.variableDeclarator(
+                    generateMessagesExportPattern(params.outputPath, config, params.exportAliases),
+                    methodCall,
+                ),
             ]),
         );
     }
