@@ -1,3 +1,17 @@
+## 3.2.0 (2026-11-03)
+
+### 🚀 Features
+
+- **eslint-plugin-i18n:** check createMessages export names in normalize-messages ([#87](https://github.com/gravity-ui/i18n/pull/87))
+
+### 🧱 Updated Dependencies
+
+- Updated @gravity-ui/i18n-cli to 1.6.0
+
+### ❤️ Thank You
+
+- dgaponov
+
 ## 3.1.0 (2026-11-03)
 
 ### 🚀 Features
