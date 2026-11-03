@@ -187,7 +187,7 @@ intl.createMessages({
             errors: [{messageId: 'notNormalized'}],
         },
         {
-            name: 'reports messages that i18n-sync normalize cannot parse',
+            name: 'reports messages that the i18n-cli parser cannot handle',
             code: `
 const other = {};
 intl.createMessages({
@@ -204,10 +204,10 @@ intl.createMessages({
 });
 
 /**
- * Oracle: the autofix must produce the same messages object as i18n-sync normalize, i.e.
- * i18n-cli parse → i18n-sync value round-trip → i18n-cli generateTranslationsFileContent.
+ * Oracle: the autofix must produce the same messages object as the i18n-cli generator, i.e.
+ * i18n-cli parse → collapse empty plurals → i18n-cli generateTranslationsFileContent.
  */
-describe('normalize-messages matches i18n-sync normalize output', () => {
+describe('normalize-messages matches i18n-cli generator output', () => {
     const LINTER_LANGUAGE_OPTIONS = {ecmaVersion: 2022, sourceType: 'module'} as const;
 
     function captureMessagesObject(code: string): ObjectExpression {
@@ -237,9 +237,9 @@ describe('normalize-messages matches i18n-sync normalize output', () => {
         return captured;
     }
 
-    // Mirrors i18n-sync formatjs loader: null values are not loaded, plurals with all forms
-    // empty are saved back as '' (transformTankerValueToFormatJS).
-    function syncRoundTrip(messages: MessageWithPlacementMeta[]): MessageWithPlacementMeta[] {
+    // Null values are dropped (the generator restores allowed locales as null),
+    // plurals with all forms empty become ''.
+    function prepareMessages(messages: MessageWithPlacementMeta[]): MessageWithPlacementMeta[] {
         return messages.map(({message, meta}) => {
             const result: Record<string, unknown> = {meta: message.meta};
 
@@ -258,7 +258,7 @@ describe('normalize-messages matches i18n-sync normalize output', () => {
         });
     }
 
-    function normalizeWithI18nSync(code: string): string {
+    function generateWithI18nCli(code: string): string {
         const messages = getMessagesFromObjectExpression(
             captureMessagesObject(code) as unknown as Parameters<
                 typeof getMessagesFromObjectExpression
@@ -267,7 +267,7 @@ describe('normalize-messages matches i18n-sync normalize output', () => {
 
         return generateTranslationsFileContent({
             outputPath: I18N_FILE,
-            messages: syncRoundTrip(messages),
+            messages: prepareMessages(messages),
         });
     }
 
@@ -372,7 +372,7 @@ intl.createMessages({
         expect(messages).toEqual([]);
         expect(output).not.toBe(code);
         expect(toComparable(captureMessagesObject(output))).toEqual(
-            toComparable(captureMessagesObject(normalizeWithI18nSync(code))),
+            toComparable(captureMessagesObject(generateWithI18nCli(code))),
         );
     });
 });

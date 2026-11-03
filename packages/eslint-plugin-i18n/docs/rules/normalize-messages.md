@@ -1,6 +1,6 @@
 # normalize-messages
 
-In files matched by `filenameMatcher`, enforces that messages inside `createMessages` / `declareMessages` are in the same shape as `i18n-sync normalize` writes them (statuses are out of scope). The rule auto-fixes the messages object.
+In files matched by `filenameMatcher`, enforces that messages inside `createMessages` / `declareMessages` are in the canonical form that `@gravity-ui/i18n-cli` generates for translation files. The rule auto-fixes the messages object.
 
 The rule reuses the `@gravity-ui/i18n-cli` parser and generator, so the expected result is exactly what the generator produces:
 
@@ -12,7 +12,7 @@ The rule reuses the `@gravity-ui/i18n-cli` parser and generator, so the expected
 
 Quote style, key notation (`ru` vs `'ru'`) and other formatting are not checked — leave them to your formatter. Values that already match are kept as written.
 
-Messages that `i18n-sync normalize` would fail to parse (spread elements, non-literal values, mixed plural and non-plural translations, etc.) are reported as `cannotNormalize` without a fix. Missing `meta.id` is not reported — use [auto-generate-translation-message-id](auto-generate-translation-message-id.md) for that.
+Messages that the `i18n-cli` parser cannot handle (spread elements, non-literal values, mixed plural and non-plural translations, etc.) are reported as `cannotNormalize` without a fix. Missing `meta.id` is not reported — use [auto-generate-translation-message-id](auto-generate-translation-message-id.md) for that.
 
 When the messages object contains comments, the problem is reported without an auto-fix (rebuilding the object would lose them).
 
