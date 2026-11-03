@@ -250,7 +250,7 @@ function parseMessage(node: TSESTree.Node): Message {
     return message;
 }
 
-function getMessagesFromObjectExpression(
+export function getMessagesFromObjectExpression(
     node: TSESTree.ObjectExpression,
 ): MessageWithPlacementMeta[] {
     const messages: MessageWithPlacementMeta[] = [];
