@@ -1,0 +1,28 @@
+name: Validate README
+
+on:
+  workflow_dispatch:
+  pull_request:
+    paths:
+      - README.md
+      - packages/i18n/README.md
+      - packages/i18n-react/README.md
+      - packages/i18n-node/README.md
+
+permissions:
+  contents: read
+  pull-requests: write
+
+jobs:
+  validate-package:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: gravity-ui/readme-validator@v1
+        with:
+          type: package
+          paths: |
+            README.md
+            packages/i18n/README.md
+            packages/i18n-react/README.md
+            packages/i18n-node/README.md
