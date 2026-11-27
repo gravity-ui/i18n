@@ -1,3 +1,13 @@
+## 1.5.4 (2026-11-27)
+
+### 🩹 Fixes
+
+- **i18n-optimize-plugin:** install locale filter after chunk loader initialization ([45a163e](https://github.com/gravity-ui/i18n/commit/45a163e))
+
+### ❤️ Thank You
+
+- EgorIlyakhin
+
 ## 1.5.3 (2026-11-03)
 
 ### 🧱 Updated Dependencies
