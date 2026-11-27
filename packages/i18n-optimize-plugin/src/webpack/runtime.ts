@@ -82,7 +82,8 @@ class LanguageRuntimeModule extends RuntimeModule {
     languageVariableName: string;
 
     constructor(languageVariableName: string) {
-        super('i18n-runtime-patch');
+        // Wrap ensureChunk after the bundler installs its default implementation.
+        super('i18n-runtime-patch', RuntimeModule.STAGE_ATTACH);
         this.languageVariableName = languageVariableName;
     }
 
